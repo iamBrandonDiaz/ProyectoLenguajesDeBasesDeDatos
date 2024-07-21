@@ -153,3 +153,90 @@ CREATE TABLE Vehiculos (
     Anio NUMBER,
     Placa VARCHAR2(10)
 );
+
+/*empleado*/
+
+CREATE OR REPLACE PROCEDURE insertar_empleado (
+    p_nombre IN VARCHAR2,
+    p_apellido IN VARCHAR2,
+    p_fecha_nacimiento IN DATE,
+    p_fecha_contratacion IN DATE
+)
+
+CREATE OR REPLACE PROCEDURE leer_empleado (
+    p_id_empleado IN NUMBER,
+    p_nombre OUT VARCHAR2,
+    p_apellido OUT VARCHAR2,
+    p_fecha_nacimiento OUT DATE,
+    p_fecha_contratacion OUT DATE
+)
+
+CREATE OR REPLACE PROCEDURE actualizar_empleado (
+    p_id_empleado IN NUMBER,
+    p_nombre IN VARCHAR2,
+    p_apellido IN VARCHAR2,
+    p_fecha_nacimiento IN DATE,
+    p_fecha_contratacion IN DATE
+)
+
+CREATE OR REPLACE PROCEDURE eliminar_empleado (
+    p_id_empleado IN NUMBER
+)
+
+/*vehiculo*/
+
+CREATE OR REPLACE PROCEDURE insertar_vehiculo (
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+) 
+
+CREATE OR REPLACE PROCEDURE leer_vehiculo (
+    p_id_vehiculo IN NUMBER,
+    p_marca OUT VARCHAR2,
+    p_modelo OUT VARCHAR2,
+    p_anio OUT NUMBER,
+    p_placa OUT VARCHAR2
+)
+
+CREATE OR REPLACE PROCEDURE actualizar_vehiculo (
+    p_id_vehiculo IN NUMBER,
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+)
+
+CREATE OR REPLACE PROCEDURE eliminar_vehiculo (
+    p_id_vehiculo IN NUMBER
+)
+
+/*pedidos*/
+
+CREATE OR REPLACE PROCEDURE insertar_pedido (
+    p_id_cliente IN NUMBER,
+    p_fecha IN DATE,
+    p_monto IN NUMBER,
+    p_id_estado IN NUMBER
+)
+
+CREATE OR REPLACE PROCEDURE leer_pedido (
+    p_id_pedido IN NUMBER,
+    p_id_cliente OUT NUMBER,
+    p_fecha OUT DATE,
+    p_monto OUT NUMBER,
+    p_id_estado OUT NUMBER
+)
+
+CREATE OR REPLACE PROCEDURE actualizar_pedido (
+    p_id_pedido IN NUMBER,
+    p_id_cliente IN NUMBER,
+    p_fecha IN DATE,
+    p_monto IN NUMBER,
+    p_id_estado IN NUMBER
+)
+
+CREATE OR REPLACE PROCEDURE eliminar_pedido (
+    p_id_pedido IN NUMBER
+)
