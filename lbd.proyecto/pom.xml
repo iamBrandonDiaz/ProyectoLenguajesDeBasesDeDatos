@@ -44,11 +44,18 @@
 		</dependency>
 		
 		<!-- Dependencias de Semana 04: Bootstrap, Font-Awesome, JQuery, Popper.js, Web Jars Locator -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>5.2.3</version>
 		</dependency>
+		 -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>5.3.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>font-awesome</artifactId>

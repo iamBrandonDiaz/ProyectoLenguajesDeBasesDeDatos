@@ -25,9 +25,10 @@ public class Producto implements Serializable {
     //private Long idCategoria; //MySQL => id_categoria FK
     
     //Relación con la tabla Categoria
-    @ManyToOne
-    @JoinColumn(name = "id_categoria")
-    Categoria categoria; //MySQL => id_categoria FK
+    // @ManyToOne
+    // @JoinColumn(name = "id_categoria")
+    // Categoria categoria; 
+    //MySQL => id_categoria FK
 
     //Constructores
     public Producto() {
