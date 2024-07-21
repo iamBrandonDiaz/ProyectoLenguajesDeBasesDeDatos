@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head th:replace="~{layout/template-new :: head}">
+        <title>TechShop</title>
+    </head>
+    <body>
+
+
+        <section th:fragment="listadoCamiones" id="camiones">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>[[#{camiones.listado}]]</h4>
+                            </div>
+                            <div th:if="${camiones != null and !camiones.empty}">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr><th>#</th>
+                                            <th>[[#{camiones.descripcion}]]</th>
+                                            <th>[[#{camiones.activo}]]</th>
+                                            <th></th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="camiones, contador : ${camiones}">
+                                            <td>[[${contador.count}]]</td>
+                                            <td>[[${camiones.descripcion}]]</td>
+                                            <td th:text="${camiones.activo} ? 'Activa' : 'Inactiva'" />
+                                            <td>
+                                                <a th:href="@{/camiones/eliminar/}+${camiones.idVehiculo}"
+                                                   class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <i class="fas fa-trash"></i> [[#{accion.eliminar}]]</a>
+                                                <a th:href="@{/camiones/modificar/}+${camiones.idVehiculo}"
+                                                   class="btn btn-success" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                    <i class="fas fa-pencil"></i> [[#{accion.actualizar}]]</a></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center p-2" th:if="${camiones == null or camioness.empty}">
+                                <span>[[#{lista.vacia}]]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center bg-success text-white mb-3">
+                            <div class="card-body">
+                                <h3>[[#{camiones.total}]]</h3>
+                                <h4 class="fs-2"><i class="fas fa-users"></i> [[${totalCamiones}]]</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
