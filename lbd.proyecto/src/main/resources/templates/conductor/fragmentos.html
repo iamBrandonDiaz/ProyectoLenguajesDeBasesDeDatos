@@ -9,7 +9,7 @@
     <!-- Seccion del Titulo -->
     <section th:fragment="titulo">
         <div class="py-2 text-center">
-            <svg class="d-block mx-auto mb-4" width="72px" height="72px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="d-block mx-auto mb-2" width="72px" height="72px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
               <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
@@ -55,9 +55,12 @@
                         <!-- Cédula -->
                         <div class="col-sm-6">
                           <label for="identification" class="form-label">Identificación</label>
-                          <input type="text" class="form-control" id="identification" placeholder="0-0000-0000" value="" required="">
-                          <div class="invalid-feedback">
-                              Un número de identificación válido es requerido.
+                          <div class="input-group has-validation">
+                              <span class="input-group-text">ID</span>
+                              <input type="text" class="form-control" id="identification" placeholder="0-0000-0000" required="">
+                              <div class="invalid-feedback">
+                                  Un correo válido es requerido.
+                              </div>
                           </div>
                         </div>
 
