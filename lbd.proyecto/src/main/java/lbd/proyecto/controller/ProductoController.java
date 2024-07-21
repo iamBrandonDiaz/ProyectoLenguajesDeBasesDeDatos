@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import lbd.proyecto.domain.Producto;
-import lbd.proyecto.impl.FirebaseStorageServiceImpl;
 import lbd.proyecto.service.ProductoService;
-import lbd.proyecto.service.CategoriaService;
 
 @Controller
 @RequestMapping("/producto")
@@ -22,16 +20,12 @@ public class ProductoController {
 
     @Autowired
     ProductoService productoService;
-
-    @Autowired
-    CategoriaService categoriaService;
     
     @GetMapping("/listado")
     public String listado(Model model) {
         List<Producto> lista = productoService.getProductos(false);
         model.addAttribute("productos", lista);
         model.addAttribute("totalProductos", lista.size());
-        model.addAttribute("categorias", categoriaService.getCategorias(true));
         return "/producto/listado";
     }
     
@@ -39,20 +33,13 @@ public class ProductoController {
     public String productoNuevo(Producto producto) {
         return "/producto/modifica";
     }
-
-    @Autowired
-    private FirebaseStorageServiceImpl firebaseStorageService;
     
     @PostMapping("/guardar")
     public String productoGuardar(Producto producto,
             @RequestParam("imagenFile") MultipartFile imagenFile) {        
         if (!imagenFile.isEmpty()) {
             productoService.save(producto);
-            producto.setRutaImagen(
-                    firebaseStorageService.cargaImagen(
-                            imagenFile, 
-                            "producto", 
-                            producto.getIdProducto()));
+            producto.setRutaImagen("test");
         }
         productoService.save(producto);
         return "redirect:/producto/listado";
@@ -68,7 +55,6 @@ public class ProductoController {
     public String productoModificar(Producto producto, Model model) {
         producto = productoService.getProducto(producto);
         model.addAttribute("producto", producto);
-        model.addAttribute("categorias", categoriaService.getCategorias(true));
         return "/producto/modifica";
     }
 }
