@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{layout/template-new :: head}">
+    <title>COMAVI</title>
+</head>
+
+<body>
+    <!-- Seccion del Titulo -->
+    <section th:fragment="titulo">
+        <div class="py-2 text-center">
+            <svg class="d-block mx-auto mb-2" width="72px" height="72px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                  <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </g>
+            </svg>
+            <h2>Nuevo Conductor</h2>
+            <p class="lead text-center" style="margin-left: 8rem; margin-right: 8rem;">
+                Por favor, proceda a completar el siguiente formulario con los detalles del nuevo conductor que desea agregar. Podrá modificar sus datos una vez se haya creado con éxito.
+            </p>
+        </div>
+    </section>
+
+    <!-- Seccion de formulario -->
+    <section th:fragment="agregar">
+        <div class="d-flex justify-content-center">
+            <div style="max-width: 40rem;">
+
+                <!-- Información Personal -->
+                <h4 class="mb-3">Información Personal</h4>
+                <form class="needs-validation" novalidate="">
+                    <div class="row g-3">
+
+                        <!-- Nombre -->
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                            <div class="invalid-feedback">
+                                Un nombre válido es requerido.
+                            </div>
+                        </div>
+
+                        <!-- Apellido -->
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                            <div class="invalid-feedback">
+                                Un apellido válido es requerido.
+                            </div>
+                        </div>
+
+                        <!-- Cédula -->
+                        <div class="col-sm-6">
+                          <label for="identification" class="form-label">Identificación</label>
+                          <div class="input-group has-validation">
+                              <span class="input-group-text">ID</span>
+                              <input type="text" class="form-control" id="identification" placeholder="0-0000-0000" required="">
+                              <div class="invalid-feedback">
+                                  Un correo válido es requerido.
+                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Fecha de nacimiento -->
+                        <div class="col-sm-6">
+                            <label for="birthDate" class="form-label">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="birthDate" placeholder="" value="" required="">
+                            <div class="invalid-feedback">
+                                Una fecha de nacimiento válida es requerida.
+                            </div>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="col-6">
+                            <label for="email" class="form-label">Correo</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" id="email" placeholder="you@company.com" required="">
+                                <div class="invalid-feedback">
+                                    Un correo válido es requerido.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Telefono -->
+                        <div class="col-6">
+                            <label for="phone" class="form-label">Teléfono</label>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">#</span>
+                                <input type="text" class="form-control" id="phone" placeholder="1234-5678" required="">
+                                <div class="invalid-feedback">
+                                    Un número de teléfono válido es requerido.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Divisor -->
+                        <hr class="my-4">
+
+                        <!-- Información de ubicación -->
+                        <h4 class="mb-3">Información de ubicación</h4>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Dirección con indicaciones</label>
+                            <input type="text" class="form-control" id="address" placeholder="Calle El Sol, Av. 12" required="">
+                            <div class="invalid-feedback">
+                                Por favor, ingrese una dirección válida.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address2" class="form-label">Indicaciones adicionales<span class="text-body-secondary">(Opcional)</span></label>
+                            <input type="text" class="form-control" id="address2" placeholder="Apartmento o número de casa">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="provincia" class="form-label">Provincia</label>
+                            <select class="form-select" id="provincia" required="">
+                                <option value="">Seleccione...</option>
+                                <option>Heredia</option>
+                                <option>San José</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, seleccione una provincia.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="canton" class="form-label">Cantón</label>
+                            <select class="form-select" id="canton" required="">
+                                <option value="">Seleccione...</option>
+                                <option>Cantón 1</option>
+                                <option>Cantón 2</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, seleccione un cantón.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="distrito" class="form-label">Distrito</label>
+                            <select class="form-select" id="distrito" required="">
+                                <option value="">Seleccione...</option>
+                                <option>Distrito 1</option>
+                                <option>Distrito 2</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, seleccione un distrito.
+                            </div>
+                        </div>
+
+                        <!-- Divisor -->
+                        <hr class="my-4">
+
+                        <!-- Google Maps -->
+                        <div class="text-center">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1964.9863664728093!2d-84.09704356634963!3d9.9362266399501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2scr!4v1721535923648!5m2!1ses!2scr" width="608" height="404" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+
+                        <!-- Divisor -->
+                        <hr class="my-4">
+
+                        <!-- Información del empleo -->
+                        <h4 class="mb-3">Información del empleo</h4>
+
+                        <!-- Puesto -->
+                        <div class="col-md-6">
+                            <label for="carga" class="form-label">Puesto</label>
+                            <select class="form-select" id="carga" required="">
+                                <option value="">Seleccione...</option>
+                                <option>Puesto 1</option>
+                                <option>Puesto 2</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, seleccione un cantón.
+                            </div>
+                        </div>
+
+                        <!-- Fecha de contratación -->
+                        <div class="col-sm-6">
+                            <label for="date" class="form-label">Fecha de contratación</label>
+                            <input type="date" class="form-control" id="date" placeholder="" value="" required="">
+                            <div class="invalid-feedback">
+                                Una fecha válida es requerida.
+                            </div>
+                        </div>
+
+                        <!-- Tipo de Licencia -->
+                        <div class="col-md-4">
+                          <label for="license" class="form-label">Licencia</label>
+                          <select class="form-select" id="license" required="">
+                              <option value="">No Aplica</option>
+                              <option>Licencia 1</option>
+                              <option>Licencia 2</option>
+                          </select>
+                          <div class="invalid-feedback">
+                              Por favor, seleccione un cantón.
+                          </div>
+                        </div>
+
+                        <!-- Fecha de Expedicion -->
+                        <div class="col-md-4">
+                          <label for="expeditionDate" class="form-label">Fecha de expedición</label>
+                          <input type="date" class="form-control" id="expeditionDate" placeholder="" value="">
+                          <div class="invalid-feedback">
+                              Una fecha válida es requerida.
+                          </div>
+                        </div>
+
+                        <!-- Fecha de Vencimiento -->
+                        <div class="col-md-4">
+                          <label for="expirationDate" class="form-label">Fecha de vencimiento</label>
+                          <input type="date" class="form-control" id="expirationDate" placeholder="" value="">
+                          <div class="invalid-feedback">
+                              Una fecha válida es requerida.
+                          </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Crear viaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
