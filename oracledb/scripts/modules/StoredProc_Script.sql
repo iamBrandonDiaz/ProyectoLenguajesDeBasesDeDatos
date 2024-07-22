@@ -77,7 +77,7 @@ BEGIN
     INTO p_marca, p_modelo, p_anio, p_placa
     FROM Vehiculos
     WHERE ID_Vehiculo = p_id_vehiculo;
-END leer_vehiculo;
+END ver_vehiculo;
 
 
 CREATE OR REPLACE PROCEDURE actualizar_vehiculo (
@@ -131,7 +131,7 @@ BEGIN
     INTO p_id_cliente, p_fecha, p_monto, p_id_estado
     FROM Pedidos
     WHERE ID_Pedido = p_id_pedido;
-END leer_pedido;
+END ver_pedido;
 
 
 CREATE OR REPLACE PROCEDURE actualizar_pedido (
