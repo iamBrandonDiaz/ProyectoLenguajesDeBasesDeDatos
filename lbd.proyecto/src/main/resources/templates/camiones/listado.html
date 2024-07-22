@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="layout/template :: head">
-    </head>
-    <body>
-        <header th:replace="layout/template :: header"></header>
-        
-        <section th:replace="camiones/fragmentos :: botonesAgregar"></section>
-        <!--<section th:replace="categoria/fragmentos :: agregarCamiones"></section>-->
-        <section th:replace="camiones/fragmentos :: listadoCamiones"></section>
-        
-        <footer th:replace="layout/template :: footer"></footer>
-    </body>
+<html>
+<head>
+    <title>Lista de Camiones</title>
+</head>
+<body>
+    <h2>Lista de Camiones</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Modelo</th>
+            <th>Marca</th>
+            <th>Año</th>
+            <th>Acciones</th>
+        </tr>
+        <c:forEach var="camion" items="${listaCamiones}">
+            <tr>
+                <td>${camion.id}</td>
+                <td>${camion.modelo}</td>
+                <td>${camion.marca}</td>
+                <td>${camion.año}</td>
+                <td>
+                    <a href="updateCamion.jsp?id=${camion.id}&modelo=${camion.modelo}&marca=${camion.marca}&anio=${camion.anio}">Actualizar</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</body>
 </html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Actualizar Camión</title>
+</head>
+<body>
+    <h2>Actualizar Camión</h2>
+    <form action="actualizarCamion" method="get">
+        <input type="hidden" name="id" value="${param.id}" />
+        Modelo: <input type="text" name="modelo" value="${param.modelo}" /><br/>
+        Marca: <input type="text" name="marca" value="${param.marca}" /><br/>
+        Año: <input type="number" name="anio" value="${param.anio}" /><br/>
+        <input type="submit" value="Actualizar" />
+    </form>
+</body>
+</html>

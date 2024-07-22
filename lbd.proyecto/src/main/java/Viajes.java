@@ -1,15 +1,13 @@
-package lbd.proyecto.domain;
-
 import java.util.ArrayList;
 import java.util.List;
 
-class Viajes {
+class Viaje {
     private int id;
     private String destino;
     private String fecha;
     private double precio;
 
-    public Viajes(int id, String destino, String fecha, double precio) {
+    public Viaje(int id, String destino, String fecha, double precio) {
         this.id = id;
         this.destino = destino;
         this.fecha = fecha;
@@ -53,28 +51,30 @@ class Viajes {
                 ", precio=" + precio +
                 '}';
     }
+}
 
+public class Viajes {
     public static void main(String[] args) {
-        List<Viajes> listaViajes = new ArrayList<>();
-        listaViajes.add(new Viajes(1, "Paris", "2024-08-10", 1200.50));
-        listaViajes.add(new Viajes(2, "Roma", "2024-09-15", 850.75));
-        listaViajes.add(new Viajes(3, "Nueva York", "2024-10-20", 1500.00));
+        List<Viaje> listaViajes = new ArrayList<>();
+        listaViajes.add(new Viaje(1, "Paris", "2024-08-10", 1200.50));
+        listaViajes.add(new Viaje(2, "Roma", "2024-09-15", 850.75));
+        listaViajes.add(new Viaje(3, "Nueva York", "2024-10-20", 1500.00));
 
         System.out.println("Lista de viajes antes de la actualización:");
-        for (Viajes v : listaViajes) {
+        for (Viaje v : listaViajes) {
             System.out.println(v);
         }
 
         actualizarViaje(listaViajes, 2, "Roma", "2024-09-20", 900.00);
 
         System.out.println("\nLista de viajes después de la actualización:");
-        for (Viajes v : listaViajes) {
+        for (Viaje v : listaViajes) {
             System.out.println(v);
         }
     }
 
-    public static void actualizarViaje(List<Viajes> listaViajes, int id, String nuevoDestino, String nuevaFecha, double nuevoPrecio) {
-        for (Viajes viaje : listaViajes) {
+    public static void actualizarViaje(List<Viaje> listaViajes, int id, String nuevoDestino, String nuevaFecha, double nuevoPrecio) {
+        for (Viaje viaje : listaViajes) {
             if (viaje.getId() == id) {
                 viaje.setDestino(nuevoDestino);
                 viaje.setFecha(nuevaFecha);

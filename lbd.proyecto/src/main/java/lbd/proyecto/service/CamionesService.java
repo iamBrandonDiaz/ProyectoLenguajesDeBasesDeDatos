@@ -5,7 +5,7 @@
 package lbd.proyecto.service;
 
 import java.util.List;
-import lbd.proyecto.domain.Camiones;
+import lbd.proyecto.domain.Camion;
 
 /**
  *
@@ -13,6 +13,6 @@ import lbd.proyecto.domain.Camiones;
  */
 public interface CamionesService {
 
-    public List<Camiones> getCamiones(boolean b);
+    public List<Camion> getCamiones(boolean b);
     
 }
