@@ -8,6 +8,7 @@ import java.util.List;
 
 // Internal imports
 import lbd.proyecto.domain.direcciones.Direccion;
+import lbd.proyecto.domain.Cliente;
 
 @Data
 @Entity

@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "estados")
-public class Estados implements Serializable {
+public class Estado implements Serializable {
     
     //Serial version UID for Serializable classes
     private static final long serialVersionUID = 1L;
@@ -24,17 +24,17 @@ public class Estados implements Serializable {
 
     //Relationship with table Pedidos
     @OneToMany(mappedBy = "estados") // One state can be assigned to many orders
-    private List<Pedidos> pedidos; // List of orders
+    private List<Pedido> pedidos; // List of orders
 
     //Relationship with table Facturas
     @OneToMany(mappedBy = "estados") // One state can be assigned to many invoices
-    private List<Facturas> facturas; // List of invoices
+    private List<Factura> facturas; // List of invoices
 
     //Constructors
-    public Estados() {
+    public Estado() {
     }
 
-    public Estados(String descripcion) {
+    public Estado(String descripcion) {
         this.descripcion = descripcion;
     }
 

@@ -6,6 +6,10 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+//Internal imports
+import lbd.proyecto.domain.direcciones.DireccionCliente;
+import lbd.proyecto.domain.Pedido;
+
 @Data
 @Entity
 @Table(name = "clientes")
@@ -30,8 +34,17 @@ public class Cliente implements Serializable {
 
     //Relationship with table Direcciones_Cliente
     @OneToMany(mappedBy = "cliente") // One client can have many addresses
-    
+    private List<DireccionCliente> direccionesCliente; // List of addresses of the client
 
-    
+    //Constructors
+    public Cliente() {
+    }
 
+    public Cliente(String nombre, String apellido, String telefono, String email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
 }

@@ -1,0 +1,70 @@
+package lbd.proyecto.domain;
+
+// External imports
+import lombok.Data;
+import jakarta.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+//Internal imports
+import lbd.proyecto.domain.direcciones.DireccionCliente;
+import lbd.proyecto.domain.Vehiculo;
+import lbd.proyecto.domain.Cliente;
+import lbd.proyecto.domain.TipoCarga;
+import lbd.proyecto.domain.Estado;
+
+@Data
+@Entity
+@Table(name = "pedidos")
+public class Pedido implements Serializable {
+
+    //Serial version UID for Serializable classes
+    private static final long serialVersionUID = 1L;
+
+    //Attributes
+    @Id // Primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental value
+    @Column(name = "id_pedido")
+    private Long idPedido; //Hibernate converts this to => id_pedido
+    private java.sql.Date fechaPedido; // Column => fecha_pedido
+    private String descripcion; // Column => descripcion
+
+    //Relationship with table Cliente
+    @ManyToOne // Many orders can be assigned to one client
+    @JoinColumn(name = "id_cliente") // Foreign key
+    private Cliente cliente; // Client
+
+    //Relationship with table Vehiculo
+    @ManyToOne // Many orders can be assigned to one vehicle
+    @JoinColumn(name = "id_vehiculo") // Foreign key
+    private Vehiculo vehiculo; // Vehicle
+
+    //Relationship with table Tipos_Carga
+    @ManyToOne // Many orders can be assigned to one type of load
+    @JoinColumn(name = "id_tipo") // Foreign key
+    private TipoCarga tiposCarga; // Type of load
+
+    //Relationship with table Estado
+    @ManyToOne // Many orders can be assigned to one state
+    @JoinColumn(name = "id_estado") // Foreign key
+    private Estado estado; // State
+
+    //Relationship with table Direcciones_Cliente
+    @OneToOne(mappedBy = "pedido") // One order can have one address
+    private DireccionCliente direccionCliente; // Address of the order
+
+    //Constructors
+    public Pedido() {
+    }
+
+    public Pedido(java.sql.Date fechaPedido, String descripcion, Cliente cliente, Vehiculo vehiculo, TipoCarga tiposCarga, Estado estado, DireccionCliente direccionCliente) {
+        this.fechaPedido = fechaPedido;
+        this.descripcion = descripcion;
+        this.cliente = cliente;
+        this.vehiculo = vehiculo;
+        this.tiposCarga = tiposCarga;
+        this.estado = estado;
+        this.direccionCliente = direccionCliente;
+    }
+    
+}
