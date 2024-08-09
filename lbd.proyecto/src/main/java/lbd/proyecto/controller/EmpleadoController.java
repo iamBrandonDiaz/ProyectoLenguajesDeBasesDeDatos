@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/conductores")
-public class ConductorController {
+@RequestMapping("/empleados")
+public class EmpleadoController {
     
     // Muestra la página principal
     @GetMapping("/agregar")
     public String page(Model model) { 
-        return "conductor/agregar";
+        return "empleado/agregar";
     }
     
 }
