@@ -14,4 +14,6 @@ public interface ClienteService {
     // Method to update a client with the Stored Procedure
     void updateCliente(Long idCliente, Cliente cliente);
 
+    // Method to get a client with the Stored Procedure
+    public Cliente getCliente(Cliente cliente);
 }
