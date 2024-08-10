@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.StoredProcedureQuery;
 import java.sql.ResultSet;
 
@@ -116,4 +118,21 @@ public class ClienteServiceImpl implements ClienteService {
         clienteDAO.deleteCliente(idCliente);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cliente> searchClientes(String nombre) {
+        
+        // Create a query object to call the SQL function "buscar_clientes"
+        Query query = entityManager.createNativeQuery("SELECT * FROM TABLE(buscar_clientes(:nombre))", Cliente.class);
+
+        // Set the parameter
+        query.setParameter("p_nombre", nombre);
+
+        // Execute the query
+        List<Cliente> clientes = query.getResultList();
+
+
+        return clientes;
+
+    }
 }

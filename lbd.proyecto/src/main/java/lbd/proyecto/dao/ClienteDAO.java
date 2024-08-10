@@ -4,7 +4,9 @@ import java.util.List;
 
 // External imports
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 // Internal imports
 import lbd.proyecto.domain.Cliente;
@@ -30,5 +32,11 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     //Method to call an stored procedure to delete a client
     @Procedure(procedureName = "eliminar_cliente")
     void deleteCliente(Long idCliente);
+
+    //Method to call a SQL function to get all the clients that match the string
+    // @Query(value = "SELECT ", nativeQuery = true)
+    // List<Cliente> searchClientes(String nombre);
+    @Query(value = "SELECT * FROM TABLE(buscar_clientes(:nombre))", nativeQuery = true)
+    List<Cliente> buscarClientes(@Param("nombre") String nombre);
 
 }
