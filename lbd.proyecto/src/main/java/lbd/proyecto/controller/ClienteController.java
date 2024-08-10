@@ -34,4 +34,15 @@ public class ClienteController {
         clienteService.updateCliente(1L, clienteTest);
         return "redirect:/clientes";
     }
+
+    @GetMapping("/get-test")
+    public String getClienteTest() {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(1L);
+
+        Cliente clienteTest = clienteService.getCliente(cliente);
+
+        System.out.println(clienteTest);
+        return "redirect:/clientes";
+    }
 }

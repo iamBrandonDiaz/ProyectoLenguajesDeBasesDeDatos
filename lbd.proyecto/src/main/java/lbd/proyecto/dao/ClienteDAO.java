@@ -1,5 +1,6 @@
 package lbd.proyecto.dao;
 
+import org.checkerframework.checker.units.qual.C;
 // External imports
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -17,6 +18,8 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     @Procedure(procedureName = "actualizar_cliente")
     void updateCliente(Long idCliente, String nombre, String apellidos, String telefono, String email);
 
-    
+    // Method to call an stored procedure to get a (single) client
+    @Procedure(procedureName = "ver_cliente")
+    Cliente getCliente(Long idCliente);
     
 }

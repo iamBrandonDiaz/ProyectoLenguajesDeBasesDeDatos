@@ -2,6 +2,8 @@ package lbd.proyecto.impl;
 
 // External imports
 import java.util.List;
+
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,4 +31,10 @@ public class ClienteServiceImpl implements ClienteService {
         clienteDAO.updateCliente(idCliente, cliente.getNombre(), cliente.getApellido(), cliente.getTelefono(), cliente.getEmail());
     }
 
+    @Override
+    @Transactional
+    public Cliente getCliente(Cliente cliente) {
+        return clienteDAO.getCliente(cliente.getIdCliente());
+
+    }
 }
