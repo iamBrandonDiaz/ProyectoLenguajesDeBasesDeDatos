@@ -21,10 +21,17 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping("/test")
+    @GetMapping("/add-test")
     public String addClientTest() {
         Cliente clienteTest = new Cliente("Name", "Lastname", "123456789", "name@last.com");
         clienteService.insertCliente(clienteTest);
+        return "redirect:/clientes";
+    }
+
+    @GetMapping("/update-test")
+    public String updateClientTest() {
+        Cliente clienteTest = new Cliente("New Name", "New Lastname", "00000000", "new@email.com");
+        clienteService.updateCliente(1L, clienteTest);
         return "redirect:/clientes";
     }
 }

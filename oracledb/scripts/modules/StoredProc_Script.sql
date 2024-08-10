@@ -180,7 +180,7 @@ CREATE OR REPLACE PROCEDURE ver_cliente (
     p_correo OUT VARCHAR2
 ) AS
 BEGIN
-    SELECT Nombre, Apellido, Telefono, Correo
+    SELECT Nombre, Apellido, Telefono, Email
     INTO p_nombre, p_apellido, p_telefono, p_correo
     FROM Clientes
     WHERE ID_Cliente = p_id_cliente;
@@ -198,6 +198,6 @@ BEGIN
     SET Nombre = p_nombre,
         Apellido = p_apellido,
         Telefono = p_telefono,
-        Correo = p_correo
+        Email = p_correo
     WHERE ID_Cliente = p_id_cliente;
 END actualizar_cliente;

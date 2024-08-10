@@ -23,4 +23,10 @@ public class ClienteServiceImpl implements ClienteService {
         clienteDAO.insertCliente(cliente.getNombre(), cliente.getApellido(), cliente.getTelefono(), cliente.getEmail());
     }
     
+    @Override
+    @Transactional
+    public void updateCliente(Long idCliente, Cliente cliente) {
+        clienteDAO.updateCliente(idCliente, cliente.getNombre(), cliente.getApellido(), cliente.getTelefono(), cliente.getEmail());
+    }
+
 }

@@ -15,5 +15,8 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     
     // Method to call an stored procedure to update a client
     @Procedure(procedureName = "actualizar_cliente")
+    void updateCliente(Long idCliente, String nombre, String apellidos, String telefono, String email);
+
+    
     
 }
