@@ -23,11 +23,11 @@ public class Estado implements Serializable {
     private String descripcion; //Column => descripcion
 
     //Relationship with table Pedidos
-    @OneToMany(mappedBy = "estados") // One state can be assigned to many orders
+    @OneToMany(mappedBy = "estado") // One state can be assigned to many orders
     private List<Pedido> pedidos; // List of orders
 
     //Relationship with table Facturas
-    @OneToMany(mappedBy = "estados") // One state can be assigned to many invoices
+    @OneToMany(mappedBy = "estado") // One state can be assigned to many invoices
     private List<Factura> facturas; // List of invoices
 
     //Constructors

@@ -23,8 +23,7 @@ public class Puesto implements Serializable {
     private String descripcion; // Column => descripcion
 
     //Relationship with table Empleado
-    @OneToMany(mappedBy = "puestos") // One job can have many employees
-    @JoinColumn(name = "id_puesto", insertable = false, updatable = false) // Foreign key, not insertable or updatable
+    @OneToMany(mappedBy = "puesto") // One job can have many employees
     private List<Empleado> empleados; // List of employees
 
     //Constructors

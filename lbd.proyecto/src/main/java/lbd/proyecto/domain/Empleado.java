@@ -36,11 +36,11 @@ public class Empleado implements Serializable {
     private Puesto puesto; // Job
 
     //Relationship with table Licencias_Empleado
-    @OneToMany(mappedBy = "empleados") // One employee can have many licenses
+    @OneToMany(mappedBy = "empleado") // One employee can have many licenses
     private List<LicenciaEmpleado> licenciaEmpleado; // Licenses
 
     //Relationship with table Direcciones_Empleado
-    @OneToMany(mappedBy = "empleados") // One employee can have many addresses
+    @OneToMany(mappedBy = "empleado") // One employee can have many addresses
     private List<DireccionEmpleado> direccionEmpleado; // Addresses
 
     //Constructors

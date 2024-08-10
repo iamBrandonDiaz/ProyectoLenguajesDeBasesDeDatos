@@ -33,9 +33,8 @@ public class DireccionPedido extends Direccion {
     public DireccionPedido() {
     }
 
-    public DireccionPedido(String detalles, Provincia provincia, Canton canton, Distrito distrito, Pedido pedido) {
+    public DireccionPedido(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
         super(detalles, provincia, canton, distrito);
-        this.pedido = pedido;
     }
     
 }

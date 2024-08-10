@@ -27,7 +27,7 @@ public class Factura implements Serializable {
     private double total; // Column => total
 
     //Relationship with table Pedido
-    @OneToOne(mappedBy = "factura") // One order can have one invoice
+    @OneToOne(mappedBy = "factura") // One invoice can be assigned to one order 
     private Pedido pedido; // Order of the invoice
 
     //Relationship with table Estado

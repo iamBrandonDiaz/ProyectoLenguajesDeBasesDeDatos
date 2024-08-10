@@ -32,7 +32,6 @@ public class Canton implements Serializable {
 
     //Relationship with table Distrito
     @OneToMany(mappedBy = "canton") // One canton can have many districts
-    @JoinColumn(name = "id_canton", insertable = false, updatable = false) // Foreign key, not insertable or updatable
     private List<Distrito> distritos; // List of districts
 
     //Constructors

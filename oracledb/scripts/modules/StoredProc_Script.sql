@@ -158,3 +158,46 @@ BEGIN
     DELETE FROM Pedidos
     WHERE ID_Pedido = p_id_pedido;
 END eliminar_pedido;
+
+
+/* SP de objeto Cliente */
+CREATE OR REPLACE PROCEDURE insertar_cliente (
+    p_nombre IN VARCHAR2,
+    p_apellido IN VARCHAR2,
+    p_telefono IN VARCHAR2,
+    p_correo IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO Clientes (Nombre, Apellido, Telefono, Correo)
+    VALUES (p_nombre, p_apellido, p_telefono, p_correo);
+END insertar_cliente;
+
+CREATE OR REPLACE PROCEDURE ver_cliente (
+    p_id_cliente IN NUMBER,
+    p_nombre OUT VARCHAR2,
+    p_apellido OUT VARCHAR2,
+    p_telefono OUT VARCHAR2,
+    p_correo OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Nombre, Apellido, Telefono, Correo
+    INTO p_nombre, p_apellido, p_telefono, p_correo
+    FROM Clientes
+    WHERE ID_Cliente = p_id_cliente;
+END ver_cliente;
+
+CREATE OR REPLACE PROCEDURE actualizar_cliente (
+    p_id_cliente IN NUMBER,
+    p_nombre IN VARCHAR2,
+    p_apellido IN VARCHAR2,
+    p_telefono IN VARCHAR2,
+    p_correo IN VARCHAR2
+) AS
+BEGIN
+    UPDATE Clientes
+    SET Nombre = p_nombre,
+        Apellido = p_apellido,
+        Telefono = p_telefono,
+        Correo = p_correo
+    WHERE ID_Cliente = p_id_cliente;
+END actualizar_cliente;

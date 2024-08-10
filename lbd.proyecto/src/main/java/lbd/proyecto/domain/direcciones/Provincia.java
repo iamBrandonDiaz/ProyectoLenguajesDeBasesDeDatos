@@ -26,7 +26,6 @@ public class Provincia implements Serializable {
 
     //Relationship with table Canton
     @OneToMany(mappedBy = "provincia") // One province can have many cantons
-    @JoinColumn(name = "id_provincia", insertable = false, updatable = false) // Foreign key, not insertable or updatable
     private List<Canton> cantones; // List of cantons
 
     //Constructors

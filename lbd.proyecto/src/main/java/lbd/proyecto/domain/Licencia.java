@@ -21,10 +21,9 @@ public class Licencia implements Serializable {
     private Long idLicencia; //Hibernate converts this to => id_licencia
     private String tipo; // Column => tipo
 
-    //Relationship with table Empleado
-    @OneToMany(mappedBy = "licencias") // One license can have many employees
-    @JoinColumn(name = "id_licencia", insertable = false, updatable = false) // Foreign key, not insertable or updatable
-    private List<Empleado> empleados; // List of employees
+    //Relationship with table Licencias_Empleado
+    @OneToMany(mappedBy = "licencia") // One license can be assigned to many employees
+    private List<LicenciaEmpleado> licenciaEmpleado; // Employees with the license
 
     //Constructors
     public Licencia() {

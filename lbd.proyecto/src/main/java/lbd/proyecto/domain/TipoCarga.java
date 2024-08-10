@@ -22,7 +22,7 @@ public class TipoCarga implements Serializable {
     private String descripcion; //Column => descripcion
 
     //Relationship with table Pedido
-    @OneToMany(mappedBy = "tipos_carga") // One type of load can be assigned to many orders
+    @OneToMany(mappedBy = "tiposCarga") // One type of load can be assigned to many orders
     private List<Pedido> pedidos; // List of orders
 
     //Constructors

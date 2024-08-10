@@ -50,8 +50,14 @@ public class Pedido implements Serializable {
     private Estado estado; // State
 
     //Relationship with table Direcciones_Cliente
-    @OneToOne(mappedBy = "pedido") // One order can have one address
+    @OneToOne // One order can have one address
+    @JoinColumn(name = "id_direccion") // Foreign key
     private DireccionCliente direccionCliente; // Address of the order
+
+    //Relationship with table Facturas
+    @OneToOne // One order can have one invoice
+    @JoinColumn(name = "id_factura") // Foreign key
+    private Factura factura; // Invoice of the order
 
     //Constructors
     public Pedido() {
