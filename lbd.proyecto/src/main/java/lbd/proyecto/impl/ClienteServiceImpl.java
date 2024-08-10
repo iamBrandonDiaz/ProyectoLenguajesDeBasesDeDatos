@@ -3,16 +3,27 @@ package lbd.proyecto.impl;
 import java.util.ArrayList;
 // External imports
 import java.util.List;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionImpl;
+import org.hibernate.jdbc.ReturningWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.StoredProcedureQuery;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import oracle.jdbc.OracleTypes;
 
 // Internal imports
 import lbd.proyecto.dao.ClienteDAO;
@@ -120,19 +131,37 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cliente> searchClientes(String nombre) {
-        
-        // Create a query object to call the SQL function "buscar_clientes"
-        Query query = entityManager.createNativeQuery("SELECT * FROM TABLE(buscar_clientes(:nombre))", Cliente.class);
-
-        // Set the parameter
-        query.setParameter("p_nombre", nombre);
-
-        // Execute the query
-        List<Cliente> clientes = query.getResultList();
-
-
+    public List<Cliente> searchClientes(String nombre) {        
+        Session session = entityManager.unwrap(Session.class);
+        List<Cliente> clientes = new ArrayList<>();
+    
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_clientes(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setString(2, nombre);
+                    callableStatement.execute();
+    
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            Cliente cliente = new Cliente();
+                            cliente.setIdCliente(rs.getLong("ID_Cliente"));
+                            cliente.setNombre(rs.getString("Nombre"));
+                            cliente.setApellido(rs.getString("Apellido"));
+                            cliente.setTelefono(rs.getString("Telefono"));
+                            cliente.setEmail(rs.getString("Email"));
+                            clientes.add(cliente);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    
         return clientes;
-
     }
+    
+    
 }

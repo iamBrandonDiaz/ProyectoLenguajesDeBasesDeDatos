@@ -36,7 +36,7 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     //Method to call a SQL function to get all the clients that match the string
     // @Query(value = "SELECT ", nativeQuery = true)
     // List<Cliente> searchClientes(String nombre);
-    @Query(value = "SELECT * FROM TABLE(buscar_clientes(:nombre))", nativeQuery = true)
-    List<Cliente> buscarClientes(@Param("nombre") String nombre);
+    @Query(value = "SELECT * FROM TABLE(buscar_clientes(:p_nombre))", nativeQuery = true)
+    List<Cliente> buscarClientes(@Param("p_nombre") String nombre);
 
 }
