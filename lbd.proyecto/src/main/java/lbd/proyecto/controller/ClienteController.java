@@ -38,10 +38,12 @@ public class ClienteController {
     @GetMapping("/get-test")
     public String getClienteTest() {
         Cliente cliente = new Cliente();
-        cliente.setIdCliente(1L);
+        cliente.setIdCliente(2L);
+        
 
         Cliente clienteTest = clienteService.getCliente(cliente);
 
+        System.out.println(cliente.getIdCliente());
         System.out.println(clienteTest);
         return "redirect:/clientes";
     }

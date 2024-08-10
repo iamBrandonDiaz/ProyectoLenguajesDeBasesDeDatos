@@ -201,3 +201,6 @@ BEGIN
         Email = p_correo
     WHERE ID_Cliente = p_id_cliente;
 END actualizar_cliente;
+
+-- Script para correr el sp de ver cliente
+CALL ver_cliente(1);

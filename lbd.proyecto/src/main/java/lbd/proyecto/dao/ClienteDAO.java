@@ -1,9 +1,12 @@
 package lbd.proyecto.dao;
 
+import java.util.Map;
+
 import org.checkerframework.checker.units.qual.C;
 // External imports
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 
 // Internal imports
 import lbd.proyecto.domain.Cliente;
