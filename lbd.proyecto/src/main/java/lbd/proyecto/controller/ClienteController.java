@@ -23,7 +23,7 @@ public class ClienteController {
 
     @GetMapping("/add-test")
     public String addClientTest() {
-        Cliente clienteTest = new Cliente("Name3", "Lastname3", "3333333", "name3@last3.com");
+        Cliente clienteTest = new Cliente("Alejandraias", "Lastname3", "3333333", "name3@last3.com");
         clienteService.insertCliente(clienteTest);
         return "redirect:/clientes";
     }
@@ -58,6 +58,13 @@ public class ClienteController {
     @GetMapping("/delete-test")
     public String deleteClienteTest() {
         clienteService.deleteCliente(3L);
+        return "redirect:/clientes";
+    }
+
+    @GetMapping("/search-test")
+    public String searchClientesTest() {
+        List<Cliente> clientes = clienteService.searchClientes("ale");
+        System.out.println(clientes);
         return "redirect:/clientes";
     }
 }
