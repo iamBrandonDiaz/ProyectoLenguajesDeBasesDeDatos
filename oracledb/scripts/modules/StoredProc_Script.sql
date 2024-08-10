@@ -202,5 +202,19 @@ BEGIN
     WHERE ID_Cliente = p_id_cliente;
 END actualizar_cliente;
 
--- Script para correr el sp de ver cliente
-CALL ver_cliente(1);
+CREATE OR REPLACE PROCEDURE eliminar_cliente (
+    p_id_cliente IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Clientes
+    WHERE ID_Cliente = p_id_cliente;
+END eliminar_cliente;
+
+CREATE OR REPLACE PROCEDURE ver_clientes (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Cliente, Nombre, Apellido, Telefono, Email
+    FROM Clientes;
+END ver_clientes;

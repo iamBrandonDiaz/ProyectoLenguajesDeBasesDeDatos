@@ -1,12 +1,10 @@
 package lbd.proyecto.dao;
 
-import java.util.Map;
+import java.util.List;
 
-import org.checkerframework.checker.units.qual.C;
 // External imports
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.query.Param;
 
 // Internal imports
 import lbd.proyecto.domain.Cliente;
@@ -25,4 +23,12 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     @Procedure(procedureName = "ver_cliente")
     Cliente getCliente(Long idCliente);
     
+    //Method to call an stored procedure to get all clients
+    @Procedure(procedureName = "ver_clientes")
+    List<Cliente> getAllClientes();
+
+    //Method to call an stored procedure to delete a client
+    @Procedure(procedureName = "eliminar_cliente")
+    void deleteCliente(Long idCliente);
+
 }
