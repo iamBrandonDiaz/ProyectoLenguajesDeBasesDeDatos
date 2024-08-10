@@ -1,10 +1,8 @@
 package lbd.proyecto.impl;
 
+import java.util.ArrayList;
 // External imports
 import java.util.List;
-import java.util.Map;
-
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +10,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.StoredProcedureQuery;
+import java.sql.ResultSet;
+
 // Internal imports
 import lbd.proyecto.dao.ClienteDAO;
 import lbd.proyecto.domain.Cliente;
@@ -39,7 +39,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Cliente getCliente(Cliente cliente) {
         // Create a StoredProcedureQuery instance for the stored procedure "ver_cliente"
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_cliente");
@@ -73,4 +73,47 @@ public class ClienteServiceImpl implements ClienteService {
 
         return newCliente;
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cliente> getAllClientes() {
+        // Create a StoredProcedureQuery instance for the stored procedure "ver_clientes"
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_clientes", Cliente.class);
+
+        // Register the output parameter
+        query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
+
+        // Execute the stored procedure
+        query.execute();
+
+        // Get the ResultSet
+        ResultSet rs = (ResultSet) query.getOutputParameterValue(1);
+
+        // Create a list of clients
+        List<Cliente> clientes = new ArrayList<>();
+
+        // Iterate over the ResultSet and add the clients to the list
+        try {
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setIdCliente(rs.getLong("id_cliente"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setTelefono(rs.getString("telefono"));
+                cliente.setEmail(rs.getString("email"));
+                clientes.add(cliente);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return clientes;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCliente(Long idCliente) {
+        clienteDAO.deleteCliente(idCliente);
+    }
+
 }
