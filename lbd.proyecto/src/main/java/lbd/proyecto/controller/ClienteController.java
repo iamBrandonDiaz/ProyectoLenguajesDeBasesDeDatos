@@ -21,12 +21,27 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @GetMapping("/add-test")
-    public String addClientTest() {
-        Cliente clienteTest = new Cliente("Alejandraias", "Lastname3", "3333333", "name3@last3.com");
-        clienteService.insertCliente(clienteTest);
-        return "redirect:/clientes";
+    // Add
+    // @GetMapping("/add-test")
+    // public String addClientTest() {
+    //     Cliente clienteTest = new Cliente("Alejandraias", "Lastname3", "3333333", "name3@last3.com");
+    //     clienteService.insertCliente(clienteTest);
+    //     return "redirect:/clientes";
+    // }
+
+    @GetMapping("/agregar")
+    public String agregarCliente() {
+        return "/cliente/agregar";
     }
+
+    @PostMapping("/add")
+    public String insertarCliente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, @RequestParam String email) {
+        Cliente cliente = new Cliente(nombre, apellido, telefono, email);
+        System.out.println(cliente);
+        clienteService.insertCliente(cliente);
+        return "redirect:/clientes/ver";
+    }
+
 
     @GetMapping("/update-test")
     public String updateClientTest() {
@@ -48,11 +63,19 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    @GetMapping("/all-test")
-    public String getAllClientesTest() {
+    // Get All
+    // @GetMapping("/all-test")
+    // public String getAllClientesTest() {
+    //     List<Cliente> clientes = clienteService.getAllClientes();
+    //     System.out.println(clientes);
+    //     return "redirect:/clientes";
+    // }
+
+    @GetMapping("/ver")
+    public String verClientes(Model model) {
         List<Cliente> clientes = clienteService.getAllClientes();
-        System.out.println(clientes);
-        return "redirect:/clientes";
+        model.addAttribute("clientes", clientes);
+        return "/cliente/ver";
     }
 
     @GetMapping("/delete-test")
@@ -61,10 +84,19 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    @GetMapping("/search-test")
-    public String searchClientesTest() {
-        List<Cliente> clientes = clienteService.searchClientes("ale");
-        System.out.println(clientes);
-        return "redirect:/clientes";
+    // Search by name
+    // @GetMapping("/search-test")
+    // public String searchClientesTest() {
+    //     List<Cliente> clientes = clienteService.searchClientes("Name");
+    //     System.out.println(clientes);
+    //     return "redirect:/clientes";
+    // }
+
+    @PostMapping("/busqueda-nombre")
+    public String buscarClienteNombre(@RequestParam String nombreBusqueda, Model model) {
+        List<Cliente> clientes = clienteService.searchClientes(nombreBusqueda);
+        model.addAttribute("nombreBusqueda", nombreBusqueda);
+        model.addAttribute("clientes", clientes);
+        return "/cliente/ver";
     }
 }
