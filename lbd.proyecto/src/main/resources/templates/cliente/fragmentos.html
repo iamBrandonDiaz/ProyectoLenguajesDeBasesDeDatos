@@ -110,7 +110,7 @@
                         <td>[[${cliente.telefono}]]</td>
                         <td>
                             <a href="#" class="btn btn-secondary">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
+                            <a th:href="@{/clientes/eliminar/} + ${cliente.idCliente}" class="btn btn-danger">Eliminar</a>
                         </td>
                       </tr>
                     </tbody>
