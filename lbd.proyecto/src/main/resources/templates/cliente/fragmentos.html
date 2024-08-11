@@ -127,7 +127,21 @@
     <!-- Seccion de filtros de busqueda -->
     <section th:fragment="filtros-busqueda">
         <div class="d-flex justify-content-center mb-4">
-            <div class="card" style="width: 18rem;">
+            <!-- ID -->
+            <div class="card mx-3" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Búsqueda</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">Por ID</h6>
+                  <form th:action="@{/clientes/busqueda-id}" method="POST">
+                    <div class="mb-3">
+                      <input type="text" class="form-control" th:value="${idBusqueda}" name="idBusqueda" id="idBusqueda" placeholder="1..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </form>
+                </div>
+            </div>
+            <!-- Nombre -->
+            <div class="card mx-3" style="width: 18rem;">
                 <div class="card-body">
                   <h5 class="card-title">Búsqueda</h5>
                   <h6 class="card-subtitle mb-2 text-body-secondary">Por Nombre</h6>
@@ -138,7 +152,20 @@
                     <button type="submit" class="btn btn-primary">Buscar</button>
                   </form>
                 </div>
-              </div>
+            </div>
+            <!-- Email -->
+            <div class="card mx-3" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Búsqueda</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">Por Email</h6>
+                  <form th:action="@{/clientes/busqueda-email}" method="POST">
+                    <div class="mb-3">
+                      <input type="text" class="form-control" th:value="${emailBusqueda}" name="emailBusqueda" id="emailBusqueda" placeholder="@gmail..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </form>
+                </div>
+            </div>
         </div>
     </section>
 

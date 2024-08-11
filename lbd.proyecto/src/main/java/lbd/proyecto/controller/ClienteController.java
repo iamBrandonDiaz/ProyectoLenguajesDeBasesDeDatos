@@ -1,8 +1,11 @@
 package lbd.proyecto.controller;
 
+import java.util.ArrayList;
 // External imports
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+
+import jakarta.persistence.NoResultException;
 // Internal imports
 import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.service.ClienteService;
@@ -84,7 +90,7 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    // Search by name
+    // Searches
     // @GetMapping("/search-test")
     // public String searchClientesTest() {
     //     List<Cliente> clientes = clienteService.searchClientes("Name");
@@ -94,9 +100,46 @@ public class ClienteController {
 
     @PostMapping("/busqueda-nombre")
     public String buscarClienteNombre(@RequestParam String nombreBusqueda, Model model) {
-        List<Cliente> clientes = clienteService.searchClientes(nombreBusqueda);
+        List<Cliente> clientes = clienteService.searchClientesNombre(nombreBusqueda);
         model.addAttribute("nombreBusqueda", nombreBusqueda);
         model.addAttribute("clientes", clientes);
+        return "/cliente/ver";
+    }
+
+    @PostMapping("/busqueda-email")
+    public String buscarClienteEmail(@RequestParam String emailBusqueda, Model model) {
+        List<Cliente> clientes = clienteService.searchClientesEmail(emailBusqueda);
+        model.addAttribute("emailBusqueda", emailBusqueda);
+        model.addAttribute("clientes", clientes);
+        return "/cliente/ver";
+    }
+
+    @PostMapping("/busqueda-id")
+    public String buscarClienteId(@RequestParam Long idBusqueda, Model model) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idBusqueda);
+
+        Cliente clienteResult = clienteService.getCliente(cliente);
+        List<Cliente> clientes = new ArrayList<>();
+
+        if (clienteResult != null) {
+            clientes.add(clienteResult);
+        }
+
+        model.addAttribute("clientes", clientes);
+
+        // try {
+        //     clienteResult = clienteService.getCliente(cliente);
+        //     List<Cliente> clientes = new ArrayList<>();
+        //     clientes.add(clienteResult);
+        //     model.addAttribute("clientes", clientes);
+        // } catch ( DataAccessException e) {
+        //     List<Cliente> clientes = new ArrayList<>();
+        //     model.addAttribute("clientes", clientes);
+            
+        // }
+
+        model.addAttribute("idBusqueda", idBusqueda);
         return "/cliente/ver";
     }
 }

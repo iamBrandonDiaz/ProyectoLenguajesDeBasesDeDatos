@@ -33,10 +33,12 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     @Procedure(procedureName = "eliminar_cliente")
     void deleteCliente(Long idCliente);
 
-    //Method to call a SQL function to get all the clients that match the string
-    // @Query(value = "SELECT ", nativeQuery = true)
-    // List<Cliente> searchClientes(String nombre);
-    @Query(value = "SELECT * FROM TABLE(buscar_clientes(:p_nombre))", nativeQuery = true)
+    //Method to call a SQL function to get all the clients that match the string in their name
+    @Query(value = "SELECT * FROM TABLE(buscar_clientes_nombre(:p_nombre))", nativeQuery = true)
     List<Cliente> buscarClientes(@Param("p_nombre") String nombre);
+
+    //Method to call a SQL function to get all the clients that match the string in their email
+    @Query(value = "SELECT * FROM TABLE(buscar_clientes_email(:p_email))", nativeQuery = true)
+    List<Cliente> buscarClientesEmail(@Param("p_email") String email);
 
 }
