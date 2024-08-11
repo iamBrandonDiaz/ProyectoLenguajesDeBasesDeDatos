@@ -49,13 +49,40 @@ public class ClienteController {
         return "redirect:/clientes/ver";
     }
 
+    // Update
+    // @GetMapping("/update-test")
+    // public String updateClientTest() {
+    //     Cliente clienteTest = new Cliente("New Name", "New Lastname", "00000000", "new@email.com");
+    //     clienteService.updateCliente(1L, clienteTest);
+    //     return "redirect:/clientes";
+    // }
 
-    @GetMapping("/update-test")
-    public String updateClientTest() {
-        Cliente clienteTest = new Cliente("New Name", "New Lastname", "00000000", "new@email.com");
-        clienteService.updateCliente(1L, clienteTest);
-        return "redirect:/clientes";
+    @GetMapping("/editar/{idCliente}")
+    public String editarCliente(@PathVariable Long idCliente, Model model) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        Cliente clienteResult = clienteService.getCliente(cliente);
+        model.addAttribute("cliente", clienteResult);
+        model.addAttribute("idCliente", idCliente);
+        model.addAttribute("nombre", clienteResult.getNombre());
+        model.addAttribute("apellido", clienteResult.getApellido());
+        model.addAttribute("telefono", clienteResult.getTelefono());
+        model.addAttribute("email", clienteResult.getEmail());
+        return "/cliente/actualizar";
     }
+
+    @PostMapping("/update")
+    public String actualizarCliente(@RequestParam Long idCliente, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, @RequestParam String email) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        cliente.setNombre(nombre);
+        cliente.setApellido(apellido);
+        cliente.setTelefono(telefono);
+        cliente.setEmail(email);
+        clienteService.updateCliente(idCliente, cliente);
+        return "redirect:/clientes/ver";
+    }
+
 
     @GetMapping("/get-test")
     public String getClienteTest() {
