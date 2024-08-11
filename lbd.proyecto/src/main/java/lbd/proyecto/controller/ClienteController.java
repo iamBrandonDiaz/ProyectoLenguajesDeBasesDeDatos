@@ -9,6 +9,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,10 +85,18 @@ public class ClienteController {
         return "/cliente/ver";
     }
 
+    // Delete
     @GetMapping("/delete-test")
     public String deleteClienteTest() {
         clienteService.deleteCliente(3L);
         return "redirect:/clientes";
+    }
+
+    @GetMapping("/eliminar/{idCliente}")
+    public String eliminarCliente(@PathVariable Long idCliente) {
+        clienteService.deleteCliente(idCliente);
+        return "redirect:/clientes/ver";
+
     }
 
     // Searches
