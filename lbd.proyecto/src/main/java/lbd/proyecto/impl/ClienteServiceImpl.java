@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.StoredProcedureQuery;
 
 import java.sql.CallableStatement;
@@ -47,41 +52,112 @@ public class ClienteServiceImpl implements ClienteService {
         clienteDAO.updateCliente(idCliente, cliente.getNombre(), cliente.getApellido(), cliente.getTelefono(), cliente.getEmail());
     }
 
+    // @Override
+    // @Transactional(readOnly = true)
+    // public Cliente getCliente(Cliente cliente) {
+    //     // Create a StoredProcedureQuery instance for the stored procedure "ver_cliente"
+    //     StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_cliente");
+
+    //     // Register the input and output parameters
+    //     query.registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN);
+    //     query.registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT);
+    //     query.registerStoredProcedureParameter("p_apellido", String.class, ParameterMode.OUT);
+    //     query.registerStoredProcedureParameter("p_telefono", String.class, ParameterMode.OUT);
+    //     query.registerStoredProcedureParameter("p_correo", String.class, ParameterMode.OUT);
+
+    //     // Set the input parameter
+    //     query.setParameter("p_id_cliente", cliente.getIdCliente());
+
+    //     // Execute the stored procedure
+    //     try {
+    //         query.execute();
+    //     } catch (PersistenceException e) {
+    //         if (e.getCause() instanceof SQLException) {
+    //             // Handle the SQLException
+    //             SQLException sqlException = (SQLException) e.getCause();
+    //             System.err.println("Error Code: " + sqlException.getErrorCode());
+    //             System.err.println("SQL State: " + sqlException.getSQLState());
+    //             System.err.println("Message: " + sqlException.getMessage());
+    //             return null;
+    //         } else {
+    //             throw e;
+    //         }
+    //     }
+
+    //     //Print the Output Parameters
+    //     System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
+    //     System.out.println("Apellido: " + query.getOutputParameterValue("p_apellido"));
+    //     System.out.println("Telefono: " + query.getOutputParameterValue("p_telefono"));
+    //     System.out.println("Correo: " + query.getOutputParameterValue("p_correo"));
+
+    //     // Map the output parameters to a Cliente object
+    //     Cliente newCliente = new Cliente();
+    //     newCliente.setIdCliente(cliente.getIdCliente());
+    //     newCliente.setNombre((String) query.getOutputParameterValue("p_nombre"));
+    //     newCliente.setApellido((String) query.getOutputParameterValue("p_apellido"));
+    //     newCliente.setTelefono((String) query.getOutputParameterValue("p_telefono"));
+    //     newCliente.setEmail((String) query.getOutputParameterValue("p_correo"));
+
+    //     return newCliente;
+    // }
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
     @Override
-    @Transactional(readOnly = true)
     public Cliente getCliente(Cliente cliente) {
-        // Create a StoredProcedureQuery instance for the stored procedure "ver_cliente"
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_cliente");
+        return transactionTemplate.execute(new TransactionCallback<Cliente>() {
+            @Override
+            public Cliente doInTransaction(TransactionStatus status) {
+                // Create a StoredProcedureQuery instance for the stored procedure "ver_cliente"
+                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_cliente");
 
-        // Register the input and output parameters
-        query.registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN);
-        query.registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT);
-        query.registerStoredProcedureParameter("p_apellido", String.class, ParameterMode.OUT);
-        query.registerStoredProcedureParameter("p_telefono", String.class, ParameterMode.OUT);
-        query.registerStoredProcedureParameter("p_correo", String.class, ParameterMode.OUT);
+                // Register the input and output parameters
+                query.registerStoredProcedureParameter("p_id_cliente", Long.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT);
+                query.registerStoredProcedureParameter("p_apellido", String.class, ParameterMode.OUT);
+                query.registerStoredProcedureParameter("p_telefono", String.class, ParameterMode.OUT);
+                query.registerStoredProcedureParameter("p_correo", String.class, ParameterMode.OUT);
 
-        // Set the input parameter
-        query.setParameter("p_id_cliente", cliente.getIdCliente());
+                // Set the input parameter
+                query.setParameter("p_id_cliente", cliente.getIdCliente());
 
-        // Execute the stored procedure
-        query.execute();
+                // Execute the stored procedure
+                try {
+                    query.execute();
+                } catch (PersistenceException e) {
+                    if (e.getCause() instanceof SQLException) {
+                        // Handle the SQLException
+                        SQLException sqlException = (SQLException) e.getCause();
+                        System.err.println("Error Code: " + sqlException.getErrorCode());
+                        System.err.println("SQL State: " + sqlException.getSQLState());
+                        System.err.println("Message: " + sqlException.getMessage());
+                        status.setRollbackOnly();
+                        return null;
+                    } else {
+                        throw e;
+                    }
+                }
 
-        //Print the Output Parameters
-        System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
-        System.out.println("Apellido: " + query.getOutputParameterValue("p_apellido"));
-        System.out.println("Telefono: " + query.getOutputParameterValue("p_telefono"));
-        System.out.println("Correo: " + query.getOutputParameterValue("p_correo"));
+                //Print the Output Parameters
+                System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
+                System.out.println("Apellido: " + query.getOutputParameterValue("p_apellido"));
+                System.out.println("Telefono: " + query.getOutputParameterValue("p_telefono"));
+                System.out.println("Correo: " + query.getOutputParameterValue("p_correo"));
 
-        // Map the output parameters to a Cliente object
-        Cliente newCliente = new Cliente();
-        newCliente.setIdCliente(cliente.getIdCliente());
-        newCliente.setNombre((String) query.getOutputParameterValue("p_nombre"));
-        newCliente.setApellido((String) query.getOutputParameterValue("p_apellido"));
-        newCliente.setTelefono((String) query.getOutputParameterValue("p_telefono"));
-        newCliente.setEmail((String) query.getOutputParameterValue("p_correo"));
+                // Map the output parameters to a Cliente object
+                Cliente newCliente = new Cliente();
+                newCliente.setIdCliente(cliente.getIdCliente());
+                newCliente.setNombre((String) query.getOutputParameterValue("p_nombre"));
+                newCliente.setApellido((String) query.getOutputParameterValue("p_apellido"));
+                newCliente.setTelefono((String) query.getOutputParameterValue("p_telefono"));
+                newCliente.setEmail((String) query.getOutputParameterValue("p_correo"));
 
-        return newCliente;
+                return newCliente;
+            }
+        });
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -127,16 +203,50 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Cliente> searchClientes(String nombre) {        
+    public List<Cliente> searchClientesNombre(String nombre) {        
         Session session = entityManager.unwrap(Session.class);
         List<Cliente> clientes = new ArrayList<>();
     
         session.doWork(new Work() {
             @Override
             public void execute(Connection connection) throws SQLException {
-                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_clientes(?) }")) {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_clientes_nombre(?) }")) {
                     callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
                     callableStatement.setString(2, nombre);
+                    callableStatement.execute();
+    
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            Cliente cliente = new Cliente();
+                            cliente.setIdCliente(rs.getLong("ID_Cliente"));
+                            cliente.setNombre(rs.getString("Nombre"));
+                            cliente.setApellido(rs.getString("Apellido"));
+                            cliente.setTelefono(rs.getString("Telefono"));
+                            cliente.setEmail(rs.getString("Email"));
+                            clientes.add(cliente);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    
+        return clientes;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Cliente> searchClientesEmail(String email) {
+        Session session = entityManager.unwrap(Session.class);
+        List<Cliente> clientes = new ArrayList<>();
+    
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_clientes_email(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setString(2, email);
                     callableStatement.execute();
     
                     try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {

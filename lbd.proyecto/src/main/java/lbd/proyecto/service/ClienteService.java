@@ -1,5 +1,6 @@
 package lbd.proyecto.service;
 
+import java.sql.SQLException;
 // External imports
 import java.util.List;
 
@@ -24,6 +25,9 @@ public interface ClienteService {
     void deleteCliente(Long idCliente);
 
     // Method to search clients by string in name with the SQL function
-    List<Cliente> searchClientes(String nombre);
+    List<Cliente> searchClientesNombre(String nombre);
+
+    // Method to search clients by string in email with the SQL function
+    List<Cliente> searchClientesEmail(String email);
     
 }
