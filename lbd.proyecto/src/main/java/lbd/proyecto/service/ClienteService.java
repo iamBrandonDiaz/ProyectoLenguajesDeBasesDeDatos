@@ -1,6 +1,5 @@
 package lbd.proyecto.service;
 
-import java.sql.SQLException;
 // External imports
 import java.util.List;
 
