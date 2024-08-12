@@ -209,3 +209,41 @@ BEGIN
     SELECT ID_Cliente, Nombre, Apellido, Telefono, Email
     FROM Clientes;
 END ver_clientes;
+
+/* SP de objeto Provincia */
+CREATE OR REPLACE PROCEDURE ver_provincia (
+    p_id_provincia IN NUMBER,
+    p_nombre OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Nombre
+    INTO p_nombre
+    FROM Provincias
+    WHERE ID_Provincia = p_id_provincia;
+END ver_provincia;
+
+CREATE OR REPLACE PROCEDURE ver_provincias (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Provincia, Nombre
+    FROM Provincias;
+END ver_provincias;
+
+
+/* SP de objeto DireccionCliente */
+CREATE OR REPLACE PROCEDURE insertar_direccion_cliente (
+    p_id_cliente IN NUMBER,
+    p_detalles IN VARCHAR2,
+    p_provincia IN VARCHAR2,
+    p_canton IN VARCHAR2,
+    p_distrito IN VARCHAR2,
+) AS
+BEGIN
+    INSERT INTO Direcciones_Cliente (ID_Cliente, ID_Provincia, ID_Canton, ID_Distrito, Detalles)
+    VALUES (p_id_cliente, p_provincia, p_canton, p_distrito, p_detalles);
+END insertar_direccion_cliente;
+
+-- Script para provar el SP de instertar direccion de cliente
+-- EXEC insertar_direccion_cliente(1, 'Detalles de la direccion', 'San Jose', 'San Jose', 'San Jose');

@@ -2,6 +2,7 @@ package lbd.proyecto.domain.direcciones;
 
 // External imports
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +15,7 @@ import lbd.proyecto.domain.Pedido;
 @Data
 @Entity
 @Table(name = "direccion_cliente")
+@EqualsAndHashCode(callSuper = true)
 public class DireccionCliente extends Direccion {
 
     //Serial version UID for Serializable classes
