@@ -32,7 +32,7 @@ public class DireccionEmpleado extends Direccion {
     //Constructors
     public DireccionEmpleado() {
     }
-
+    
     public DireccionEmpleado(String detalles, Provincia provincia, Canton canton, Distrito distrito, String tipo) {
         super(detalles, provincia, canton, distrito);
     }
