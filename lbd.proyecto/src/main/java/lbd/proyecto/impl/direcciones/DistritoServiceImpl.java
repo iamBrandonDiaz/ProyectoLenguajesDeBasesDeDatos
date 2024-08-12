@@ -4,6 +4,7 @@ package lbd.proyecto.impl.direcciones;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
@@ -21,11 +22,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // Internal imports
+import lbd.proyecto.domain.direcciones.Canton;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
+import lbd.proyecto.service.direcciones.CantonService;
+import lbd.proyecto.domain.direcciones.Distrito;
+import lbd.proyecto.service.direcciones.DistritoService;
 
 @Service
-public class ProvinciaServiceImpl implements ProvinciaService {
+public class DistritoServiceImpl implements DistritoService {
+    
+    @Autowired
+    private CantonService cantonService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -34,20 +42,21 @@ public class ProvinciaServiceImpl implements ProvinciaService {
     private TransactionTemplate transactionTemplate;
 
     @Override
-    public Provincia getProvincia(Provincia provincia) {
-        
-        return transactionTemplate.execute(new TransactionCallback<Provincia>() {
+    public Distrito getDistrito(Distrito distrito) {
+
+        return transactionTemplate.execute(new TransactionCallback<Distrito>() {
             @Override
-            public Provincia doInTransaction(TransactionStatus status) {
-                // Create a StoredProcedureQuery instance for the stored procedure "provincia"
-                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_provincia");
+            public Distrito doInTransaction(TransactionStatus status) {
+                // Create a StoredProcedureQuery instance for the stored procedure "canton"
+                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_distrito");
 
                 // Register the input and output parameters
-                query.registerStoredProcedureParameter("p_id_provincia", Long.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("p_id_distrito", Long.class, ParameterMode.IN);
                 query.registerStoredProcedureParameter("p_nombre", String.class, ParameterMode.OUT);
+                query.registerStoredProcedureParameter("p_id_canton", Long.class, ParameterMode.OUT);
 
                 // Set the input parameter
-                query.setParameter("p_id_provincia", provincia.getIdProvincia());
+                query.setParameter("p_id_distrito", distrito.getIdDistrito());
 
                 // Execute the stored procedure
                 try {
@@ -69,24 +78,28 @@ public class ProvinciaServiceImpl implements ProvinciaService {
                 //Print the Output Parameters
                 System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
 
-                // Map the output parameters to a Provincia object
-                Provincia newProvincia = new Provincia();
-                newProvincia.setIdProvincia(provincia.getIdProvincia());
-                newProvincia.setNombre((String) query.getOutputParameterValue("p_nombre"));
+                // Map the output parameters to a Distrito object
+                Distrito newDistrito = new Distrito();
+                newDistrito.setIdDistrito(distrito.getIdDistrito());
+                newDistrito.setNombre((String) query.getOutputParameterValue("p_nombre"));
 
-                return newProvincia;
+                // Map the canton to the Canton object
+                Canton canton = new Canton();
+                canton.setIdCanton((Long) query.getOutputParameterValue("p_id_canton"));
+                newDistrito.setCanton(cantonService.getCanton(canton));
+
+                return newDistrito;
             }
         });
-
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Provincia> getAllProvincias() {
-        // Create a StoredProcedureQuery instance for the stored procedure "ver_provincias"
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_provincias", Provincia.class);
+    public List<Distrito> getAllDistritos() {
+        // Create a StoredProcedureQuery instance for the stored procedure "ver_distritos"
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_distritos");
 
-        // Register the output parameter
+        // Register the output parameters
         query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
 
         // Execute the stored procedure
@@ -95,21 +108,31 @@ public class ProvinciaServiceImpl implements ProvinciaService {
         // Get the ResultSet
         ResultSet rs = (ResultSet) query.getOutputParameterValue(1);
 
-        // Create a list of clients
-        List<Provincia> provincias = new ArrayList<>();
+        // Create a list of districts
+        List<Distrito> distritos = new ArrayList<Distrito>();
 
-        // Iterate over the ResultSet and add the clients to the list
+        // Iterate over the ResultSet and add the districts to the list
         try {
             while (rs.next()) {
-                Provincia provincia = new Provincia();
-                provincia.setIdProvincia(rs.getLong("id_provincia"));
-                provincia.setNombre(rs.getString("nombre"));
-                provincias.add(provincia);
+                Distrito distrito = new Distrito();
+                distrito.setIdDistrito(rs.getLong("id_distrito"));
+                distrito.setNombre(rs.getString("nombre"));
+
+                // Map the canton to the Canton object
+                Canton canton = new Canton();
+                canton.setIdCanton(rs.getLong("id_canton"));
+                Canton newCanton = cantonService.getCanton(canton);
+
+                distrito.setCanton(newCanton);
+
+                distritos.add(distrito);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return provincias;
+        return distritos;
+
     }
+
 }

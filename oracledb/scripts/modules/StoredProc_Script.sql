@@ -240,6 +240,50 @@ BEGIN
     FROM Provincias;
 END ver_provincias;
 
+/* SP de objeto Canton */
+CREATE OR REPLACE PROCEDURE ver_canton (
+    p_id_canton IN NUMBER,
+    p_nombre OUT VARCHAR2,
+    p_id_provincia OUT NUMBER
+) AS
+BEGIN
+    SELECT Nombre, ID_Provincia
+    INTO p_nombre, p_id_provincia
+    FROM Cantones
+    WHERE ID_Canton = p_id_canton;
+END ver_canton;
+
+CREATE OR REPLACE PROCEDURE ver_cantones (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Canton, Nombre, ID_Provincia
+    FROM Cantones;
+END ver_cantones;
+
+/* SP de objeto Distrito */
+CREATE OR REPLACE PROCEDURE ver_distrito (
+    p_id_distrito IN NUMBER,
+    p_nombre OUT VARCHAR2,
+    p_id_canton OUT NUMBER
+) AS
+BEGIN
+    SELECT Nombre, ID_Canton
+    INTO p_nombre, p_id_canton
+    FROM Distritos
+    WHERE ID_Distrito = p_id_distrito;
+END ver_distrito;
+
+CREATE OR REPLACE PROCEDURE ver_distritos (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Distrito, Nombre, ID_Canton
+    FROM Distritos;
+END ver_distritos;
+
 
 /* SP de objeto DireccionCliente */
 CREATE OR REPLACE PROCEDURE insertar_direccion_cliente (
