@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
-
 import jakarta.persistence.NoResultException;
 // Internal imports
 import lbd.proyecto.domain.Cliente;
