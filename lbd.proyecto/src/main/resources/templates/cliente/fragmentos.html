@@ -247,6 +247,41 @@
 
                         <button class="w-100 btn btn-primary btn-lg" type="submit">Editar</button>
                 </form>
+
+                <hr class="my-4">
+
+                <!-- Direcciones -->
+                <h4 class="mb-3">Direcciones</h4>
+                <div th:if="${direccionesCliente != null and !direccionesCliente.empty}">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Provincia</th>
+                            <th scope="col">Cantón</th>
+                            <th scope="col">Distrito</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:each="direccion : ${direccionesCliente}">
+                            <th scope="row">[[${direccion.idDireccion}]]</th>
+                            <td>[[${direccion.provincia}]]</td>
+                            <td>[[${direccion.apellido}]]</td>                        
+                            <td>[[${direccion.email}]]</td>
+                            <td>
+                                <a th:href="@{/clientes/editar/} + ${cliente.idCliente}" class="btn btn-secondary">Editar</a>
+                                <a th:href="@{/clientes/eliminar/} + ${cliente.idCliente}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+                <div th:if="${clientes == null or clientes.empty}">
+                    <p class="lead text-center" style="margin-left: 8rem; margin-right: 8rem;">
+                        No se encontraron clientes registrados :(
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
