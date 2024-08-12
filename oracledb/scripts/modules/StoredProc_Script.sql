@@ -14,15 +14,12 @@ END insertar_empleado;
 
 
 CREATE OR REPLACE PROCEDURE ver_empleado (
-    p_id_empleado IN NUMBER,
-    p_nombre OUT VARCHAR2,
-    p_apellido OUT VARCHAR2,
-    p_fecha_nacimiento OUT DATE,
-    p_fecha_contratacion OUT DATE
+    p_id_empleado IN NUMBER, 
+    p_cursor OUT SYS_REFCURSOR   
 ) AS
 BEGIN
+    OPEN p_cursor FOR
     SELECT Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion
-    INTO p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion
     FROM Empleados
     WHERE ID_Empleado = p_id_empleado;
 END ver_empleado;
@@ -67,14 +64,11 @@ END insertar_vehiculo;
 
 CREATE OR REPLACE PROCEDURE ver_vehiculo (
     p_id_vehiculo IN NUMBER,
-    p_marca OUT VARCHAR2,
-    p_modelo OUT VARCHAR2,
-    p_anio OUT NUMBER,
-    p_placa OUT VARCHAR2
+	p_cursor OUT SYS_REFCURSOR
 ) AS
 BEGIN
+	OPEN p_cursor FOR
     SELECT Marca, Modelo, Anio, Placa
-    INTO p_marca, p_modelo, p_anio, p_placa
     FROM Vehiculos
     WHERE ID_Vehiculo = p_id_vehiculo;
 END ver_vehiculo;
@@ -121,14 +115,11 @@ END insertar_pedido;
 
 CREATE OR REPLACE PROCEDURE ver_pedido (
     p_id_pedido IN NUMBER,
-    p_id_cliente OUT NUMBER,
-    p_fecha OUT DATE,
-    p_monto OUT NUMBER,
-    p_id_estado OUT NUMBER
+    p_cursor OUT SYS_REFCURSOR
 ) AS
 BEGIN
+    OPEN p_cursor FOR
     SELECT ID_Cliente, Fecha, Monto, ID_Estado
-    INTO p_id_cliente, p_fecha, p_monto, p_id_estado
     FROM Pedidos
     WHERE ID_Pedido = p_id_pedido;
 END ver_pedido;
