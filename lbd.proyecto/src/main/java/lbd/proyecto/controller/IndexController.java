@@ -37,44 +37,74 @@ public class IndexController {
     @RequestMapping("/")
     public String page(Model model) {
         //Test getProvincia and getAllProvincias
-        Provincia provincia = new Provincia();
-        provincia.setIdProvincia(1L);
-        Provincia provinciaResult = provinciaService.getProvincia(provincia);
-        System.out.println(provinciaResult.toString());
+        // Provincia provincia = new Provincia();
+        // provincia.setIdProvincia(3L);
+        // Provincia provinciaResult = provinciaService.getProvincia(provincia);
+        // System.out.println(provinciaResult.toString());
         
-        List<Provincia> provincias = provinciaService.getAllProvincias();
-        for (Provincia p : provincias) {
-            System.out.println(p.toString());
-        }
+        // List<Provincia> provincias = provinciaService.getAllProvincias();
+        // for (Provincia p : provincias) {
+        //     System.out.println(p.toString());
+        // }
         
         //Test getCanton and getAllCantones
-        Canton canton = new Canton();
-        canton.setIdCanton(1L);
-        Canton cantonResult = cantonService.getCanton(canton);
-        System.out.println(cantonResult.toString());
+        // Canton canton = new Canton();
+        // canton.setIdCanton(1L);
+        // Canton cantonResult = cantonService.getCanton(canton);
+        // System.out.println(cantonResult.toString());
 
-        List<Canton> cantones = cantonService.getAllCantones();
-        for (Canton c : cantones) {
-            System.out.println(c.toString());
-        }
+        // List<Canton> cantones = cantonService.getAllCantones();
+        // for (Canton c : cantones) {
+        //     System.out.println(c.toString());
+        // }
 
         // Test getDistrito and getAllDistritos
-        Distrito distrito = new Distrito();
-        distrito.setIdDistrito(16L);
-        Distrito distritoResult = distritoService.getDistrito(distrito);
-        System.out.println(distritoResult.toString());
+        System.out.println("NUEVO TEST");
+        // Distrito distrito = new Distrito();
+        // distrito.setIdDistrito(25L);
+        // Distrito distritoResult = distritoService.getDistrito(distrito);
+        // System.out.println(distritoResult.toString());
 
-        List<Distrito> distritos = distritoService.getAllDistritos();
-        for (Distrito d : distritos) {
-            System.out.println(d.toString());
-        }
+        // List<Distrito> distritos = distritoService.getAllDistritos();
+        // for (Distrito d : distritos) {
+        //     System.out.println(d.toString());
+        // }
 
         //Test addDireccion_Clientes
-        DireccionCliente direccionCliente = new DireccionCliente("Diagonal al super", distritoResult);
-        Cliente cliente = new Cliente();
-        cliente.setIdCliente(1L);
-        System.out.println(direccionCliente.toString());
-        direccionClienteService.insertDireccionCliente(direccionCliente, cliente, distritoResult);
+        // DireccionCliente direccionCliente = new DireccionCliente("Nueva direccion", distritoResult);
+        // Cliente cliente = new Cliente();
+        // cliente.setIdCliente(2L);
+        // System.out.println(direccionCliente.toString());
+        // direccionClienteService.insertDireccionCliente(direccionCliente, cliente, distritoResult);
+
+        //Test updateDireccion_Clientes
+        // DireccionCliente direccionCliente = new DireccionCliente();
+        // direccionCliente.setIdDireccion(7L);
+        // direccionCliente.setDetalles("Fix Direccion 3");
+
+        // Distrito distrito2 = new Distrito();
+        // distrito2.setIdDistrito(25L);
+        // direccionCliente.setDistrito(distrito2);
+
+        // System.out.println("TEST");
+        // System.out.println(direccionCliente.toString());
+        // System.out.println(direccionCliente.getDistrito().toString());
+        // direccionClienteService.updateDireccionCliente(direccionCliente, direccionCliente.getDistrito());
+
+        //Test getDireccion_Clientes
+        DireccionCliente direccionCliente = new DireccionCliente();
+        direccionCliente.setIdDireccion(1L);
+        DireccionCliente direccionClienteResult = direccionClienteService.getDireccionCliente(direccionCliente);
+        System.out.println(direccionClienteResult.toString());
+        System.out.println(direccionClienteResult.getDistrito().toString());
+
+        //Test getAllDirecciones_Clientes
+        List<DireccionCliente> direcciones = direccionClienteService.getAllDirecciones();
+        for (DireccionCliente d : direcciones) {
+            System.out.println(d.toString());
+            System.out.println(d.getDetalles());
+            System.out.println(d.getDistrito().toString());
+        }
 
         return "index-new";
     }

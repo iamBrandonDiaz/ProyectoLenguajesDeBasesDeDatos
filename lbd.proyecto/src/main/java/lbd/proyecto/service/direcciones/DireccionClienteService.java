@@ -12,4 +12,13 @@ public interface DireccionClienteService {
     
     // Method to save a new direction with the Stored Procedure
     void insertDireccionCliente(DireccionCliente direccionCliente, Cliente cliente, Distrito distrito);
+
+    // Method to update a direction with the Stored Procedure
+    void updateDireccionCliente(DireccionCliente direccionCliente, Distrito distrito);
+
+    // Method to get a direction with the Stored Procedure
+    DireccionCliente getDireccionCliente(DireccionCliente direccionCliente);
+
+    // Method to get all directions with the Stored Procedure
+    List<DireccionCliente> getAllDirecciones();
 }
