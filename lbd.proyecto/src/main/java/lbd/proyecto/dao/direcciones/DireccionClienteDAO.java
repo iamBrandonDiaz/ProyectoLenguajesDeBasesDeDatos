@@ -29,5 +29,9 @@ public interface DireccionClienteDAO extends JpaRepository<DireccionCliente, Lon
     // Method to call an stored procedure to get all distritos
     @Procedure(procedureName = "ver_direcciones_cliente")
     List<DireccionCliente> getAllDireccionesCliente();
-    
+
+    // Method to call a SQL function to get all the directions by client ID
+    @Query(value = "SELECT * FROM TABLE(buscar_direcciones_cliente(:p_id_cliente))", nativeQuery = true)
+    List<DireccionCliente> buscarDireccionesCliente(@Param("p_id_cliente") Long idCliente);
+
 }

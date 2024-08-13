@@ -181,4 +181,43 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
 
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<DireccionCliente> searchDireccionByCliente(Long idCliente) {
+        Session session = entityManager.unwrap(Session.class);
+        List<DireccionCliente> direcciones = new ArrayList<>();
+
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_direcciones_por_cliente(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setLong(2, idCliente);
+                    callableStatement.execute();
+
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            DireccionCliente direccion = new DireccionCliente();
+                            direccion.setIdDireccion(rs.getLong("id_direccion"));
+                            direccion.setDetalles(rs.getString("detalles"));
+
+                            Distrito distrito = new Distrito();
+                            distrito.setIdDistrito(rs.getLong("id_distrito"));
+                            direccion.setDistrito(distritoService.getDistrito(distrito));
+
+                            Cliente cliente = new Cliente();
+                            cliente.setIdCliente(rs.getLong("id_cliente"));
+                            direccion.setCliente(clienteService.getCliente(cliente));
+
+                            direcciones.add(direccion);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        return direcciones;
+    }
 }

@@ -79,11 +79,11 @@ public class IndexController {
 
         //Test updateDireccion_Clientes
         // DireccionCliente direccionCliente = new DireccionCliente();
-        // direccionCliente.setIdDireccion(7L);
-        // direccionCliente.setDetalles("Fix Direccion 3");
+        // direccionCliente.setIdDireccion(6L);
+        // direccionCliente.setDetalles("Fix Direccion 2");
 
         // Distrito distrito2 = new Distrito();
-        // distrito2.setIdDistrito(25L);
+        // distrito2.setIdDistrito(14L);
         // direccionCliente.setDistrito(distrito2);
 
         // System.out.println("TEST");
@@ -92,19 +92,36 @@ public class IndexController {
         // direccionClienteService.updateDireccionCliente(direccionCliente, direccionCliente.getDistrito());
 
         //Test getDireccion_Clientes
-        DireccionCliente direccionCliente = new DireccionCliente();
-        direccionCliente.setIdDireccion(1L);
-        DireccionCliente direccionClienteResult = direccionClienteService.getDireccionCliente(direccionCliente);
-        System.out.println(direccionClienteResult.toString());
-        System.out.println(direccionClienteResult.getDistrito().toString());
+        // DireccionCliente direccionCliente = new DireccionCliente();
+        // direccionCliente.setIdDireccion(1L);
+        // DireccionCliente direccionClienteResult = direccionClienteService.getDireccionCliente(direccionCliente);
+        // System.out.println(direccionClienteResult.toString());
+        // System.out.println(direccionClienteResult.getDistrito().toString());
 
         //Test getAllDirecciones_Clientes
-        List<DireccionCliente> direcciones = direccionClienteService.getAllDirecciones();
+        // List<DireccionCliente> direcciones = direccionClienteService.getAllDirecciones();
+        // for (DireccionCliente d : direcciones) {
+        //     System.out.println(d.toString());
+        //     System.out.println(d.getDetalles());
+        //     System.out.println(d.getDistrito().toString());
+        // }
+
+        // Test searchDireccionByCliente
+        List<DireccionCliente> direcciones = direccionClienteService.searchDireccionByCliente(2L);
         for (DireccionCliente d : direcciones) {
-            System.out.println(d.toString());
-            System.out.println(d.getDetalles());
-            System.out.println(d.getDistrito().toString());
+            System.out.println("----- DIRECCION -----");
+            System.out.println("ID Dirección: " + d.getIdDireccion());
+            System.out.println("Detalles: " + d.getDetalles());
+            System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+            System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+            System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+            System.out.println("ID Cliente: " + d.getCliente().getIdCliente());
+            System.out.println("Nombre Cliente: " + d.getCliente().getNombre());
+            System.out.println("Email Cliente: " + d.getCliente().getEmail());
+            System.out.println("Telefono Cliente: " + d.getCliente().getTelefono());
+
         }
+
 
         return "index-new";
     }

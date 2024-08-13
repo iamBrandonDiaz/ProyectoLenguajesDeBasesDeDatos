@@ -21,4 +21,8 @@ public interface DireccionClienteService {
 
     // Method to get all directions with the Stored Procedure
     List<DireccionCliente> getAllDirecciones();
+
+    // Method to search directions by client ID with the SQL function
+    List<DireccionCliente> searchDireccionByCliente(Long idCliente);
+
 }
