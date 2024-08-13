@@ -33,15 +33,20 @@ public class DireccionCliente extends Direccion {
     private Cliente cliente; // Client to which the address belongs
 
     //Relationship with table Pedidos
-    @OneToOne(mappedBy = "direccionCliente") // One address can belong to one order
-    private Pedido pedido; // Order to which the address belongs
+    @OneToMany(mappedBy = "direccionCliente") // One client can have many orders
+    private List<Pedido> pedidos; // Orders that the client has made
 
     //Constructors
     public DireccionCliente() {
     }
 
-    public DireccionCliente(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
-        super(detalles, provincia, canton, distrito);
+    public DireccionCliente(String detalles, Distrito distrito) {
+        super(detalles, distrito);
     }
+    
+
+    // public DireccionCliente(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
+    //     super(detalles, provincia, canton, distrito);
+    // }
     
 }

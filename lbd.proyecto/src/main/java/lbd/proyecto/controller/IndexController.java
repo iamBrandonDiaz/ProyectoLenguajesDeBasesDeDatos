@@ -2,14 +2,18 @@ package lbd.proyecto.controller;
 
 import java.util.List;
 
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.domain.direcciones.Canton;
+import lbd.proyecto.domain.direcciones.DireccionCliente;
 import lbd.proyecto.domain.direcciones.Distrito;
 import lbd.proyecto.service.direcciones.CantonService;
+import lbd.proyecto.service.direcciones.DireccionClienteService;
 import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
@@ -25,6 +29,9 @@ public class IndexController {
 
     @Autowired
     DistritoService distritoService;
+
+    @Autowired
+    DireccionClienteService direccionClienteService;
     
     // Muestra la página principal
     @RequestMapping("/")
@@ -53,7 +60,7 @@ public class IndexController {
 
         // Test getDistrito and getAllDistritos
         Distrito distrito = new Distrito();
-        distrito.setIdDistrito(1L);
+        distrito.setIdDistrito(16L);
         Distrito distritoResult = distritoService.getDistrito(distrito);
         System.out.println(distritoResult.toString());
 
@@ -61,6 +68,13 @@ public class IndexController {
         for (Distrito d : distritos) {
             System.out.println(d.toString());
         }
+
+        //Test addDireccion_Clientes
+        DireccionCliente direccionCliente = new DireccionCliente("Diagonal al super", distritoResult);
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(1L);
+        System.out.println(direccionCliente.toString());
+        direccionClienteService.insertDireccionCliente(direccionCliente, cliente, distritoResult);
 
         return "index-new";
     }

@@ -11,6 +11,7 @@ import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.domain.direcciones.Canton;
 import lbd.proyecto.domain.direcciones.Distrito;
 
+@Data
 @MappedSuperclass
 public class Direccion implements Serializable {
     
@@ -25,14 +26,14 @@ public class Direccion implements Serializable {
     private String detalles; // Column => detalles
 
     //Relationship with table Provincia
-    @ManyToOne // Many addresses can belong to one province
-    @JoinColumn(name = "id_provincia") // Foreign key
-    private Provincia provincia; // Province to which the address belongs
+    // @ManyToOne // Many addresses can belong to one province
+    // @JoinColumn(name = "id_provincia") // Foreign key
+    // private Provincia provincia; // Province to which the address belongs
 
     //Relationship with table Canton
-    @ManyToOne // Many addresses can belong to one canton
-    @JoinColumn(name = "id_canton") // Foreign key
-    private Canton canton; // Canton to which the address belongs
+    // @ManyToOne // Many addresses can belong to one canton
+    // @JoinColumn(name = "id_canton") // Foreign key
+    // private Canton canton; // Canton to which the address belongs
 
     //Relationship with table Distrito
     @ManyToOne // Many addresses can belong to one district
@@ -43,10 +44,15 @@ public class Direccion implements Serializable {
     public Direccion() {
     }
 
-    public Direccion(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
+    public Direccion(String detalles, Distrito distrito) {
         this.detalles = detalles;
-        this.provincia = provincia;
-        this.canton = canton;
         this.distrito = distrito;
     }
+
+    // public Direccion(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
+    //     this.detalles = detalles;
+    //     this.provincia = provincia;
+    //     this.canton = canton;
+    //     this.distrito = distrito;
+    // }
 }

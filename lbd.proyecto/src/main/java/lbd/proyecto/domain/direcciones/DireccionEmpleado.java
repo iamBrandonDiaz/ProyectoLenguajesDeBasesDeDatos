@@ -33,7 +33,11 @@ public class DireccionEmpleado extends Direccion {
     public DireccionEmpleado() {
     }
     
-    public DireccionEmpleado(String detalles, Provincia provincia, Canton canton, Distrito distrito, String tipo) {
-        super(detalles, provincia, canton, distrito);
+    public DireccionEmpleado(String detalles, Distrito distrito) {
+        super(detalles, distrito);
     }
+
+    // public DireccionEmpleado(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
+    //     super(detalles, provincia, canton, distrito);
+    // }
 }
