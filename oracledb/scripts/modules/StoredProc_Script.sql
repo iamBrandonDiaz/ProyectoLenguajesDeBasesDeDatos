@@ -289,5 +289,46 @@ BEGIN
     VALUES (p_id_cliente, p_provincia, p_canton, p_distrito, p_detalles);
 END insertar_direccion_cliente;
 
+CREATE OR REPLACE PROCEDURE actualizar_direccion_cliente (
+    p_id_direccion IN NUMBER,
+    p_detalles IN VARCHAR2,
+    p_provincia IN VARCHAR2,
+    p_canton IN VARCHAR2,
+    p_distrito IN VARCHAR2
+) AS
+BEGIN
+    UPDATE Direcciones_Cliente
+    SET ID_Provincia = p_provincia,
+        ID_Canton = p_canton,
+        ID_Distrito = p_distrito,
+        Detalles = p_detalles
+    WHERE ID_Direccion = p_id_direccion;
+END actualizar_direccion_cliente;
+
+CREATE OR REPLACE PROCEDURE ver_direccion_cliente (
+    p_id_direccion IN NUMBER,
+    p_id_cliente OUT NUMBER,
+    p_detalles OUT VARCHAR2,
+    p_id_distrito OUT VARCHAR2
+) AS
+BEGIN
+    SELECT ID_Cliente, Detalles, ID_Distrito
+    INTO p_id_cliente, p_detalles, p_id_distrito
+    FROM Direcciones_Cliente
+    WHERE ID_Direccion = p_id_direccion;
+END ver_direccion_cliente;
+
+DROP PROCEDURE ver_direcciones_clientes;
+CREATE OR REPLACE PROCEDURE ver_direcciones_cliente(
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Direccion, ID_Cliente, Detalles, ID_Distrito
+    FROM Direcciones_Cliente;
+END ver_direcciones_cliente;
+
+
+
 -- Script para provar el SP de instertar direccion de cliente
 -- EXEC insertar_direccion_cliente(1, 'Detalles de la direccion', 'San Jose', 'San Jose', 'San Jose');

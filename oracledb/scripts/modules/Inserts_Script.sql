@@ -29,27 +29,27 @@ INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (1, 3, 'Desampara
 INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (1, 3, 'San Miguel');
 INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (1, 3, 'San Rafael');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 1, 'Heredia');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 1, 'Mercedes');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 1, 'Ulloa');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 4, 'Heredia');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 4, 'Mercedes');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 4, 'Ulloa');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 2, 'Barva');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 2, 'San Pedro');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 2, 'San Roque');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 5, 'Barva');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 5, 'San Pedro');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 5, 'San Roque');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 3, 'Santo Domingo');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 3, 'Paracito');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 3, 'Santa Rosa');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 6, 'Santo Domingo');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 6, 'Paracito');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (2, 6, 'Santa Rosa');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 1, 'Oriental');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 1, 'Occidental');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 1, 'Carmen');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 7, 'Oriental');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 7, 'Occidental');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 7, 'Carmen');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 2, 'Paraíso');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 2, 'Orosi');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 2, 'Cachí');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 8, 'Paraíso');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 8, 'Orosi');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 8, 'Cachí');
 
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 3, 'Tres Ríos');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 3, 'San Diego');
-INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 3, 'Concepción');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'Tres Ríos');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'San Diego');
+INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'Concepción');
 

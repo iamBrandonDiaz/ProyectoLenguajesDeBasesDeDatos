@@ -42,12 +42,13 @@ public class DistritoServiceImpl implements DistritoService {
     private TransactionTemplate transactionTemplate;
 
     @Override
+    @Transactional
     public Distrito getDistrito(Distrito distrito) {
 
         return transactionTemplate.execute(new TransactionCallback<Distrito>() {
             @Override
             public Distrito doInTransaction(TransactionStatus status) {
-                // Create a StoredProcedureQuery instance for the stored procedure "canton"
+                // Create a StoredProcedureQuery instance for the stored procedure "ver_distrito"
                 StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_distrito");
 
                 // Register the input and output parameters
@@ -76,7 +77,7 @@ public class DistritoServiceImpl implements DistritoService {
                 }
 
                 //Print the Output Parameters
-                System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
+                // System.out.println("Nombre: " + query.getOutputParameterValue("p_nombre"));
 
                 // Map the output parameters to a Distrito object
                 Distrito newDistrito = new Distrito();
