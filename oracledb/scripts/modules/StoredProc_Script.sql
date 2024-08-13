@@ -291,7 +291,7 @@ CREATE OR REPLACE PROCEDURE insertar_direccion_cliente (
     p_detalles IN VARCHAR2,
     p_provincia IN VARCHAR2,
     p_canton IN VARCHAR2,
-    p_distrito IN VARCHAR2,
+    p_distrito IN VARCHAR2
 ) AS
 BEGIN
     INSERT INTO Direcciones_Cliente (ID_Cliente, ID_Provincia, ID_Canton, ID_Distrito, Detalles)

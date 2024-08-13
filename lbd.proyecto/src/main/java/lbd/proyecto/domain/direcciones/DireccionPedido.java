@@ -33,8 +33,12 @@ public class DireccionPedido extends Direccion {
     public DireccionPedido() {
     }
 
-    public DireccionPedido(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
-        super(detalles, provincia, canton, distrito);
+    public DireccionPedido(String detalles, Distrito distrito) {
+        super(detalles, distrito);
     }
+    
+    // public DireccionPedido(String detalles, Provincia provincia, Canton canton, Distrito distrito) {
+    //     super(detalles, provincia, canton, distrito);
+    // }
     
 }
