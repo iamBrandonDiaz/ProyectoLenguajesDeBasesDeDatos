@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lbd.proyecto.domain.Cliente;
+import lbd.proyecto.domain.Estado;
+import lbd.proyecto.service.EstadoService;
 import lbd.proyecto.domain.direcciones.Canton;
 import lbd.proyecto.domain.direcciones.DireccionCliente;
 import lbd.proyecto.domain.direcciones.Distrito;
@@ -37,6 +39,9 @@ public class IndexController {
 
     @Autowired
     LicenciaService licenciaService;
+
+    @Autowired
+    EstadoService estadoService;
     
     // Muestra la página principal
     @RequestMapping("/")
@@ -134,15 +139,27 @@ public class IndexController {
 
 
         //Test getLicencia and getAllLicencias
-        Licencia licencia = new Licencia();
-        licencia.setIdLicencia(1L);
-        Licencia licenciaResult = licenciaService.getLicencia(licencia);
-        System.out.println(licenciaResult.toString());
+        // Licencia licencia = new Licencia();
+        // licencia.setIdLicencia(1L);
+        // Licencia licenciaResult = licenciaService.getLicencia(licencia);
+        // System.out.println(licenciaResult.toString());
 
-        List<Licencia> licencias = licenciaService.getAllLicencias();
-        for (Licencia l : licencias) {
-            System.out.println(l.toString());
+        // List<Licencia> licencias = licenciaService.getAllLicencias();
+        // for (Licencia l : licencias) {
+        //     System.out.println(l.toString());
+        // }
+
+        // Test getEstado and getAllEstados
+        Estado estado = new Estado();
+        estado.setIdEstado(3L);
+        Estado estadoResult = estadoService.getEstado(estado);
+        System.out.println(estadoResult.toString());
+
+        List<Estado> estados = estadoService.getAllEstados();
+        for (Estado e : estados) {
+            System.out.println(e.toString());
         }
+
 
         return "index-new";
     }

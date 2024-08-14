@@ -73,3 +73,11 @@ INSERT INTO Licencias (Tipo) VALUES ('Tipo D3');
 INSERT INTO Licencias (Tipo) VALUES ('Tipo E1');
 INSERT INTO Licencias (Tipo) VALUES ('Tipo E2');
 
+-- Inserts para tabla Estados
+INSERT INTO Estados (Descripcion) VALUES ('Cancelado');
+INSERT INTO Estados (Descripcion) VALUES ('No aceptado');
+INSERT INTO Estados (Descripcion) VALUES ('Aceptado');
+INSERT INTO Estados (Descripcion) VALUES ('En Proceso');
+INSERT INTO Estados (Descripcion) VALUES ('Entregado');
+INSERT INTO Estados (Descripcion) VALUES ('Completado');
+
