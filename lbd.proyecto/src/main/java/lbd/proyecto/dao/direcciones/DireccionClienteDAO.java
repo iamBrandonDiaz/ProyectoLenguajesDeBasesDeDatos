@@ -22,12 +22,16 @@ public interface DireccionClienteDAO extends JpaRepository<DireccionCliente, Lon
     @Procedure(procedureName = "actualizar_direccion_cliente")
     void updateDireccionCliente(Long idDireccion, String detalles, Long idProvincia, Long idCanton, Long idDistrito);
 
+    // Method to call an stored procedure to delete a direction
+    @Procedure(procedureName = "eliminar_direccion_cliente")
+    void deleteDireccionCliente(Long idDireccion);
+
     // Method to call an stored procedure to get a (single) distrito
     @Procedure(procedureName = "ver_direccion_cliente")
     DireccionCliente getDireccionCliente(Long idDireccion);
 
     // Method to call an stored procedure to get all distritos
-    @Procedure(procedureName = "ver_direcciones_cliente")
+    @Procedure(procedureName = "ver_direcciones_clientes")
     List<DireccionCliente> getAllDireccionesCliente();
 
     // Method to call a SQL function to get all the directions by client ID

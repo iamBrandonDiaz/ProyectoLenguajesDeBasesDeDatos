@@ -17,6 +17,8 @@ import lbd.proyecto.service.direcciones.DireccionClienteService;
 import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
+import lbd.proyecto.domain.Licencia;
+import lbd.proyecto.service.LicenciaService;
 
 @Controller
 public class IndexController {
@@ -32,6 +34,9 @@ public class IndexController {
 
     @Autowired
     DireccionClienteService direccionClienteService;
+
+    @Autowired
+    LicenciaService licenciaService;
     
     // Muestra la página principal
     @RequestMapping("/")
@@ -59,7 +64,7 @@ public class IndexController {
         // }
 
         // Test getDistrito and getAllDistritos
-        System.out.println("NUEVO TEST");
+        // System.out.println("NUEVO TEST");
         // Distrito distrito = new Distrito();
         // distrito.setIdDistrito(25L);
         // Distrito distritoResult = distritoService.getDistrito(distrito);
@@ -71,7 +76,7 @@ public class IndexController {
         // }
 
         //Test addDireccion_Clientes
-        // DireccionCliente direccionCliente = new DireccionCliente("Nueva direccion", distritoResult);
+        // DireccionCliente direccionCliente = new DireccionCliente("Nueva direccion para delete 2", distritoResult);
         // Cliente cliente = new Cliente();
         // cliente.setIdCliente(2L);
         // System.out.println(direccionCliente.toString());
@@ -107,21 +112,37 @@ public class IndexController {
         // }
 
         // Test searchDireccionByCliente
-        List<DireccionCliente> direcciones = direccionClienteService.searchDireccionesByCliente(2L);
-        for (DireccionCliente d : direcciones) {
-            System.out.println("----- DIRECCION -----");
-            System.out.println("ID Dirección: " + d.getIdDireccion());
-            System.out.println("Detalles: " + d.getDetalles());
-            System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
-            System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
-            System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
-            System.out.println("ID Cliente: " + d.getCliente().getIdCliente());
-            System.out.println("Nombre Cliente: " + d.getCliente().getNombre());
-            System.out.println("Email Cliente: " + d.getCliente().getEmail());
-            System.out.println("Telefono Cliente: " + d.getCliente().getTelefono());
+        // List<DireccionCliente> direcciones = direccionClienteService.searchDireccionesByCliente(2L);
+        // for (DireccionCliente d : direcciones) {
+        //     System.out.println("----- DIRECCION -----");
+        //     System.out.println("ID Dirección: " + d.getIdDireccion());
+        //     System.out.println("Detalles: " + d.getDetalles());
+        //     System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+        //     System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+        //     System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+        //     System.out.println("ID Cliente: " + d.getCliente().getIdCliente());
+        //     System.out.println("Nombre Cliente: " + d.getCliente().getNombre());
+        //     System.out.println("Email Cliente: " + d.getCliente().getEmail());
+        //     System.out.println("Telefono Cliente: " + d.getCliente().getTelefono());
 
+        // }
+
+        //Test deleteDireccion_Cliente
+        // DireccionCliente direccionCliente = new DireccionCliente();
+        // direccionCliente.setIdDireccion(21L);
+        // direccionClienteService.deleteDireccionCliente(direccionCliente);
+
+
+        //Test getLicencia and getAllLicencias
+        Licencia licencia = new Licencia();
+        licencia.setIdLicencia(1L);
+        Licencia licenciaResult = licenciaService.getLicencia(licencia);
+        System.out.println(licenciaResult.toString());
+
+        List<Licencia> licencias = licenciaService.getAllLicencias();
+        for (Licencia l : licencias) {
+            System.out.println(l.toString());
         }
-
 
         return "index-new";
     }

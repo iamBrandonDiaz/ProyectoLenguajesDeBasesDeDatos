@@ -327,17 +327,62 @@ BEGIN
     WHERE ID_Direccion = p_id_direccion;
 END ver_direccion_cliente;
 
-DROP PROCEDURE ver_direcciones_clientes;
-CREATE OR REPLACE PROCEDURE ver_direcciones_cliente(
+-- DROP PROCEDURE ver_direcciones_clientes;
+CREATE OR REPLACE PROCEDURE ver_direcciones_clientes(
     p_cursor OUT SYS_REFCURSOR
 ) AS
 BEGIN
     OPEN p_cursor FOR
     SELECT ID_Direccion, ID_Cliente, Detalles, ID_Distrito
     FROM Direcciones_Cliente;
-END ver_direcciones_cliente;
+END ver_direcciones_clientes;
 
+CREATE OR REPLACE PROCEDURE eliminar_direccion_cliente (
+    p_id_direccion IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Direcciones_Cliente
+    WHERE ID_Direccion = p_id_direccion;
+END eliminar_direccion_cliente;
 
+-- SP de objeto Licencia
+CREATE OR REPLACE PROCEDURE ver_licencia (
+    p_id_licencia IN NUMBER,
+    p_tipo OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Tipo
+    INTO p_tipo
+    FROM Licencias
+    WHERE ID_Licencia = p_id_licencia;
+END ver_licencia;
 
--- Script para provar el SP de instertar direccion de cliente
--- EXEC insertar_direccion_cliente(1, 'Detalles de la direccion', 'San Jose', 'San Jose', 'San Jose');
+CREATE OR REPLACE PROCEDURE ver_licencias (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Licencia, Tipo
+    FROM Licencias;
+END ver_licencias;
+
+-- SP de objeto Estado
+CREATE OR REPLACE PROCEDURE ver_estado (
+    p_id_estado IN NUMBER,
+    p_descripcion OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Descripcion
+    INTO p_descripcion
+    FROM Estados
+    WHERE ID_Estado = p_id_estado;
+END ver_estado;
+
+CREATE OR REPLACE PROCEDURE ver_estados (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Estado, Descripcion
+    FROM Estados;
+END ver_estados;

@@ -141,8 +141,8 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
     @Override
     @Transactional(readOnly = true)
     public List<DireccionCliente> getAllDirecciones() {
-        // Create a StoredProcedureQuery instance for the stored procedure "ver_direcciones_cliente"
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_direcciones_cliente");
+        // Create a StoredProcedureQuery instance for the stored procedure "ver_direcciones_clientes"
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_direcciones_clientes");
 
         // Register the output parameters
         query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
@@ -219,5 +219,11 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
         });
 
         return direcciones;
+    }
+
+    @Override
+    @Transactional
+    public void deleteDireccionCliente(DireccionCliente direccionCliente) {
+        direccionClienteDAO.deleteDireccionCliente(direccionCliente.getIdDireccion());
     }
 }
