@@ -183,7 +183,7 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DireccionCliente> searchDireccionByCliente(Long idCliente) {
+    public List<DireccionCliente> searchDireccionesByCliente(Long idCliente) {
         Session session = entityManager.unwrap(Session.class);
         List<DireccionCliente> direcciones = new ArrayList<>();
 

@@ -23,6 +23,6 @@ public interface DireccionClienteService {
     List<DireccionCliente> getAllDirecciones();
 
     // Method to search directions by client ID with the SQL function
-    List<DireccionCliente> searchDireccionByCliente(Long idCliente);
+    List<DireccionCliente> searchDireccionesByCliente(Long idCliente);
 
 }

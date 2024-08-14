@@ -53,3 +53,23 @@ INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'Tres Río
 INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'San Diego');
 INSERT INTO Distritos (ID_Provincia, ID_Canton, Nombre) VALUES (3, 9, 'Concepción');
 
+-- Inserts para tabla Licencias
+INSERT INTO Licencias (Tipo) VALUES ('Tipo A1');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo A2');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo A3');
+
+INSERT INTO Licencias (Tipo) VALUES ('Tipo B1');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo B2');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo B3');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo B4');
+
+INSERT INTO Licencias (Tipo) VALUES ('Tipo C1');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo C2');
+
+INSERT INTO Licencias (Tipo) VALUES ('Tipo D1');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo D2');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo D3');
+
+INSERT INTO Licencias (Tipo) VALUES ('Tipo E1');
+INSERT INTO Licencias (Tipo) VALUES ('Tipo E2');
+

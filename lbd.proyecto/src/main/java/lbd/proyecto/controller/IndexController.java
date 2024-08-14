@@ -107,7 +107,7 @@ public class IndexController {
         // }
 
         // Test searchDireccionByCliente
-        List<DireccionCliente> direcciones = direccionClienteService.searchDireccionByCliente(2L);
+        List<DireccionCliente> direcciones = direccionClienteService.searchDireccionesByCliente(2L);
         for (DireccionCliente d : direcciones) {
             System.out.println("----- DIRECCION -----");
             System.out.println("ID Dirección: " + d.getIdDireccion());
