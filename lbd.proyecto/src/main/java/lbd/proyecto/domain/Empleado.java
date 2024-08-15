@@ -25,8 +25,6 @@ public class Empleado implements Serializable {
     private Long idEmpleado; //Hibernate converts this to => id_empleado
     private String nombre; //Column => nombre
     private String apellido; //Column => apellido
-    private String correo; //Column => correo
-    private String telefono; //Column => telefono
     private java.sql.Date fechaNacimiento; //Column => fecha_nacimiento
     private java.sql.Date fechaContratacion; //Column => fecha_contratacion
 
@@ -47,11 +45,9 @@ public class Empleado implements Serializable {
     public Empleado() {
     }
 
-    public Empleado(String nombre, String apellido, String correo, String telefono, java.sql.Date fechaNacimiento, java.sql.Date fechaContratacion) {
+    public Empleado(String nombre, String apellido, java.sql.Date fechaNacimiento, java.sql.Date fechaContratacion) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.correo = correo;
-        this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.fechaContratacion = fechaContratacion;
     }

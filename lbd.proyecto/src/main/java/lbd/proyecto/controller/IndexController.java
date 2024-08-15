@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lbd.proyecto.domain.Cliente;
+import lbd.proyecto.domain.Empleado;
+import lbd.proyecto.service.EmpleadoService;
 import lbd.proyecto.domain.Estado;
 import lbd.proyecto.service.EstadoService;
 import lbd.proyecto.domain.direcciones.Canton;
@@ -32,6 +34,12 @@ import lbd.proyecto.service.TipoCargaService;
 public class IndexController {
 
     @Autowired
+    EmpleadoService empleadoService;
+
+    @Autowired
+    PuestoService puestoService;
+
+    @Autowired
     ProvinciaService provinciaService;
 
     @Autowired
@@ -53,10 +61,9 @@ public class IndexController {
     TipoCargaService tipoCargaService;
 
     @Autowired
-    PuestoService puestoService;
-    
-    @Autowired
     VehiculoService vehiculoService;
+
+    
 
     // Muestra la página principal
     @RequestMapping("/")
@@ -226,9 +233,53 @@ public class IndexController {
         // vehiculo.setIdVehiculo(11L);
         // vehiculoService.deleteVehiculo(vehiculo.getIdVehiculo());
 
+        // Test getEmpleado and getAllEmpleados
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(3L);
+        // Empleado empleadoResult = empleadoService.getEmpleado(empleado);
+        // System.out.println("*** EMPLEADO ***");
+        // System.out.println("Nombre" + empleadoResult.getNombre());
+        // System.out.println("Apellido" + empleadoResult.getApellido());
+        // System.out.println("Fecha Nacimiento" + empleadoResult.getFechaNacimiento());
+        // System.out.println("Fecha Contratacion" + empleadoResult.getFechaContratacion());
+        // System.out.println("Puesto" + empleadoResult.getPuesto().toString());
+
+        // System.out.println("*** LIST ***");
+        // List<Empleado> empleados = empleadoService.getAllEmpleados();
+        // for (Empleado e : empleados) {
+        //     System.out.println(e.toString());
+        //     System.out.println("*** ITEM ***");
+        //     System.out.println("Nombre: " + e.getNombre());
+        //     System.out.println("Apellido: " + e.getApellido());
+        //     System.out.println("Fecha Nacimiento: " + e.getFechaNacimiento());
+        //     System.out.println("Fecha Contratacion: " + e.getFechaContratacion());
+        //     System.out.println("Puesto: " + e.getPuesto().toString());
+        // }
+
+        // Test insertEmpleado
+        // Puesto puesto = new Puesto();
+        // puesto.setIdPuesto("DRV-03");
+        // Empleado empleado = new Empleado("Test 2", "Employee", empleadoService.convertDate("1950-12-24"), empleadoService.convertDate("1949-01-01"));
+        // empleado.setPuesto(puesto);
+        // empleadoService.insertEmpleado(empleado);
+
+        // Test updateEmpleado
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(7L);
+        // empleado.setNombre("Update");
+        // empleado.setApellido("Test");
+        // empleado.setFechaNacimiento(empleadoService.convertDate("1966-02-11"));
+        // empleado.setFechaContratacion(empleadoService.convertDate("1965-01-01"));
+        // Puesto puesto = new Puesto();
+        // puesto.setIdPuesto("STR-MGR");
+        // empleado.setPuesto(puesto);
+        // empleadoService.updateEmpleado(empleado.getIdEmpleado(), empleado);
+
+        // Test deleteEmpleado
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(8L);
+        empleadoService.deleteEmpleado(empleado.getIdEmpleado());
         
-
-
 
         return "index-new";
     }

@@ -119,3 +119,10 @@ INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Volvo', 'FH', 2016, 
 INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Scania', 'R450', 2017, '678901');
 INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Mercedes-Benz', 'Actros', 2018, '789012');
 INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('MAN', 'TGX', 2019, '890123');
+
+-- Inserts para tabla Empleados
+INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Juan', 'Perez', TO_DATE('2003-03-03', 'YYYY-MM-DD'), TO_DATE('2020-01-01', 'YYYY-MM-DD'), 'DRV-01');
+INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Maria', 'Gonzalez', TO_DATE('1998-08-08', 'YYYY-MM-DD'), TO_DATE('2021-11-11', 'YYYY-MM-DD'), 'DRV-02');
+INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Pedro', 'Rodriguez', TO_DATE('1994-04-04', 'YYYY-MM-DD'), TO_DATE('2022-02-02', 'YYYY-MM-DD'), 'DRV-03');
+INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Ana', 'Jimenez', TO_DATE('1995-05-05', 'YYYY-MM-DD'), TO_DATE('2024-12-22', 'YYYY-MM-DD'), 'MTN-TEC');
+INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Luis', 'Hernandez', TO_DATE('1990-10-10', 'YYYY-MM-DD'), TO_DATE('2023-03-03', 'YYYY-MM-DD'), 'MTN-ENG');

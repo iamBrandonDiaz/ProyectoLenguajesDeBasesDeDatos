@@ -77,8 +77,8 @@ public class PuestoServiceImpl implements PuestoService {
                 }
 
                 // Print the output parameter
-                System.out.println("Puesto: " + query.getOutputParameterValue("p_descripcion"));
-                System.out.println("Tipo de p_salario: " + query.getOutputParameterValue("p_salario").getClass());
+                // System.out.println("Puesto: " + query.getOutputParameterValue("p_descripcion"));
+                // System.out.println("Tipo de p_salario: " + query.getOutputParameterValue("p_salario").getClass());
 
                 // Map the output parameters to a Licencia object
                 Puesto puestoResult = new Puesto();

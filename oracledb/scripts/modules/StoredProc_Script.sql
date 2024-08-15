@@ -5,11 +5,12 @@ CREATE OR REPLACE PROCEDURE insertar_empleado (
     p_nombre IN VARCHAR2,
     p_apellido IN VARCHAR2,
     p_fecha_nacimiento IN DATE,
-    p_fecha_contratacion IN DATE
+    p_fecha_contratacion IN DATE,
+    p_id_puesto IN VARCHAR2
 ) AS
 BEGIN
-    INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion)
-    VALUES (p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion);
+    INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto)
+    VALUES (p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion, p_id_puesto);
 END insertar_empleado;
 
 
@@ -18,14 +19,24 @@ CREATE OR REPLACE PROCEDURE ver_empleado (
     p_nombre OUT VARCHAR2,
     p_apellido OUT VARCHAR2,
     p_fecha_nacimiento OUT DATE,
-    p_fecha_contratacion OUT DATE
+    p_fecha_contratacion OUT DATE,
+    p_id_puesto OUT VARCHAR2
 ) AS
 BEGIN
-    SELECT Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion
-    INTO p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion
+    SELECT Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto
+    INTO p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion, p_id_puesto
     FROM Empleados
     WHERE ID_Empleado = p_id_empleado;
 END ver_empleado;
+
+CREATE OR REPLACE PROCEDURE ver_empleados (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Empleado, Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto
+    FROM Empleados;
+END ver_empleados;
 
 
 CREATE OR REPLACE PROCEDURE actualizar_empleado (
@@ -33,14 +44,16 @@ CREATE OR REPLACE PROCEDURE actualizar_empleado (
     p_nombre IN VARCHAR2,
     p_apellido IN VARCHAR2,
     p_fecha_nacimiento IN DATE,
-    p_fecha_contratacion IN DATE
+    p_fecha_contratacion IN DATE,
+    p_id_puesto IN VARCHAR2
 ) AS
 BEGIN
     UPDATE Empleados
     SET Nombre = p_nombre,
         Apellido = p_apellido,
         Fecha_Nacimiento = p_fecha_nacimiento,
-        Fecha_Contratacion = p_fecha_contratacion
+        Fecha_Contratacion = p_fecha_contratacion,
+        ID_Puesto = p_id_puesto
     WHERE ID_Empleado = p_id_empleado;
 END actualizar_empleado;
 
