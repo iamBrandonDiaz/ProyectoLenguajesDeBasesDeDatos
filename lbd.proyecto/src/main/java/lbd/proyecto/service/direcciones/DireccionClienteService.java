@@ -7,6 +7,7 @@ import java.util.List;
 import lbd.proyecto.domain.direcciones.DireccionCliente;
 import lbd.proyecto.domain.direcciones.Distrito;
 import lbd.proyecto.domain.Cliente;
+
 public interface DireccionClienteService {
     
     // Method to save a new direction with the Stored Procedure

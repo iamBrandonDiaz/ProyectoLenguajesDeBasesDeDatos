@@ -15,9 +15,11 @@ import lbd.proyecto.domain.Estado;
 import lbd.proyecto.service.EstadoService;
 import lbd.proyecto.domain.direcciones.Canton;
 import lbd.proyecto.domain.direcciones.DireccionCliente;
+import lbd.proyecto.domain.direcciones.DireccionEmpleado;
 import lbd.proyecto.domain.direcciones.Distrito;
 import lbd.proyecto.service.direcciones.CantonService;
 import lbd.proyecto.service.direcciones.DireccionClienteService;
+import lbd.proyecto.service.direcciones.DireccionEmpleadoService;
 import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
@@ -37,6 +39,9 @@ public class IndexController {
 
     @Autowired
     EmpleadoService empleadoService;
+
+    @Autowired
+    DireccionEmpleadoService direccionEmpleadoService;
 
     @Autowired
     PuestoService puestoService;
@@ -72,7 +77,7 @@ public class IndexController {
     // Muestra la página principal
     @RequestMapping("/")
     public String page(Model model) {
-        //Test getProvincia and getAllProvincias
+        // Test getProvincia and getAllProvincias
         // Provincia provincia = new Provincia();
         // provincia.setIdProvincia(3L);
         // Provincia provinciaResult = provinciaService.getProvincia(provincia);
@@ -95,9 +100,9 @@ public class IndexController {
         // }
 
         // Test getDistrito and getAllDistritos
-        // System.out.println("NUEVO TEST");
+        // System.out.println("TEST DE DISTRITOS");
         // Distrito distrito = new Distrito();
-        // distrito.setIdDistrito(25L);
+        // distrito.setIdDistrito(14L);
         // Distrito distritoResult = distritoService.getDistrito(distrito);
         // System.out.println(distritoResult.toString());
 
@@ -129,7 +134,7 @@ public class IndexController {
 
         //Test getDireccion_Clientes
         // DireccionCliente direccionCliente = new DireccionCliente();
-        // direccionCliente.setIdDireccion(1L);
+        // direccionCliente.setIdDireccion(7L);
         // DireccionCliente direccionClienteResult = direccionClienteService.getDireccionCliente(direccionCliente);
         // System.out.println(direccionClienteResult.toString());
         // System.out.println(direccionClienteResult.getDistrito().toString());
@@ -320,12 +325,71 @@ public class IndexController {
         // System.out.println(licenciaEmpleadoResult.getEmpleado().toString());
 
         // Test getAllLicenciasEmpleado
-        List<LicenciaEmpleado> licenciasEmpleado = licenciaEmpleadoService.getAllLicenciasEmpleados();
-        for (LicenciaEmpleado le : licenciasEmpleado) {
-            System.out.println(le.toString());
-            System.out.println(le.getLicencia().toString());
-            System.out.println(le.getEmpleado().toString());
+        // List<LicenciaEmpleado> licenciasEmpleado = licenciaEmpleadoService.getAllLicenciasEmpleados();
+        // for (LicenciaEmpleado le : licenciasEmpleado) {
+        //     System.out.println(le.toString());
+        //     System.out.println(le.getLicencia().toString());
+        //     System.out.println(le.getEmpleado().toString());
+        // }
+
+        // Test insertDireccion_Empleados
+        // Distrito distrito = new Distrito();
+        // distrito.setIdDistrito(8L);
+
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(6L);
+
+        // DireccionEmpleado direccionEmpleado = new DireccionEmpleado("Nueva direccion por insert 3", distrito);
+        // direccionEmpleadoService.insertDireccionEmpleado(direccionEmpleado, empleado, distrito);
+
+        // Test updateDireccion_Empleados
+        // DireccionEmpleado direccionEmpleado = new DireccionEmpleado();
+        // direccionEmpleado.setIdDireccion(6L);
+        // direccionEmpleado.setDetalles("Fix Direccion ID6");
+        // System.out.println("TEST");
+        // System.out.println(direccionEmpleado.toString());
+        // System.out.println(direccionEmpleado.getDetalles().toString());
+
+        // Distrito distrito2 = new Distrito();
+        // distrito2.setIdDistrito(26L);
+        // direccionEmpleado.setDistrito(distritoService.getDistrito(distrito2));
+
+        // System.out.println(direccionEmpleado.getDistrito().toString());
+
+        // direccionEmpleadoService.updateDireccionEmpleado(direccionEmpleado, direccionEmpleado.getDistrito());
+
+        // Test getDireccion_Empleados
+        // DireccionEmpleado direccionEmpleado = new DireccionEmpleado();
+        // direccionEmpleado.setIdDireccion(2L);
+        // DireccionEmpleado direccionEmpleadoResult = direccionEmpleadoService.getDireccionEmpleado(direccionEmpleado);
+        // System.out.println(direccionEmpleadoResult.toString());
+        // System.out.println(direccionEmpleadoResult.getDistrito().toString());
+
+        // // Test getAllDirecciones_Empleados
+        // List<DireccionEmpleado> direcciones = direccionEmpleadoService.getAllDirecciones();
+        // for (DireccionEmpleado d : direcciones) {
+        //     System.out.println(d.toString());
+        //     System.out.println(d.getDetalles());
+        //     System.out.println(d.getDistrito().toString());
+        // }
+
+        // Test searchDireccionesByEmpleado
+        List<DireccionEmpleado> direcciones = direccionEmpleadoService.searchDireccionesByEmpleado(5L);
+        for (DireccionEmpleado d : direcciones) {
+            System.out.println("----- DIRECCION -----");
+            System.out.println("ID Dirección: " + d.getIdDireccion());
+            System.out.println("Detalles: " + d.getDetalles());
+            System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+            System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+            System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+            System.out.println("ID Empleado: " + d.getEmpleado().getIdEmpleado());
+            System.out.println("Nombre Empleado: " + d.getEmpleado().getNombre());
+            System.out.println("Apellido Empleado: " + d.getEmpleado().getApellido());
+            System.out.println("Fecha Nacimiento Empleado: " + d.getEmpleado().getFechaNacimiento());
+            System.out.println("Fecha Contratacion Empleado: " + d.getEmpleado().getFechaContratacion());
+            System.out.println("Puesto Empleado: " + d.getEmpleado().getPuesto().toString());
         }
+
 
         return "index-new";
     }

@@ -514,4 +514,74 @@ BEGIN
     WHERE ID_Licencia_Empleado = p_id_licencia_empleado;
 END eliminar_licencia_empleado;
 
+-- SP de objeto Direccion_Empleado
+CREATE OR REPLACE PROCEDURE insertar_direccion_empleado (
+    p_id_empleado IN NUMBER,
+    p_detalles IN VARCHAR2,
+    p_id_provincia IN NUMBER,
+    p_id_canton IN NUMBER,
+    p_id_distrito IN NUMBER
+) AS
+BEGIN
+    INSERT INTO Direcciones_Empleado (ID_Empleado, Detalles, ID_Provincia, ID_Canton, ID_Distrito)
+    VALUES (p_id_empleado, p_detalles, p_id_provincia, p_id_canton, p_id_distrito);
+END insertar_direccion_empleado;
 
+CREATE OR REPLACE PROCEDURE ver_direccion_empleado (
+    p_id_direccion IN NUMBER,
+    p_id_empleado OUT NUMBER,
+    p_detalles OUT VARCHAR2,
+    p_id_distrito OUT VARCHAR2
+) AS
+BEGIN
+    SELECT ID_Empleado, Detalles, ID_Distrito
+    INTO p_id_empleado, p_detalles, p_id_distrito
+    FROM Direcciones_Empleado
+    WHERE ID_Direccion = p_id_direccion;
+END ver_direccion_empleado;
+
+-- Test ver_direccion_empleado
+DECLARE
+    v_id_empleado Direcciones_Empleado.ID_Empleado%TYPE;
+    v_detalles Direcciones_Empleado.Detalles%TYPE;
+    v_id_distrito Direcciones_Empleado.ID_Distrito%TYPE;
+BEGIN
+    ver_direccion_empleado(3, v_id_empleado, v_detalles, v_id_distrito);
+    DBMS_OUTPUT.PUT_LINE('ID_Empleado: ' || v_id_empleado);
+    DBMS_OUTPUT.PUT_LINE('Detalles: ' || v_detalles);
+    DBMS_OUTPUT.PUT_LINE('ID_Distrito: ' || v_id_distrito);
+END;
+
+
+CREATE OR REPLACE PROCEDURE ver_direcciones_empleados (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Direccion, ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles
+    FROM Direcciones_Empleado;
+END ver_direcciones_empleados;
+
+CREATE OR REPLACE PROCEDURE actualizar_direccion_empleado (
+    p_id_direccion IN NUMBER,
+    p_detalles IN VARCHAR2,
+    p_id_provincia IN NUMBER,
+    p_id_canton IN NUMBER,
+    p_id_distrito IN NUMBER
+) AS
+BEGIN
+    UPDATE Direcciones_Empleado
+    SET ID_Provincia = p_id_provincia,
+        ID_Canton = p_id_canton,
+        ID_Distrito = p_id_distrito,
+        Detalles = p_detalles
+    WHERE ID_Direccion = p_id_direccion;
+END actualizar_direccion_empleado;
+
+CREATE OR REPLACE PROCEDURE eliminar_direccion_empleado (
+    p_id_direccion IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Direcciones_Empleado
+    WHERE ID_Direccion = p_id_direccion;
+END eliminar_direccion_empleado;

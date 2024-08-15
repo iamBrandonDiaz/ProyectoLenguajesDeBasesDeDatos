@@ -61,7 +61,7 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
     public void insertDireccionCliente(DireccionCliente direccionCliente, Cliente cliente, Distrito distrito) {
         Distrito distritoResult = distritoService.getDistrito(distrito);
         Cliente clienteResult = clienteService.getCliente(cliente);
-        direccionClienteDAO.insertDireccionCliente(cliente.getIdCliente(), direccionCliente.getDetalles(), distritoResult.getCanton().getProvincia().getIdProvincia(), distritoResult.getCanton().getIdCanton(), distritoResult.getIdDistrito());
+        direccionClienteDAO.insertDireccionCliente(clienteResult.getIdCliente(), direccionCliente.getDetalles(), distritoResult.getCanton().getProvincia().getIdProvincia(), distritoResult.getCanton().getIdCanton(), distritoResult.getIdDistrito());
 
         direccionCliente.setCliente(clienteResult);
         direccionCliente.setDistrito(distritoResult);

@@ -134,3 +134,8 @@ INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fech
 INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (4, 4, TO_DATE('2024-12-22', 'YYYY-MM-DD'), TO_DATE('2029-12-22', 'YYYY-MM-DD'));
 INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (5, 5, TO_DATE('2023-03-03', 'YYYY-MM-DD'), TO_DATE('2028-03-03', 'YYYY-MM-DD'));
 INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (2, 13, TO_DATE('2030-03-03', 'YYYY-MM-DD'), TO_DATE('2035-03-03', 'YYYY-MM-DD'));
+
+-- Inserts para tabla Direcciones_Empleado
+INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (1, 1, 1, 1, 'Calle 1, Casa 2');
+INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (2, 2, 4, 10, 'Calle 2, Casa 3');
+INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (3, 3, 7, 19, 'Calle 3, Casa 4');

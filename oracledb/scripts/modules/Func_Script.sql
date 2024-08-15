@@ -55,3 +55,15 @@ BEGIN
     WHERE ID_Cliente = p_id_cliente;
     RETURN l_cursor;
 END buscar_direcciones_por_cliente;
+
+-- Function to search direction by employee ID
+CREATE OR REPLACE FUNCTION buscar_direcciones_por_empleado(p_id_empleado IN NUMBER)
+RETURN SYS_REFCURSOR AS
+    l_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN l_cursor FOR
+    SELECT ID_Direccion, ID_Empleado, Detalles, ID_Distrito
+    FROM Direcciones_Empleado
+    WHERE ID_Empleado = p_id_empleado;
+    RETURN l_cursor;
+END buscar_direcciones_por_empleado;
