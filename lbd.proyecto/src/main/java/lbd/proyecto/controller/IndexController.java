@@ -20,6 +20,8 @@ import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
 import lbd.proyecto.domain.Licencia;
+import lbd.proyecto.domain.Puesto;
+import lbd.proyecto.service.PuestoService;
 import lbd.proyecto.service.LicenciaService;
 import lbd.proyecto.domain.TipoCarga;
 import lbd.proyecto.service.TipoCargaService;
@@ -47,6 +49,9 @@ public class IndexController {
 
     @Autowired
     TipoCargaService tipoCargaService;
+
+    @Autowired
+    PuestoService puestoService;
     
     // Muestra la página principal
     @RequestMapping("/")
@@ -166,14 +171,25 @@ public class IndexController {
         // }
 
         // Test getTipoCarga and getAllTipoCargas
-        TipoCarga tipoCarga = new TipoCarga();
-        tipoCarga.setIdTipo(1L);
-        TipoCarga tipoCargaResult = tipoCargaService.getTipoCarga(tipoCarga);
-        System.out.println(tipoCargaResult.toString());
+        // TipoCarga tipoCarga = new TipoCarga();
+        // tipoCarga.setIdTipo(1L);
+        // TipoCarga tipoCargaResult = tipoCargaService.getTipoCarga(tipoCarga);
+        // System.out.println(tipoCargaResult.toString());
 
-        List<TipoCarga> tiposCarga = tipoCargaService.getAllTiposCarga();
-        for (TipoCarga t : tiposCarga) {
-            System.out.println(t.toString());
+        // List<TipoCarga> tiposCarga = tipoCargaService.getAllTiposCarga();
+        // for (TipoCarga t : tiposCarga) {
+        //     System.out.println(t.toString());
+        // }
+
+        // Test getPuesto and getAllPuestos
+        Puesto puesto = new Puesto();
+        puesto.setIdPuesto("MTN-TEC");
+        Puesto puestoResult = puestoService.getPuesto(puesto);
+        System.out.println(puestoResult.toString());
+
+        List<Puesto> puestos = puestoService.getAllPuestos();
+        for (Puesto p : puestos) {
+            System.out.println(p.toString());
         }
 
 
