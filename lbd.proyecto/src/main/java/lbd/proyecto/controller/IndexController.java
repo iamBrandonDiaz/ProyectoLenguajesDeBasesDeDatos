@@ -35,6 +35,8 @@ import lbd.proyecto.domain.TipoCarga;
 import lbd.proyecto.domain.Vehiculo;
 import lbd.proyecto.service.VehiculoService;
 import lbd.proyecto.service.TipoCargaService;
+import lbd.proyecto.domain.direcciones.DireccionPedido;
+import lbd.proyecto.service.direcciones.DireccionPedidoService;
 
 @Controller
 public class IndexController {
@@ -77,6 +79,9 @@ public class IndexController {
     
     @Autowired
     PedidoService pedidoService;
+
+    @Autowired
+    DireccionPedidoService direccionPedidoService;
 
     // Muestra la página principal
     @RequestMapping("/")
@@ -475,6 +480,80 @@ public class IndexController {
         //     System.out.println(p.getTiposCarga().toString());
         //     System.out.println(p.getEstado().toString());
         //     System.out.println(p.getLicenciaEmpleado().toString());
+        // }
+
+        // Test insertDireccion_Pedidos
+        // Distrito distrito = new Distrito();
+        // distrito.setIdDistrito(26L);
+
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(6L);
+
+        // DireccionPedido direccionPedido = new DireccionPedido("Duplicado para update", distrito);
+        // direccionPedidoService.insertDireccionPedido(direccionPedido, pedido, distrito);
+
+        // Test updateDireccion_Pedidos
+        // DireccionPedido direccionPedido = new DireccionPedido();
+        // direccionPedido.setIdDireccion(7L);
+
+        // Distrito distrito = new Distrito();
+        // distrito.setIdDistrito(19L);
+
+        // direccionPedido.setDetalles("Update exitoso");
+        // direccionPedido.setDistrito(distritoService.getDistrito(distrito));
+
+        // direccionPedidoService.updateDireccionPedido(direccionPedido, distrito);
+
+        // Test deleteDireccion_Pedidos
+        // DireccionPedido direccionPedido = new DireccionPedido();
+        // direccionPedido.setIdDireccion(5L);
+        // direccionPedidoService.deleteDireccionPedido(direccionPedido);
+
+        // Test getDireccion_Pedidos
+        // DireccionPedido direccionPedido = new DireccionPedido();
+        // direccionPedido.setIdDireccion(2L);
+        // DireccionPedido direccionPedidoResult = direccionPedidoService.getDireccionPedido(direccionPedido);
+        // System.out.println("ID Direccion: " + direccionPedidoResult.getIdDireccion());
+        // System.out.println("Detalles: " + direccionPedidoResult.getDetalles());
+        // System.out.println("ID Distrito: " + direccionPedidoResult.getDistrito().getIdDistrito() + " Nombre Distrito: " + direccionPedidoResult.getDistrito().getNombre());
+        // System.out.println("ID Canton: " + direccionPedidoResult.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + direccionPedidoResult.getDistrito().getCanton().getNombre());
+        // System.out.println("ID Provincia: " + direccionPedidoResult.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + direccionPedidoResult.getDistrito().getCanton().getProvincia().getNombre());
+        // System.out.println("ID Pedido: " + direccionPedidoResult.getPedido().getIdPedido());
+        // System.out.println("Fecha Pedido: " + direccionPedidoResult.getPedido().getFechaPedido());
+        // System.out.println("Descripcion Pedido: " + direccionPedidoResult.getPedido().getDescripcion());
+        // System.out.println("ID Cliente: " + direccionPedidoResult.getPedido().getCliente().getIdCliente());
+        // System.out.println("Nombre Cliente: " + direccionPedidoResult.getPedido().getCliente().getNombre());
+
+        // Test getAllDirecciones_Pedidos
+        // List<DireccionPedido> direcciones = direccionPedidoService.getAllDirecciones();
+        // for (DireccionPedido d : direcciones) {
+        //     System.out.println("----- DIRECCION -----");
+        //     System.out.println("ID Dirección: " + d.getIdDireccion());
+        //     System.out.println("Detalles: " + d.getDetalles());
+        //     System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+        //     System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+        //     System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+        //     System.out.println("ID Pedido: " + d.getPedido().getIdPedido());
+        //     System.out.println("Fecha Pedido: " + d.getPedido().getFechaPedido());
+        //     System.out.println("Descripcion Pedido: " + d.getPedido().getDescripcion());
+        //     System.out.println("ID Cliente: " + d.getPedido().getCliente().getIdCliente());
+        //     System.out.println("Nombre Cliente: " + d.getPedido().getCliente().getNombre());
+        // }
+
+        // Test searchDireccionesByPedido
+        // List<DireccionPedido> direcciones = direccionPedidoService.searchDireccionesByPedido(6L);
+        // for (DireccionPedido d : direcciones) {
+        //     System.out.println("----- DIRECCION -----");
+        //     System.out.println("ID Dirección: " + d.getIdDireccion());
+        //     System.out.println("Detalles: " + d.getDetalles());
+        //     System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+        //     System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+        //     System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+        //     System.out.println("ID Pedido: " + d.getPedido().getIdPedido());
+        //     System.out.println("Fecha Pedido: " + d.getPedido().getFechaPedido());
+        //     System.out.println("Descripcion Pedido: " + d.getPedido().getDescripcion());
+        //     System.out.println("ID Cliente: " + d.getPedido().getCliente().getIdCliente());
+        //     System.out.println("Nombre Cliente: " + d.getPedido().getCliente().getNombre());
         // }
 
         return "index-new";

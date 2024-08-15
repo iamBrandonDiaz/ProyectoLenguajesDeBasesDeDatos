@@ -79,3 +79,17 @@ BEGIN
     WHERE ID_Cliente = p_id_cliente;
     RETURN l_cursor;
 END buscar_pedidos_por_cliente;
+
+-- Function to search direction by Order ID
+CREATE OR REPLACE FUNCTION buscar_direcciones_por_pedido(p_id_pedido IN NUMBER)
+RETURN SYS_REFCURSOR AS
+    l_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN l_cursor FOR
+    SELECT ID_Direccion, ID_Pedido, Detalles, ID_Distrito
+    FROM Direcciones_Pedido
+    WHERE ID_Pedido = p_id_pedido;
+    RETURN l_cursor;
+END buscar_direcciones_por_pedido;
+
+-- Function to search invoice by Client ID
