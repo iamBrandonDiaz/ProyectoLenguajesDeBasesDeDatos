@@ -24,6 +24,8 @@ import lbd.proyecto.domain.Puesto;
 import lbd.proyecto.service.PuestoService;
 import lbd.proyecto.service.LicenciaService;
 import lbd.proyecto.domain.TipoCarga;
+import lbd.proyecto.domain.Vehiculo;
+import lbd.proyecto.service.VehiculoService;
 import lbd.proyecto.service.TipoCargaService;
 
 @Controller
@@ -53,6 +55,9 @@ public class IndexController {
     @Autowired
     PuestoService puestoService;
     
+    @Autowired
+    VehiculoService vehiculoService;
+
     // Muestra la página principal
     @RequestMapping("/")
     public String page(Model model) {
@@ -182,16 +187,26 @@ public class IndexController {
         // }
 
         // Test getPuesto and getAllPuestos
-        Puesto puesto = new Puesto();
-        puesto.setIdPuesto("MTN-TEC");
-        Puesto puestoResult = puestoService.getPuesto(puesto);
-        System.out.println(puestoResult.toString());
+        // Puesto puesto = new Puesto();
+        // puesto.setIdPuesto("MTN-TEC");
+        // Puesto puestoResult = puestoService.getPuesto(puesto);
+        // System.out.println(puestoResult.toString());
 
-        List<Puesto> puestos = puestoService.getAllPuestos();
-        for (Puesto p : puestos) {
-            System.out.println(p.toString());
+        // List<Puesto> puestos = puestoService.getAllPuestos();
+        // for (Puesto p : puestos) {
+        //     System.out.println(p.toString());
+        // }
+
+        // Test getVehiculo and getAllVehiculos
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setIdVehiculo(1L);
+        Vehiculo vehiculoResult = vehiculoService.getVehiculo(vehiculo);
+        System.out.println(vehiculoResult.toString());
+
+        List<Vehiculo> vehiculos = vehiculoService.getAllVehiculos();
+        for (Vehiculo v : vehiculos) {
+            System.out.println(v.toString());
         }
-
 
         return "index-new";
     }

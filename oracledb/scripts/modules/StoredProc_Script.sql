@@ -436,3 +436,27 @@ BEGIN
     SELECT ID_Puesto, Descripcion, Salario
     FROM Puestos;
 END ver_puestos;
+
+-- SP de objeto Vehiculo
+CREATE OR REPLACE PROCEDURE ver_vehiculo (
+    p_id_vehiculo IN NUMBER,
+    p_marca OUT VARCHAR2,
+    p_modelo OUT VARCHAR2,
+    p_anio OUT INT,
+    p_placa OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Marca, Modelo, Anio, Placa
+    INTO p_marca, p_modelo, p_anio, p_placa
+    FROM Vehiculos
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END ver_vehiculo;
+
+CREATE OR REPLACE PROCEDURE ver_vehiculos (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Vehiculo, Marca, Modelo, Anio, Placa
+    FROM Vehiculos;
+END ver_vehiculos;

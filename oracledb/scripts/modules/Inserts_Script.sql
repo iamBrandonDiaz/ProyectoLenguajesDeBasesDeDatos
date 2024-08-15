@@ -107,4 +107,15 @@ INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('DRV-MGR', 1000000
 INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('MTN-TEC', 850000, 'Tecnico de Mantenimiento');
 INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('MTN-ENG', 1300000, 'Ingeniero de Mantenimiento');
 
+-- Inserts para tabla Vehiculos
+-- Vehículos de carga liviana
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Toyota', 'Hilux', 2018, 'CMV-000');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Nissan', 'Navara', 2019, 'CMV-002');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Mitsubishi', 'L200', 2020, 'CMV-004');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Ford', 'Ranger', 2021, 'CMV-006');
 
+-- Vehículos de carga pesada
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Volvo', 'FH', 2016, '567890');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Scania', 'R450', 2017, '678901');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('Mercedes-Benz', 'Actros', 2018, '789012');
+INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa) VALUES ('MAN', 'TGX', 2019, '890123');

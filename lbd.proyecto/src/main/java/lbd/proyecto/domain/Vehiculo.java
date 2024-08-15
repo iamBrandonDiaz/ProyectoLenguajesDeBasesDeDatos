@@ -22,7 +22,7 @@ public class Vehiculo implements Serializable {
     private String placa; // Column => placa
     private String marca; // Column => marca
     private String modelo; // Column => modelo
-    private String year; // Column => year
+    private Integer anio; // Column => anio
 
     //Relationship with table Pedido
     @OneToMany(mappedBy = "vehiculo") // One vehicle can be assigned to many orders
@@ -32,11 +32,11 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(String placa, String marca, String modelo, String year) {
+    public Vehiculo(String placa, String marca, String modelo, Integer anio) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
-        this.year = year;
+        this.anio = anio;
     }
 
 }
