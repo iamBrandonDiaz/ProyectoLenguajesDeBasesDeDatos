@@ -1,14 +1,14 @@
 package lbd.proyecto.dao.direcciones;
 
-import java.util.List;
+
 
 // External imports
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import java.util.List;
 
-import lbd.proyecto.domain.Cliente;
 // Internal imports
 import lbd.proyecto.domain.direcciones.DireccionCliente;
 

@@ -126,3 +126,11 @@ INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, I
 INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Pedro', 'Rodriguez', TO_DATE('1994-04-04', 'YYYY-MM-DD'), TO_DATE('2022-02-02', 'YYYY-MM-DD'), 'DRV-03');
 INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Ana', 'Jimenez', TO_DATE('1995-05-05', 'YYYY-MM-DD'), TO_DATE('2024-12-22', 'YYYY-MM-DD'), 'MTN-TEC');
 INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion, ID_Puesto) VALUES ('Luis', 'Hernandez', TO_DATE('1990-10-10', 'YYYY-MM-DD'), TO_DATE('2023-03-03', 'YYYY-MM-DD'), 'MTN-ENG');
+
+-- Inserts para tabla Licencias_Empleado
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (1, 1, TO_DATE('2020-01-01', 'YYYY-MM-DD'), TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (2, 2, TO_DATE('2021-11-11', 'YYYY-MM-DD'), TO_DATE('2026-11-11', 'YYYY-MM-DD'));
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (3, 3, TO_DATE('2022-02-02', 'YYYY-MM-DD'), TO_DATE('2027-02-02', 'YYYY-MM-DD'));
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (4, 4, TO_DATE('2024-12-22', 'YYYY-MM-DD'), TO_DATE('2029-12-22', 'YYYY-MM-DD'));
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (5, 5, TO_DATE('2023-03-03', 'YYYY-MM-DD'), TO_DATE('2028-03-03', 'YYYY-MM-DD'));
+INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento) VALUES (2, 13, TO_DATE('2030-03-03', 'YYYY-MM-DD'), TO_DATE('2035-03-03', 'YYYY-MM-DD'));

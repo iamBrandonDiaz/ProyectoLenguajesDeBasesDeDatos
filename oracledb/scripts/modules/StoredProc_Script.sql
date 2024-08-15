@@ -456,3 +456,62 @@ BEGIN
     DELETE FROM Vehiculos
     WHERE ID_Vehiculo = p_id_vehiculo;
 END eliminar_vehiculo;
+
+-- SP de objeto Licencia_Empleado
+CREATE OR REPLACE PROCEDURE insertar_licencia_empleado (
+    p_id_empleado IN NUMBER,
+    p_id_licencia IN NUMBER,
+    p_fecha_expedicion IN DATE,
+    p_fecha_vencimiento IN DATE
+) AS
+BEGIN
+    INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento)
+    VALUES (p_id_empleado, p_id_licencia, p_fecha_expedicion, p_fecha_vencimiento);
+END insertar_licencia_empleado;
+
+CREATE OR REPLACE PROCEDURE ver_licencia_empleado (
+    p_id_licencia_empleado IN NUMBER,
+    p_id_empleado OUT NUMBER,
+    p_id_licencia OUT NUMBER,
+    p_fecha_expedicion OUT DATE,
+    p_fecha_vencimiento OUT DATE
+) AS
+BEGIN
+    SELECT ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento
+    INTO p_id_empleado, p_id_licencia, p_fecha_expedicion, p_fecha_vencimiento
+    FROM Licencias_Empleado
+    WHERE ID_Licencia_Empleado = p_id_licencia_empleado;
+END ver_licencia_empleado;
+
+CREATE OR REPLACE PROCEDURE ver_licencias_empleados (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Licencia_Empleado, ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento
+    FROM Licencias_Empleado;
+END ver_licencias_empleados;
+
+CREATE OR REPLACE PROCEDURE actualizar_licencia_empleado (
+    p_id_licencia_empleado IN NUMBER,
+    p_id_licencia IN NUMBER,
+    p_fecha_expedicion IN DATE,
+    p_fecha_vencimiento IN DATE
+) AS
+BEGIN
+    UPDATE Licencias_Empleado
+    SET ID_Licencia = p_id_licencia,
+        Fecha_Expedicion = p_fecha_expedicion,
+        Fecha_Vencimiento = p_fecha_vencimiento
+    WHERE ID_Licencia_Empleado = p_id_licencia_empleado;
+END actualizar_licencia_empleado;
+
+CREATE OR REPLACE PROCEDURE eliminar_licencia_empleado (
+    p_id_licencia_empleado IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Licencias_Empleado
+    WHERE ID_Licencia_Empleado = p_id_licencia_empleado;
+END eliminar_licencia_empleado;
+
+

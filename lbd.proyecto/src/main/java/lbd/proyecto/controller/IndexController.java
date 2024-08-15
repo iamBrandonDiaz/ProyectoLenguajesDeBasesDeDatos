@@ -22,6 +22,8 @@ import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
 import lbd.proyecto.domain.Licencia;
+import lbd.proyecto.domain.LicenciaEmpleado;
+import lbd.proyecto.service.LicenciaEmpleadoService;
 import lbd.proyecto.domain.Puesto;
 import lbd.proyecto.service.PuestoService;
 import lbd.proyecto.service.LicenciaService;
@@ -63,6 +65,8 @@ public class IndexController {
     @Autowired
     VehiculoService vehiculoService;
 
+    @Autowired
+    LicenciaEmpleadoService licenciaEmpleadoService;
     
 
     // Muestra la página principal
@@ -130,7 +134,7 @@ public class IndexController {
         // System.out.println(direccionClienteResult.toString());
         // System.out.println(direccionClienteResult.getDistrito().toString());
 
-        //Test getAllDirecciones_Clientes
+        // Test getAllDirecciones_Clientes
         // List<DireccionCliente> direcciones = direccionClienteService.getAllDirecciones();
         // for (DireccionCliente d : direcciones) {
         //     System.out.println(d.toString());
@@ -276,10 +280,52 @@ public class IndexController {
         // empleadoService.updateEmpleado(empleado.getIdEmpleado(), empleado);
 
         // Test deleteEmpleado
-        Empleado empleado = new Empleado();
-        empleado.setIdEmpleado(8L);
-        empleadoService.deleteEmpleado(empleado.getIdEmpleado());
-        
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(8L);
+        // empleadoService.deleteEmpleado(empleado.getIdEmpleado());
+
+        // Test insertLicenciaEmpleado
+        // Licencia licencia = new Licencia();
+        // licencia.setIdLicencia(5L);
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(3L);
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setFechaExpedicion(empleadoService.convertDate("1980-06-01"));
+        // licenciaEmpleado.setFechaVencimiento(empleadoService.convertDate("1985-06-01"));
+        // licenciaEmpleado.setLicencia(licencia);
+        // licenciaEmpleado.setEmpleado(empleado);
+        // licenciaEmpleadoService.insertLicenciaEmpleado(licenciaEmpleado, empleado, licencia);
+
+        // Test updateLicenciaEmpleado
+        // Licencia licencia = new Licencia();
+        // licencia.setIdLicencia(7L);
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setIdLicenciaEmpleado(6L);
+        // licenciaEmpleado.setFechaExpedicion(empleadoService.convertDate("1983-12-12"));
+        // licenciaEmpleado.setFechaVencimiento(empleadoService.convertDate("1988-12-12"));
+        // licenciaEmpleado.setLicencia(licencia);
+        // licenciaEmpleadoService.updateLicenciaEmpleado(licencia, licenciaEmpleado);
+
+        // Test deleteLicenciaEmpleado
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setIdLicenciaEmpleado(7L);
+        // licenciaEmpleadoService.deleteLicenciaEmpleado(licenciaEmpleado);
+
+        // Test getLicenciaEmpleado
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setIdLicenciaEmpleado(8L);
+        // LicenciaEmpleado licenciaEmpleadoResult = licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado);
+        // System.out.println(licenciaEmpleadoResult.toString());
+        // System.out.println(licenciaEmpleadoResult.getLicencia().toString());
+        // System.out.println(licenciaEmpleadoResult.getEmpleado().toString());
+
+        // Test getAllLicenciasEmpleado
+        List<LicenciaEmpleado> licenciasEmpleado = licenciaEmpleadoService.getAllLicenciasEmpleados();
+        for (LicenciaEmpleado le : licenciasEmpleado) {
+            System.out.println(le.toString());
+            System.out.println(le.getLicencia().toString());
+            System.out.println(le.getEmpleado().toString());
+        }
 
         return "index-new";
     }
