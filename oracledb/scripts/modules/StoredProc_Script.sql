@@ -52,60 +52,6 @@ BEGIN
     WHERE ID_Empleado = p_id_empleado;
 END eliminar_empleado;
 
-/* SP de objeto Vehiculo */
-CREATE OR REPLACE PROCEDURE insertar_vehiculo (
-    p_marca IN VARCHAR2,
-    p_modelo IN VARCHAR2,
-    p_anio IN NUMBER,
-    p_placa IN VARCHAR2
-) AS
-BEGIN
-    INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa)
-    VALUES (p_marca, p_modelo, p_anio, p_placa);
-END insertar_vehiculo;
-
-
-CREATE OR REPLACE PROCEDURE ver_vehiculo (
-    p_id_vehiculo IN NUMBER,
-    p_marca OUT VARCHAR2,
-    p_modelo OUT VARCHAR2,
-    p_anio OUT NUMBER,
-    p_placa OUT VARCHAR2
-) AS
-BEGIN
-    SELECT Marca, Modelo, Anio, Placa
-    INTO p_marca, p_modelo, p_anio, p_placa
-    FROM Vehiculos
-    WHERE ID_Vehiculo = p_id_vehiculo;
-END ver_vehiculo;
-
-
-CREATE OR REPLACE PROCEDURE actualizar_vehiculo (
-    p_id_vehiculo IN NUMBER,
-    p_marca IN VARCHAR2,
-    p_modelo IN VARCHAR2,
-    p_anio IN NUMBER,
-    p_placa IN VARCHAR2
-) AS
-BEGIN
-    UPDATE Vehiculos
-    SET Marca = p_marca,
-        Modelo = p_modelo,
-        Anio = p_anio,
-        Placa = p_placa
-    WHERE ID_Vehiculo = p_id_vehiculo;
-END actualizar_vehiculo;
-
-
-CREATE OR REPLACE PROCEDURE eliminar_vehiculo (
-    p_id_vehiculo IN NUMBER
-) AS
-BEGIN
-    DELETE FROM Vehiculos
-    WHERE ID_Vehiculo = p_id_vehiculo;
-END eliminar_vehiculo;
-
-
 /* SP de objeto Pedido */
 CREATE OR REPLACE PROCEDURE insertar_pedido (
     p_id_cliente IN NUMBER,
@@ -460,3 +406,40 @@ BEGIN
     SELECT ID_Vehiculo, Marca, Modelo, Anio, Placa
     FROM Vehiculos;
 END ver_vehiculos;
+
+CREATE OR REPLACE PROCEDURE insertar_vehiculo (
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa)
+    VALUES (p_marca, p_modelo, p_anio, p_placa);
+END insertar_vehiculo;
+
+
+CREATE OR REPLACE PROCEDURE actualizar_vehiculo (
+    p_id_vehiculo IN NUMBER,
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+) AS
+BEGIN
+    UPDATE Vehiculos
+    SET Marca = p_marca,
+        Modelo = p_modelo,
+        Anio = p_anio,
+        Placa = p_placa
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END actualizar_vehiculo;
+
+
+CREATE OR REPLACE PROCEDURE eliminar_vehiculo (
+    p_id_vehiculo IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Vehiculos
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END eliminar_vehiculo;

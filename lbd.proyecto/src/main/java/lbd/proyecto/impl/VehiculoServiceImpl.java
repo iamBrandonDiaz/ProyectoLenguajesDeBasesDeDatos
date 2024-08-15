@@ -11,6 +11,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.checkerframework.checker.units.qual.A;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
@@ -35,11 +36,32 @@ import lbd.proyecto.service.VehiculoService;
 @Service
 public class VehiculoServiceImpl implements VehiculoService {
     
+    @Autowired
+    private VehiculoDAO vehiculoDAO;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
     private TransactionTemplate transactionTemplate;
+
+    @Override
+    @Transactional
+    public void insertVehiculo(Vehiculo vehiculo) {
+        vehiculoDAO.insertVehiculo(vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getAnio(), vehiculo.getPlaca());
+    }
+
+    @Override
+    @Transactional
+    public void updateVehiculo(Long idVehiculo, Vehiculo vehiculo) {
+        vehiculoDAO.updateVehiculo(idVehiculo, vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getAnio(), vehiculo.getPlaca());
+    }
+
+    @Override
+    @Transactional
+    public void deleteVehiculo(Long idVehiculo) {
+        vehiculoDAO.deleteVehiculo(idVehiculo);
+    }
 
     @Override
     public Vehiculo getVehiculo(Vehiculo vehiculo) {

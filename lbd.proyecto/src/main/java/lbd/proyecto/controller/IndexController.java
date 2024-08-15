@@ -198,15 +198,37 @@ public class IndexController {
         // }
 
         // Test getVehiculo and getAllVehiculos
-        Vehiculo vehiculo = new Vehiculo();
-        vehiculo.setIdVehiculo(1L);
-        Vehiculo vehiculoResult = vehiculoService.getVehiculo(vehiculo);
-        System.out.println(vehiculoResult.toString());
+        // Vehiculo vehiculo = new Vehiculo();
+        // vehiculo.setIdVehiculo(1L);
+        // Vehiculo vehiculoResult = vehiculoService.getVehiculo(vehiculo);
+        // System.out.println(vehiculoResult.toString());
 
-        List<Vehiculo> vehiculos = vehiculoService.getAllVehiculos();
-        for (Vehiculo v : vehiculos) {
-            System.out.println(v.toString());
-        }
+        // List<Vehiculo> vehiculos = vehiculoService.getAllVehiculos();
+        // for (Vehiculo v : vehiculos) {
+        //     System.out.println(v.toString());
+        // }
+
+        // Test insertVehiculo
+        // Vehiculo vehiculo = new Vehiculo("123-TST", "Toyota", "Corolla", 2015);
+        // vehiculoService.insertVehiculo(vehiculo);
+
+        // Test updateVehiculo
+        // Vehiculo vehiculo = new Vehiculo();
+        // vehiculo.setIdVehiculo(9L);
+        // vehiculo.setMarca("Chevrolet");
+        // vehiculo.setModelo("Concord");
+        // vehiculo.setAnio(2010);
+        // vehiculo.setPlaca("456-DEF");
+        // vehiculoService.updateVehiculo(vehiculo.getIdVehiculo(), vehiculo);
+
+        // Test deleteVehiculo
+        // Vehiculo vehiculo = new Vehiculo();
+        // vehiculo.setIdVehiculo(11L);
+        // vehiculoService.deleteVehiculo(vehiculo.getIdVehiculo());
+
+        
+
+
 
         return "index-new";
     }
