@@ -41,7 +41,7 @@ public class Pedido implements Serializable {
 
     //Relationship with table Tipos_Carga
     @ManyToOne // Many orders can be assigned to one type of load
-    @JoinColumn(name = "id_tipo") // Foreign key
+    @JoinColumn(name = "id_tipo_carga") // Foreign key
     private TipoCarga tiposCarga; // Type of load
 
     //Relationship with table Estado
@@ -54,6 +54,10 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "id_direccion_cliente") // Foreign key
     private DireccionCliente direccionCliente; // Client address
 
+    //Relationship with table Licencias_Empleado
+    @ManyToOne // Many orders can be assigned to one employee license
+    @JoinColumn(name = "id_licencia_empleado") // Foreign key
+    private LicenciaEmpleado licenciaEmpleado; // Employee license
 
     //Relationship with table Facturas
     @OneToOne // One order can have one invoice

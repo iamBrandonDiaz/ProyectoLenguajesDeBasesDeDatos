@@ -65,60 +65,6 @@ BEGIN
     WHERE ID_Empleado = p_id_empleado;
 END eliminar_empleado;
 
-/* SP de objeto Pedido */
-CREATE OR REPLACE PROCEDURE insertar_pedido (
-    p_id_cliente IN NUMBER,
-    p_fecha IN DATE,
-    p_monto IN NUMBER,
-    p_id_estado IN NUMBER
-) AS
-BEGIN
-    INSERT INTO Pedidos (ID_Cliente, Fecha, Monto, ID_Estado)
-    VALUES (p_id_cliente, p_fecha, p_monto, p_id_estado);
-END insertar_pedido;
-
-
-CREATE OR REPLACE PROCEDURE ver_pedido (
-    p_id_pedido IN NUMBER,
-    p_id_cliente OUT NUMBER,
-    p_fecha OUT DATE,
-    p_monto OUT NUMBER,
-    p_id_estado OUT NUMBER
-) AS
-BEGIN
-    SELECT ID_Cliente, Fecha, Monto, ID_Estado
-    INTO p_id_cliente, p_fecha, p_monto, p_id_estado
-    FROM Pedidos
-    WHERE ID_Pedido = p_id_pedido;
-END ver_pedido;
-
-
-CREATE OR REPLACE PROCEDURE actualizar_pedido (
-    p_id_pedido IN NUMBER,
-    p_id_cliente IN NUMBER,
-    p_fecha IN DATE,
-    p_monto IN NUMBER,
-    p_id_estado IN NUMBER
-) AS
-BEGIN
-    UPDATE Pedidos
-    SET ID_Cliente = p_id_cliente,
-        Fecha = p_fecha,
-        Monto = p_monto,
-        ID_Estado = p_id_estado
-    WHERE ID_Pedido = p_id_pedido;
-END actualizar_pedido;
-
-
-CREATE OR REPLACE PROCEDURE eliminar_pedido (
-    p_id_pedido IN NUMBER
-) AS
-BEGIN
-    DELETE FROM Pedidos
-    WHERE ID_Pedido = p_id_pedido;
-END eliminar_pedido;
-
-
 /* SP de objeto Cliente */
 CREATE OR REPLACE PROCEDURE insertar_cliente (
     p_nombre IN VARCHAR2,
@@ -585,3 +531,103 @@ BEGIN
     DELETE FROM Direcciones_Empleado
     WHERE ID_Direccion = p_id_direccion;
 END eliminar_direccion_empleado;
+
+-- SP de objeto Pedido
+CREATE OR REPLACE PROCEDURE insertar_pedido (
+    p_descripcion IN VARCHAR2,
+    p_id_cliente IN NUMBER,
+    p_id_vehiculo IN NUMBER,
+    p_id_tipo_carga IN NUMBER,
+    p_fecha IN DATE,
+    p_id_estado IN NUMBER,
+    p_id_licencia_empleado IN NUMBER
+) AS
+BEGIN
+    INSERT INTO Pedidos (Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado)
+    VALUES (p_descripcion, p_id_cliente, p_id_vehiculo, p_id_tipo_carga, p_fecha, p_id_estado, p_id_licencia_empleado);
+END insertar_pedido;
+
+CREATE OR REPLACE PROCEDURE ver_pedido (
+    p_id_pedido IN NUMBER,
+    p_descripcion OUT VARCHAR2,
+    p_id_cliente OUT NUMBER,
+    p_id_vehiculo OUT NUMBER,
+    p_id_tipo_carga OUT NUMBER,
+    p_fecha OUT DATE,
+    p_id_estado OUT NUMBER,
+    p_id_licencia_empleado OUT NUMBER
+) AS
+BEGIN
+    SELECT Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado
+    INTO p_descripcion, p_id_cliente, p_id_vehiculo, p_id_tipo_carga, p_fecha, p_id_estado, p_id_licencia_empleado
+    FROM Pedidos
+    WHERE ID_Pedido = p_id_pedido;
+END ver_pedido;
+
+CREATE OR REPLACE PROCEDURE ver_pedidos (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Pedido, Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado
+    FROM Pedidos;
+END ver_pedidos;
+
+-- Test ver_pedidos
+DECLARE
+    v_id_pedido Pedidos.ID_Pedido%TYPE;
+    v_descripcion Pedidos.Descripcion%TYPE;
+    v_id_cliente Pedidos.ID_Cliente%TYPE;
+    v_id_vehiculo Pedidos.ID_Vehiculo%TYPE;
+    v_id_tipo_carga Pedidos.ID_Tipo_Carga%TYPE;
+    v_fecha Pedidos.Fecha%TYPE;
+    v_id_estado Pedidos.ID_Estado%TYPE;
+    v_id_licencia_empleado Pedidos.ID_Licencia_Empleado%TYPE;
+    v_cursor SYS_REFCURSOR;
+BEGIN
+    ver_pedidos(v_cursor);
+    LOOP
+        FETCH v_cursor INTO v_id_pedido, v_descripcion, v_id_cliente, v_id_vehiculo, v_id_tipo_carga, v_fecha, v_id_estado, v_id_licencia_empleado;
+        EXIT WHEN v_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID_Pedido: ' || v_id_pedido);
+        DBMS_OUTPUT.PUT_LINE('Descripcion: ' || v_descripcion);
+        DBMS_OUTPUT.PUT_LINE('ID_Cliente: ' || v_id_cliente);
+        DBMS_OUTPUT.PUT_LINE('ID_Vehiculo: ' || v_id_vehiculo);
+        DBMS_OUTPUT.PUT_LINE('ID_Tipo_Carga: ' || v_id_tipo_carga);
+        DBMS_OUTPUT.PUT_LINE('Fecha: ' || v_fecha);
+        DBMS_OUTPUT.PUT_LINE('ID_Estado: ' || v_id_estado);
+        DBMS_OUTPUT.PUT_LINE('ID_Licencia_Empleado: ' || v_id_licencia_empleado);
+        DBMS_OUTPUT.PUT_LINE('-------------------------');
+    END LOOP;
+    CLOSE v_cursor;
+END;
+
+CREATE OR REPLACE PROCEDURE actualizar_pedido (
+    p_id_pedido IN NUMBER,
+    p_descripcion IN VARCHAR2,
+    p_id_cliente IN NUMBER,
+    p_id_vehiculo IN NUMBER,
+    p_id_tipo_carga IN NUMBER,
+    p_fecha IN DATE,
+    p_id_estado IN NUMBER,
+    p_id_licencia_empleado IN NUMBER
+) AS
+BEGIN
+    UPDATE Pedidos
+    SET Descripcion = p_descripcion,
+        ID_Cliente = p_id_cliente,
+        ID_Vehiculo = p_id_vehiculo,
+        ID_Tipo_Carga = p_id_tipo_carga,
+        Fecha = p_fecha,
+        ID_Estado = p_id_estado,
+        ID_Licencia_Empleado = p_id_licencia_empleado
+    WHERE ID_Pedido = p_id_pedido;
+END actualizar_pedido;
+
+CREATE OR REPLACE PROCEDURE eliminar_pedido (
+    p_id_pedido IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Pedidos
+    WHERE ID_Pedido = p_id_pedido;
+END eliminar_pedido;

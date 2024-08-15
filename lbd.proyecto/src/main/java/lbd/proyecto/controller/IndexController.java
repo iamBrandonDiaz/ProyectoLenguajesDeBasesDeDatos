@@ -25,6 +25,8 @@ import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
 import lbd.proyecto.domain.Licencia;
 import lbd.proyecto.domain.LicenciaEmpleado;
+import lbd.proyecto.domain.Pedido;
+import lbd.proyecto.service.PedidoService;
 import lbd.proyecto.service.LicenciaEmpleadoService;
 import lbd.proyecto.domain.Puesto;
 import lbd.proyecto.service.PuestoService;
@@ -73,6 +75,8 @@ public class IndexController {
     @Autowired
     LicenciaEmpleadoService licenciaEmpleadoService;
     
+    @Autowired
+    PedidoService pedidoService;
 
     // Muestra la página principal
     @RequestMapping("/")
@@ -374,22 +378,104 @@ public class IndexController {
         // }
 
         // Test searchDireccionesByEmpleado
-        List<DireccionEmpleado> direcciones = direccionEmpleadoService.searchDireccionesByEmpleado(5L);
-        for (DireccionEmpleado d : direcciones) {
-            System.out.println("----- DIRECCION -----");
-            System.out.println("ID Dirección: " + d.getIdDireccion());
-            System.out.println("Detalles: " + d.getDetalles());
-            System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
-            System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
-            System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
-            System.out.println("ID Empleado: " + d.getEmpleado().getIdEmpleado());
-            System.out.println("Nombre Empleado: " + d.getEmpleado().getNombre());
-            System.out.println("Apellido Empleado: " + d.getEmpleado().getApellido());
-            System.out.println("Fecha Nacimiento Empleado: " + d.getEmpleado().getFechaNacimiento());
-            System.out.println("Fecha Contratacion Empleado: " + d.getEmpleado().getFechaContratacion());
-            System.out.println("Puesto Empleado: " + d.getEmpleado().getPuesto().toString());
-        }
+        // List<DireccionEmpleado> direcciones = direccionEmpleadoService.searchDireccionesByEmpleado(5L);
+        // for (DireccionEmpleado d : direcciones) {
+        //     System.out.println("----- DIRECCION -----");
+        //     System.out.println("ID Dirección: " + d.getIdDireccion());
+        //     System.out.println("Detalles: " + d.getDetalles());
+        //     System.out.println("ID Distrito: " + d.getDistrito().getIdDistrito() + " Nombre Distrito: " + d.getDistrito().getNombre());
+        //     System.out.println("ID Canton: " + d.getDistrito().getCanton().getIdCanton() + " Nombre Canton: " + d.getDistrito().getCanton().getNombre());
+        //     System.out.println("ID Provincia: " + d.getDistrito().getCanton().getProvincia().getIdProvincia() + " Nombre Provincia: " + d.getDistrito().getCanton().getProvincia().getNombre());
+        //     System.out.println("ID Empleado: " + d.getEmpleado().getIdEmpleado());
+        //     System.out.println("Nombre Empleado: " + d.getEmpleado().getNombre());
+        //     System.out.println("Apellido Empleado: " + d.getEmpleado().getApellido());
+        //     System.out.println("Fecha Nacimiento Empleado: " + d.getEmpleado().getFechaNacimiento());
+        //     System.out.println("Fecha Contratacion Empleado: " + d.getEmpleado().getFechaContratacion());
+        //     System.out.println("Puesto Empleado: " + d.getEmpleado().getPuesto().toString());
+        // }
 
+        // Test insertPedido
+        // Pedido pedido = new Pedido();
+        // pedido.setFechaPedido(empleadoService.convertDate("2022-12-22"));
+        // pedido.setDescripcion("Duplicado de prueba");
+        // Cliente cliente = new Cliente();
+        // cliente.setIdCliente(6L);
+        // pedido.setCliente(cliente);
+        // Vehiculo vehiculo = new Vehiculo();
+        // vehiculo.setIdVehiculo(6L);
+        // pedido.setVehiculo(vehiculo);
+        // TipoCarga tipoCarga = new TipoCarga();
+        // tipoCarga.setIdTipo(2L);
+        // pedido.setTiposCarga(tipoCarga);
+        // Estado estado = new Estado();
+        // estado.setIdEstado(4L);
+        // pedido.setEstado(estado);
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setIdLicenciaEmpleado(8L);
+        // pedido.setLicenciaEmpleado(licenciaEmpleado);
+        // pedidoService.insertPedido(pedido, cliente, vehiculo, tipoCarga, estado, licenciaEmpleado);
+
+        // Test updatePedido
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(7L);
+        // pedido.setFechaPedido(empleadoService.convertDate("2033-03-03"));
+        // pedido.setDescripcion("Update de prueba");
+        // Cliente cliente = new Cliente();
+        // cliente.setIdCliente(1L);
+        // pedido.setCliente(cliente);
+        // Vehiculo vehiculo = new Vehiculo();
+        // vehiculo.setIdVehiculo(1L);
+        // pedido.setVehiculo(vehiculo);
+        // TipoCarga tipoCarga = new TipoCarga();
+        // tipoCarga.setIdTipo(1L);
+        // pedido.setTiposCarga(tipoCarga);
+        // Estado estado = new Estado();
+        // estado.setIdEstado(1L);
+        // pedido.setEstado(estado);
+        // LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        // licenciaEmpleado.setIdLicenciaEmpleado(1L);
+        // pedido.setLicenciaEmpleado(licenciaEmpleado);
+        // pedidoService.updatePedido(pedido, cliente, vehiculo, tipoCarga, estado, licenciaEmpleado);
+
+        // Test deletePedido
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(8L);
+        // pedidoService.deletePedido(pedido);
+
+        // Test getPedido
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(6L);
+        // Pedido pedidoResult = pedidoService.getPedido(pedido);  
+        // System.out.println(pedidoResult.toString());
+        // System.out.println(pedidoResult.getCliente().toString());
+        // System.out.println(pedidoResult.getVehiculo().toString());
+        // System.out.println(pedidoResult.getTiposCarga().toString());
+        // System.out.println(pedidoResult.getEstado().toString());
+        // System.out.println(pedidoResult.getLicenciaEmpleado().toString());
+
+        // Test getAllPedidos
+        // List<Pedido> pedidos = pedidoService.getAllPedidos();
+        // for (Pedido p : pedidos) {
+        //     System.out.println("----- PEDIDO -----");
+        //     System.out.println(p.toString());
+        //     System.out.println(p.getCliente().toString());
+        //     System.out.println(p.getVehiculo().toString());
+        //     System.out.println(p.getTiposCarga().toString());
+        //     System.out.println(p.getEstado().toString());
+        //     System.out.println(p.getLicenciaEmpleado().toString());
+        // }
+
+        // Test searchPedidosByCliente
+        // List<Pedido> pedidos = pedidoService.searchPedidosByCliente(1L);
+        // for (Pedido p : pedidos) {
+        //     System.out.println("----- PEDIDO -----");
+        //     System.out.println(p.toString());
+        //     System.out.println(p.getCliente().toString());
+        //     System.out.println(p.getVehiculo().toString());
+        //     System.out.println(p.getTiposCarga().toString());
+        //     System.out.println(p.getEstado().toString());
+        //     System.out.println(p.getLicenciaEmpleado().toString());
+        // }
 
         return "index-new";
     }

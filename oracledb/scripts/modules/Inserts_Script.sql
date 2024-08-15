@@ -139,3 +139,8 @@ INSERT INTO Licencias_Empleado (ID_Empleado, ID_Licencia, Fecha_Expedicion, Fech
 INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (1, 1, 1, 1, 'Calle 1, Casa 2');
 INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (2, 2, 4, 10, 'Calle 2, Casa 3');
 INSERT INTO Direcciones_Empleado (ID_Empleado, ID_Provincia, ID_Canton, ID_Distrito, Detalles) VALUES (3, 3, 7, 19, 'Calle 3, Casa 4');
+
+-- Inserts para tabla Pedidos
+INSERT INTO Pedidos (Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado) VALUES ('Pedido 1', 1, 1, 1, TO_DATE('2022-01-01', 'YYYY-MM-DD'), 3, 1);
+INSERT INTO Pedidos (Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado) VALUES ('Pedido 2', 2, 2, 2, TO_DATE('2022-02-02', 'YYYY-MM-DD'), 3, 2);
+INSERT INTO Pedidos (Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado) VALUES ('Pedido 3', 4, 3, 3, TO_DATE('2022-03-03', 'YYYY-MM-DD'), 3, 3);

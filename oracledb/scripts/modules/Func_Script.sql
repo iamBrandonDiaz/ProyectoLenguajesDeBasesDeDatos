@@ -67,3 +67,15 @@ BEGIN
     WHERE ID_Empleado = p_id_empleado;
     RETURN l_cursor;
 END buscar_direcciones_por_empleado;
+
+-- Function to search order by client ID
+CREATE OR REPLACE FUNCTION buscar_pedidos_por_cliente(p_id_cliente IN NUMBER)
+RETURN SYS_REFCURSOR AS
+    l_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN l_cursor FOR
+    SELECT ID_Pedido, Descripcion, ID_Cliente, ID_Vehiculo, ID_Tipo_Carga, Fecha, ID_Estado, ID_Licencia_Empleado
+    FROM Pedidos
+    WHERE ID_Cliente = p_id_cliente;
+    RETURN l_cursor;
+END buscar_pedidos_por_cliente;
