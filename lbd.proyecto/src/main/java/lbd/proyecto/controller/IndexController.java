@@ -12,6 +12,8 @@ import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.domain.Empleado;
 import lbd.proyecto.service.EmpleadoService;
 import lbd.proyecto.domain.Estado;
+import lbd.proyecto.domain.Factura;
+import lbd.proyecto.service.FacturaService;
 import lbd.proyecto.service.EstadoService;
 import lbd.proyecto.domain.direcciones.Canton;
 import lbd.proyecto.domain.direcciones.DireccionCliente;
@@ -82,6 +84,9 @@ public class IndexController {
 
     @Autowired
     DireccionPedidoService direccionPedidoService;
+
+    @Autowired
+    FacturaService facturaService;
 
     // Muestra la página principal
     @RequestMapping("/")
@@ -554,6 +559,64 @@ public class IndexController {
         //     System.out.println("Descripcion Pedido: " + d.getPedido().getDescripcion());
         //     System.out.println("ID Cliente: " + d.getPedido().getCliente().getIdCliente());
         //     System.out.println("Nombre Cliente: " + d.getPedido().getCliente().getNombre());
+        // }
+
+        // Test insertFactura
+        // Factura factura = new Factura();
+        // factura.setFecha(empleadoService.convertDate("2044-12-04"));
+        // factura.setTotal(450000.00);
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(7L);
+        // factura.setPedido(pedido);
+        // Estado estado = new Estado();
+        // estado.setIdEstado(2L);
+        // factura.setEstado(estado);
+        // facturaService.insertFactura(factura, pedido, estado);
+
+        // Test updateFactura
+        // Factura factura = new Factura();
+        // factura.setIdFactura(6L);
+        // factura.setFecha(empleadoService.convertDate("2012-12-12"));
+        // factura.setTotal(500000.00);
+        // Estado estado = new Estado();
+        // estado.setIdEstado(4L);
+        // factura.setEstado(estado);
+        // facturaService.updateFactura(factura, estado);
+
+        // Test deleteFactura
+        // Factura factura = new Factura();
+        // factura.setIdFactura(8L);
+        // facturaService.deleteFactura(factura);
+
+        // Test getFactura
+        // Factura factura = new Factura();
+        // factura.setIdFactura(7L);
+        // Factura facturaResult = facturaService.getFactura(factura);
+        // System.out.println("ID Factura: " + facturaResult.getIdFactura());
+        // System.out.println("Fecha Factura: " + facturaResult.getFecha());
+        // System.out.println("Total Factura: " + facturaResult.getTotal());
+        // System.out.println("ID Estado: " + facturaResult.getEstado().getIdEstado());
+        // System.out.println("Nombre Estado: " + facturaResult.getEstado().getDescripcion());
+        // System.out.println("ID Pedido: " + facturaResult.getPedido().getIdPedido());
+        // System.out.println("Fecha Pedido: " + facturaResult.getPedido().getFechaPedido());
+        // System.out.println("Descripcion Pedido: " + facturaResult.getPedido().getDescripcion());
+        // System.out.println("ID Cliente: " + facturaResult.getPedido().getCliente().getIdCliente());
+        // System.out.println("Nombre Cliente: " + facturaResult.getPedido().getCliente().getNombre());
+
+        // Test getAllFacturas
+        // List<Factura> facturas = facturaService.getAllFacturas();
+        // for (Factura f : facturas) {
+        //     System.out.println("----- FACTURA -----");
+        //     System.out.println("ID Factura: " + f.getIdFactura());
+        //     System.out.println("Fecha Factura: " + f.getFecha());
+        //     System.out.println("Total Factura: " + f.getTotal());
+        //     System.out.println("ID Estado: " + f.getEstado().getIdEstado());
+        //     System.out.println("Nombre Estado: " + f.getEstado().getDescripcion());
+        //     System.out.println("ID Pedido: " + f.getPedido().getIdPedido());
+        //     System.out.println("Fecha Pedido: " + f.getPedido().getFechaPedido());
+        //     System.out.println("Descripcion Pedido: " + f.getPedido().getDescripcion());
+        //     System.out.println("ID Cliente: " + f.getPedido().getCliente().getIdCliente());
+        //     System.out.println("Nombre Cliente: " + f.getPedido().getCliente().getNombre());
         // }
 
         return "index-new";

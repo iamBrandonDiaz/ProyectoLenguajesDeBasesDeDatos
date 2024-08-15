@@ -729,15 +729,13 @@ END ver_facturas;
 
 CREATE OR REPLACE PROCEDURE actualizar_factura (
     p_id_factura IN NUMBER,
-    p_id_pedido IN NUMBER,
     p_fecha IN DATE,
     p_total IN NUMBER,
     p_id_estado IN NUMBER
 ) AS
 BEGIN
     UPDATE Facturas
-    SET ID_Pedido = p_id_pedido,
-        Fecha = p_fecha,
+    SET Fecha = p_fecha,
         Total = p_total,
         ID_Estado = p_id_estado
     WHERE ID_Factura = p_id_factura;

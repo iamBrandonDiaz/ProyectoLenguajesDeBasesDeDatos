@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import oracle.jdbc.OracleTypes;
-import oracle.ons.Cli;
+
 // Internal imports
 import lbd.proyecto.domain.Pedido;
 import lbd.proyecto.domain.Cliente;
