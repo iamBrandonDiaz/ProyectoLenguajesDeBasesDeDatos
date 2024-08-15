@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.persistence.NoResultException;
 // Internal imports
 import lbd.proyecto.domain.Cliente;
+import lbd.proyecto.domain.direcciones.DireccionCliente;
 import lbd.proyecto.service.ClienteService;
+import lbd.proyecto.service.direcciones.DireccionClienteService;
 
 @Controller
 @RequestMapping("/clientes")
@@ -25,6 +27,9 @@ public class ClienteController {
     
     @Autowired
     ClienteService clienteService;
+
+    @Autowired
+    DireccionClienteService direccionClienteService;
 
     // Add
     // @GetMapping("/add-test")
@@ -176,4 +181,31 @@ public class ClienteController {
         model.addAttribute("idBusqueda", idBusqueda);
         return "/cliente/ver";
     }
+
+    // Direccion
+
+    @GetMapping("{idCliente}/dir/ver")
+    public String verDireccion(@PathVariable Long idCliente, Model model) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        List<DireccionCliente> direcciones = direccionClienteService.searchDireccionesByCliente(cliente.getIdCliente());
+        model.addAttribute("direcciones", direcciones);
+        return "/direccion/ver-cliente";
+    }
+
+    @GetMapping("{idCliente}/dir/agregar")
+    public String agregarDireccion(@PathVariable Long idCliente) {
+        return "/direccion/agregar-cliente";
+    }
+
+
+
+    // @PostMapping("/dir/add")
+    // public String insertarDireccion(@RequestParam Long idCliente, @RequestParam String calle, @RequestParam String colonia, @RequestParam String ciudad, @RequestParam String estado, @RequestParam String cp) {
+    //     Cliente cliente = new Cliente();
+    //     cliente.setIdCliente(idCliente);
+    //     clienteService.insertDireccionCliente(cliente, calle, colonia, ciudad, estado, cp);
+    //     return "redirect:/clientes/ver";
+    // }
+
 }
