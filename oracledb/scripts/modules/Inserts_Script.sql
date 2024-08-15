@@ -81,3 +81,30 @@ INSERT INTO Estados (Descripcion) VALUES ('En Proceso');
 INSERT INTO Estados (Descripcion) VALUES ('Entregado');
 INSERT INTO Estados (Descripcion) VALUES ('Completado');
 
+-- Inserts para tabla Tipos_Carga
+-- Carga a granel: Este tipo de carga incluye materiales como granos, minerales, petróleo, gas, entre otros. Son transportados en grandes cantidades y no requieren embalaje.
+-- Carga general: Este tipo de carga incluye mercancías empaquetadas individualmente, como electrodomésticos, muebles, y productos electrónicos.
+-- Carga fraccionada: Este tipo de carga incluye mercancías que son demasiado grandes para ser enviadas como carga general, pero demasiado pequeñas para requerir un camión completo.
+-- Carga de contenedor: Este tipo de carga se transporta en contenedores estandarizados que pueden ser cargados y descargados, apilados, transportados de manera eficiente a largas distancias.
+-- Carga pesada o sobredimensionada: Este tipo de carga es demasiado grande o pesada para ser transportada en un camión estándar o contenedor. Puede requerir permisos especiales y equipos de manejo especializados.
+-- Carga peligrosa: Este tipo de carga incluye materiales que son potencialmente peligrosos, como productos químicos, materiales radiactivos y explosivos.
+-- Carga refrigerada: Este tipo de carga requiere control de temperatura durante el transporte. Incluye alimentos, productos farmacéuticos y ciertos productos químicos.
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga a granel');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga general');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga fraccionada');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga de contenedor');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga pesada o sobredimensionada');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga peligrosa');
+INSERT INTO Tipos_Carga (Descripcion) VALUES ('Carga refrigerada');
+
+-- Inserts para tabla Puestos
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('DRV-01', 750000, 'Conductor Nivel 1');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('DRV-02', 900000, 'Conductor Nivel 2');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('DRV-03', 1100000, 'Conductor Nivel 3');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('LOG-MGR', 920000, 'Administrador de Logistica');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('STR-MGR', 800000, 'Administrador de Almacen');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('DRV-MGR', 1000000, 'Administrador de Conductores');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('MTN-TEC', 850000, 'Tecnico de Mantenimiento');
+INSERT INTO Puestos (ID_Puesto, Salario, Descripcion) VALUES ('MTN-ENG', 1300000, 'Ingeniero de Mantenimiento');
+
+

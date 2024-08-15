@@ -21,6 +21,8 @@ import lbd.proyecto.domain.direcciones.Provincia;
 import lbd.proyecto.service.direcciones.ProvinciaService;
 import lbd.proyecto.domain.Licencia;
 import lbd.proyecto.service.LicenciaService;
+import lbd.proyecto.domain.TipoCarga;
+import lbd.proyecto.service.TipoCargaService;
 
 @Controller
 public class IndexController {
@@ -42,6 +44,9 @@ public class IndexController {
 
     @Autowired
     EstadoService estadoService;
+
+    @Autowired
+    TipoCargaService tipoCargaService;
     
     // Muestra la página principal
     @RequestMapping("/")
@@ -150,14 +155,25 @@ public class IndexController {
         // }
 
         // Test getEstado and getAllEstados
-        Estado estado = new Estado();
-        estado.setIdEstado(3L);
-        Estado estadoResult = estadoService.getEstado(estado);
-        System.out.println(estadoResult.toString());
+        // Estado estado = new Estado();
+        // estado.setIdEstado(3L);
+        // Estado estadoResult = estadoService.getEstado(estado);
+        // System.out.println(estadoResult.toString());
 
-        List<Estado> estados = estadoService.getAllEstados();
-        for (Estado e : estados) {
-            System.out.println(e.toString());
+        // List<Estado> estados = estadoService.getAllEstados();
+        // for (Estado e : estados) {
+        //     System.out.println(e.toString());
+        // }
+
+        // Test getTipoCarga and getAllTipoCargas
+        TipoCarga tipoCarga = new TipoCarga();
+        tipoCarga.setIdTipo(1L);
+        TipoCarga tipoCargaResult = tipoCargaService.getTipoCarga(tipoCarga);
+        System.out.println(tipoCargaResult.toString());
+
+        List<TipoCarga> tiposCarga = tipoCargaService.getAllTiposCarga();
+        for (TipoCarga t : tiposCarga) {
+            System.out.println(t.toString());
         }
 
 

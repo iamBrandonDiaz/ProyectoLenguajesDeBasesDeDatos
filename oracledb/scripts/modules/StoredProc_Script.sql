@@ -386,3 +386,53 @@ BEGIN
     SELECT ID_Estado, Descripcion
     FROM Estados;
 END ver_estados;
+
+-- SP de objeto Tipos_Carga
+CREATE OR REPLACE PROCEDURE ver_tipo_carga (
+    p_id_tipo IN NUMBER,
+    p_descripcion OUT VARCHAR2
+) AS
+BEGIN
+    SELECT Descripcion
+    INTO p_descripcion
+    FROM Tipos_Carga
+    WHERE ID_Tipo = p_id_tipo;
+END ver_tipo_carga;
+-- Test ver_tipo_carga
+DECLARE
+    v_descripcion Tipos_Carga.Descripcion%TYPE;
+BEGIN
+    ver_tipo_carga(1, v_descripcion);
+    DBMS_OUTPUT.PUT_LINE('Descripcion: ' || v_descripcion);
+END;
+
+CREATE OR REPLACE PROCEDURE ver_tipos_carga (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Tipo, Descripcion
+    FROM Tipos_Carga;
+END ver_tipos_carga;
+
+-- SP de objeto Puesto
+CREATE OR REPLACE PROCEDURE ver_puesto (
+    p_id_puesto IN VARCHAR2,
+    p_descripcion OUT VARCHAR2,
+    p_salario OUT NUMBER
+) AS
+BEGIN
+    SELECT Descripcion, Salario
+    INTO p_descripcion, p_salario
+    FROM Puestos
+    WHERE ID_Puesto = p_id_puesto;
+END ver_puesto;
+
+CREATE OR REPLACE PROCEDURE ver_puestos (
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Puesto, Descripcion, Salario
+    FROM Puestos;
+END ver_puestos;

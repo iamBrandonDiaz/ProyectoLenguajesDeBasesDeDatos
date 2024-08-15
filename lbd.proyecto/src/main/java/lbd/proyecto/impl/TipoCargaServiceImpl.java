@@ -27,12 +27,12 @@ import java.sql.SQLException;
 import oracle.jdbc.OracleTypes;
 
 // Internal imports
-import lbd.proyecto.dao.EstadoDAO;
-import lbd.proyecto.domain.Estado;
-import lbd.proyecto.service.EstadoService;
+import lbd.proyecto.dao.TipoCargaDAO;
+import lbd.proyecto.domain.TipoCarga;
+import lbd.proyecto.service.TipoCargaService;
 
 @Service
-public class EstadoServiceImpl implements EstadoService {
+public class TipoCargaServiceImpl implements TipoCargaService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -41,20 +41,22 @@ public class EstadoServiceImpl implements EstadoService {
     private TransactionTemplate transactionTemplate;
 
     @Override
-    public Estado getEstado(Estado estado) {
+    public TipoCarga getTipoCarga(TipoCarga tipoCarga) {
 
-        return transactionTemplate.execute(new TransactionCallback<Estado>() {
+        return transactionTemplate.execute(new TransactionCallback<TipoCarga>() {
             @Override
-            public Estado doInTransaction(TransactionStatus status) {
-                // Create a StoredProcedureQuery instance for the stored procedure "ver_estado"
-                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_estado");
+            public TipoCarga doInTransaction(TransactionStatus status) {
+                // Create a StoredProcedureQuery instance for the stored procedure "ver_tipo_carga"
+                StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_tipo_carga");
 
                 // Register the input and output parameters
-                query.registerStoredProcedureParameter("p_id_estado", Long.class, ParameterMode.IN);
+                query.registerStoredProcedureParameter("p_id_tipo", Long.class, ParameterMode.IN);
                 query.registerStoredProcedureParameter("p_descripcion", String.class, ParameterMode.OUT);
 
                 // Set the input parameter
-                query.setParameter("p_id_estado", estado.getIdEstado());
+                query.setParameter("p_id_tipo", tipoCarga.getIdTipo());
+                System.out.println(" ----- TEST 1 ------");
+                System.out.println(tipoCarga.toString());
 
                 // Execute the stored procedure
                 try {
@@ -74,25 +76,23 @@ public class EstadoServiceImpl implements EstadoService {
                 }
 
                 // Print the output parameter
-                System.out.println("Descripcion: " + query.getOutputParameterValue("p_descripcion"));
+                System.out.println("Tipo: " + query.getOutputParameterValue("p_descripcion"));
 
-                // Map the output parameters to a Estado object
-                Estado estadoResult = new Estado();
-                estadoResult.setIdEstado(estado.getIdEstado());
-                estadoResult.setDescripcion((String) query.getOutputParameterValue("p_descripcion"));
+                // Map the output parameters to a TipoCarga object
+                TipoCarga tipoCargaResult = new TipoCarga();
+                tipoCargaResult.setIdTipo(tipoCarga.getIdTipo());
+                tipoCargaResult.setDescripcion((String) query.getOutputParameterValue("p_descripcion"));
 
-                System.out.println("Id: " + estadoResult.getIdEstado());
-
-                return estadoResult;
+                return tipoCargaResult;
             }
         });
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Estado> getAllEstados() {
-        // Create a StoredProcedureQuery instance for the stored procedure "ver_estados"
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_estados", Estado.class);
+    public List<TipoCarga> getAllTiposCarga() {
+        // Create a StoredProcedureQuery instance for the stored procedure "ver_tipos_carga"
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_tipos_carga", TipoCarga.class);
 
         // Register the output parameter
         query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
@@ -116,23 +116,23 @@ public class EstadoServiceImpl implements EstadoService {
         // Get the result set
         ResultSet resultSet = (ResultSet) query.getOutputParameterValue(1);
 
-        // Create a list of states
-        List<Estado> estados = new ArrayList<>();
+        // Create a list of loads
+        List<TipoCarga> tiposCarga = new ArrayList<>();
 
         // Iterate over the result set
         try {
             while (resultSet.next()) {
-                Estado estado = new Estado();
-                estado.setIdEstado(resultSet.getLong("id_estado"));
-                estado.setDescripcion(resultSet.getString("descripcion"));
-                estados.add(estado);
+                TipoCarga tipoCarga = new TipoCarga();
+                tipoCarga.setIdTipo(resultSet.getLong("id_tipo"));
+                tipoCarga.setDescripcion(resultSet.getString("descripcion"));
+                tiposCarga.add(tipoCarga);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
 
-        return estados;
+        return tiposCarga;
     }
     
 }
