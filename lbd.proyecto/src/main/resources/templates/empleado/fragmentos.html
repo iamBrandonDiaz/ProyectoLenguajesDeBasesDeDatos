@@ -123,7 +123,7 @@
                         <td>[[${empleado.puesto.salario}]]</td>
                         <td>[[${empleado.fechaContratacion}]]</td>
                         <td>
-                            <!-- <a th:href="@{/empleados/} + ${empleado.idEmpleado} + '/dir/ver'" class="btn btn-primary">Direcciones</a> -->
+                            <a th:href="@{/empleados/} + ${empleado.idEmpleado} + '/dir/ver'" class="btn btn-primary">Direcciones</a>
                             <a th:href="@{/empleados/editar/} + ${empleado.idEmpleado}" class="btn btn-secondary">Editar</a>
                             <a th:href="@{/empleados/eliminar/} + ${empleado.idEmpleado}" class="btn btn-danger">Eliminar</a>
                         </td>

@@ -268,12 +268,5 @@ public class ClienteController {
         redirectAttributes.addAttribute("idCliente", idCliente);
         return "redirect:/clientes/{idCliente}/dir/ver";
     }
-    
-    // @GetMapping("/eliminar/{idCliente}")
-    // public String eliminarCliente(@PathVariable Long idCliente) {
-    //     clienteService.deleteCliente(idCliente);
-    //     return "redirect:/clientes/ver";
-
-    // }
 
 }

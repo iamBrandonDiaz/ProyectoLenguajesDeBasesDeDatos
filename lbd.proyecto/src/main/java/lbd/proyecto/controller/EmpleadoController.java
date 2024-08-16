@@ -16,16 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import jakarta.persistence.NoResultException;
-
 // Internal imports
 import lbd.proyecto.domain.Empleado;
 import lbd.proyecto.domain.Licencia;
 import lbd.proyecto.domain.LicenciaEmpleado;
 import lbd.proyecto.domain.Puesto;
+
+import lbd.proyecto.domain.direcciones.Distrito;
 import lbd.proyecto.service.EmpleadoService;
 import lbd.proyecto.service.PuestoService;
 import lbd.proyecto.service.LicenciaService;
 import lbd.proyecto.service.LicenciaEmpleadoService;
+import lbd.proyecto.service.direcciones.DireccionEmpleadoService;
+import lbd.proyecto.service.direcciones.DistritoService;
+import lbd.proyecto.domain.direcciones.DireccionEmpleado;
 
 @Controller
 @RequestMapping("/empleados")
@@ -43,6 +47,12 @@ public class EmpleadoController {
     @Autowired
     LicenciaEmpleadoService licenciaEmpleadoService;
 
+    @Autowired
+    DireccionEmpleadoService direccionEmpleadoService;
+
+    @Autowired
+    DistritoService distritoService;
+
     @GetMapping("/agregar")
     public String agregarEmpleado(Model model) { 
         model.addAttribute("puestos", puestoService.getAllPuestos());
@@ -51,7 +61,7 @@ public class EmpleadoController {
     }
 
     @PostMapping("/add")
-    public String insertarCliente(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String fechaNacimiento, 
+    public String insertarEmpleado(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String fechaNacimiento, 
         @RequestParam String idPuesto, @RequestParam String fechaContratacion, RedirectAttributes redirectAttributes) {
             Empleado empleado = new Empleado();
             empleado.setNombre(nombre);
@@ -113,7 +123,84 @@ public class EmpleadoController {
         return "redirect:/empleados/ver";
     }
 
-    
+    // Direccion
+    @GetMapping("{idEmpleado}/dir/ver")
+    public String verDireccion(@PathVariable Long idEmpleado, Model model) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        List<DireccionEmpleado> direcciones = direccionEmpleadoService.searchDireccionesByEmpleado(empleado.getIdEmpleado());
+        model.addAttribute("direcciones", direcciones);
+        return "/direccion/ver-empleado";
+    }
+
+    @GetMapping("{idEmpleado}/dir/agregar")
+    public String agregarDireccion(@PathVariable Long idEmpleado, Model model) {
+        model.addAttribute("idEmpleado", idEmpleado);
+        return "/direccion/agregar-empleado";
+    }
+
+    @PostMapping("/dir/add")
+    public String insertarDireccion(@RequestParam Long idEmpleado, @RequestParam String idDistrito, @RequestParam String detalles, RedirectAttributes redirectAttributes) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+        DireccionEmpleado direccionEmpleado = new DireccionEmpleado(detalles, distritoResult);
+        direccionEmpleado.setEmpleado(empleado);
+
+        direccionEmpleadoService.insertDireccionEmpleado(direccionEmpleado, empleado, distritoResult);
+
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+
+        return "redirect:/empleados/{idEmpleado}/dir/ver";
+    }
+
+    @GetMapping("{idEmpleado}/dir/editar/{idDireccion}")
+    public String editarDireccion(@PathVariable Long idEmpleado, @PathVariable Long idDireccion, Model model) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        DireccionEmpleado direccion = new DireccionEmpleado();
+        direccion.setIdDireccion(idDireccion);
+        DireccionEmpleado direccionResult = direccionEmpleadoService.getDireccionEmpleado(direccion);
+        System.out.println(" *** DEBUG *** ");
+        System.out.println(direccionResult);
+        System.out.println(direccionResult.getDistrito().getCanton().getProvincia().getIdProvincia());
+        
+
+        model.addAttribute("direccion", direccionResult);
+        model.addAttribute("idEmpleado", idEmpleado);
+        model.addAttribute("idDireccion", idDireccion);
+        model.addAttribute("detalles", direccionResult.getDetalles());
+        return "/direccion/actualizar-empleado";
+    }
+
+    @PostMapping("/dir/update")
+    public String actualizarDireccion(@RequestParam Long idEmpleado, @RequestParam Long idDireccion, @RequestParam String detalles, @RequestParam String idDistrito, RedirectAttributes redirectAttributes) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        DireccionEmpleado direccion = new DireccionEmpleado();
+        direccion.setIdDireccion(idDireccion);
+        direccion.setDetalles(detalles);
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+
+        direccionEmpleadoService.updateDireccionEmpleado(direccion, distritoResult);
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+        return "redirect:/empleados/{idEmpleado}/dir/ver";
+    }
+
+    @GetMapping("{idEmpleado}/dir/eliminar/{idDireccion}")
+    public String eliminarDireccion(@PathVariable Long idEmpleado, @PathVariable Long idDireccion, RedirectAttributes redirectAttributes) {
+        DireccionEmpleado direccion = new DireccionEmpleado();
+        direccion.setIdDireccion(idDireccion);
+        direccionEmpleadoService.deleteDireccionEmpleado(direccion);
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+        return "redirect:/empleados/{idEmpleado}/dir/ver";
+    }
+
 
 }
 
