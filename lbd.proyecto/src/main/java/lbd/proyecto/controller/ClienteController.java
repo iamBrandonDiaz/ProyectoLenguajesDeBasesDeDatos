@@ -1,6 +1,6 @@
 package lbd.proyecto.controller;
 
-import java.util.ArrayList;
+
 // External imports
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import jakarta.persistence.NoResultException;
+
 // Internal imports
 import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.domain.direcciones.DireccionCliente;
+import lbd.proyecto.domain.direcciones.Distrito;
+import lbd.proyecto.service.direcciones.DistritoService;
 import lbd.proyecto.service.ClienteService;
 import lbd.proyecto.service.direcciones.DireccionClienteService;
 
@@ -30,6 +35,9 @@ public class ClienteController {
 
     @Autowired
     DireccionClienteService direccionClienteService;
+
+    @Autowired
+    DistritoService distritoService;
 
     // Add
     // @GetMapping("/add-test")
@@ -194,18 +202,78 @@ public class ClienteController {
     }
 
     @GetMapping("{idCliente}/dir/agregar")
-    public String agregarDireccion(@PathVariable Long idCliente) {
+    public String agregarDireccion(@PathVariable Long idCliente, Model model) {
+        model.addAttribute("idCliente", idCliente);
         return "/direccion/agregar-cliente";
     }
 
+    @PostMapping("/dir/add")
+    public String insertarDireccion(@RequestParam Long idCliente, @RequestParam String idDistrito, @RequestParam String detalles, RedirectAttributes redirectAttributes) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+        DireccionCliente direccionCliente = new DireccionCliente(detalles, distritoResult);
+        direccionCliente.setCliente(cliente);
 
+        direccionClienteService.insertDireccionCliente(direccionCliente, cliente, distritoResult);
 
-    // @PostMapping("/dir/add")
-    // public String insertarDireccion(@RequestParam Long idCliente, @RequestParam String calle, @RequestParam String colonia, @RequestParam String ciudad, @RequestParam String estado, @RequestParam String cp) {
-    //     Cliente cliente = new Cliente();
-    //     cliente.setIdCliente(idCliente);
-    //     clienteService.insertDireccionCliente(cliente, calle, colonia, ciudad, estado, cp);
+        redirectAttributes.addAttribute("idCliente", idCliente);
+
+        return "redirect:/clientes/{idCliente}/dir/ver";
+    }
+
+    @GetMapping("{idCliente}/dir/editar/{idDireccion}")
+    public String editarDireccion(@PathVariable Long idCliente, @PathVariable Long idDireccion, Model model) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        DireccionCliente direccion = new DireccionCliente();
+        direccion.setIdDireccion(idDireccion);
+        DireccionCliente direccionResult = direccionClienteService.getDireccionCliente(direccion);
+        System.out.println(" *** DEBUG *** ");
+        System.out.println(direccionResult);
+        System.out.println(direccionResult.getDistrito().getCanton().getProvincia().getIdProvincia());
+        
+
+        model.addAttribute("direccion", direccionResult);
+        model.addAttribute("idCliente", idCliente);
+        model.addAttribute("idDireccion", idDireccion);
+        model.addAttribute("detalles", direccionResult.getDetalles());
+        return "/direccion/actualizar-cliente";
+    }
+
+    @PostMapping("/dir/update")
+    public String actualizarDireccion(@RequestParam Long idCliente, @RequestParam Long idDireccion, @RequestParam String detalles, @RequestParam String idDistrito, RedirectAttributes redirectAttributes) {
+        Cliente cliente = new Cliente();
+        cliente.setIdCliente(idCliente);
+        DireccionCliente direccion = new DireccionCliente();
+        direccion.setIdDireccion(idDireccion);
+        direccion.setDetalles(detalles);
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+
+        direccionClienteService.updateDireccionCliente(direccion, distritoResult);
+        redirectAttributes.addAttribute("idCliente", idCliente);
+        return "redirect:/clientes/{idCliente}/dir/ver";
+    }
+
+    @GetMapping("{idCliente}/dir/eliminar/{idDireccion}")
+    public String eliminarDireccion(@PathVariable Long idCliente, @PathVariable Long idDireccion, RedirectAttributes redirectAttributes) {
+        DireccionCliente direccion = new DireccionCliente();
+        direccion.setIdDireccion(idDireccion);
+        direccionClienteService.deleteDireccionCliente(direccion);
+        redirectAttributes.addAttribute("idCliente", idCliente);
+        return "redirect:/clientes/{idCliente}/dir/ver";
+    }
+    
+    // @GetMapping("/eliminar/{idCliente}")
+    // public String eliminarCliente(@PathVariable Long idCliente) {
+    //     clienteService.deleteCliente(idCliente);
     //     return "redirect:/clientes/ver";
+
     // }
 
 }
