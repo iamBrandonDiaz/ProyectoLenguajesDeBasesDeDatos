@@ -154,7 +154,7 @@
                         <!-- Marca -->
                         <div class="col-sm-6">
                             <label for="marca" class="form-label">Marca</label>
-                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Toyota" th:value="{marca}" required="">
+                            <input type="text" class="form-control" id="marca" name="marca" placeholder="Toyota" th:value="${marca}" required="">
                             <div class="invalid-feedback">
                                 Una marca válido es requerido.
                             </div>
@@ -163,7 +163,7 @@
                         <!-- Modelo -->
                         <div class="col-sm-6">
                             <label for="modelo" class="form-label">Modelo</label>
-                            <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Hilux" th:value="{modelo}" required="">
+                            <input type="text" class="form-control" id="modelo" name="modelo" placeholder="Hilux" th:value="${modelo}" required="">
                             <div class="invalid-feedback">
                                 Un modelo válido es requerido.
                             </div>
@@ -174,7 +174,7 @@
                             <label for="placa" class="form-label">Placa</label>
                             <div class="input-group has-validation">
                                 <span class="input-group-text">ID</span>
-                                <input type="text" class="form-control" id="placa" name="placa" th:value="{placa}" placeholder="XXX-000" required="">
+                                <input type="text" class="form-control" id="placa" name="placa" th:value="${placa}" placeholder="XXX-000" required="">
                                 <div class="invalid-feedback">
                                     Una placa válida es requerido.
                                 </div>
@@ -184,7 +184,7 @@
                         <!-- Anio -->
                         <div class="col-sm-6">
                             <label for="anio" class="form-label">Año</label>
-                            <input type="number" min="1900" max="2099" class="form-control" id="anio" name="anio" placeholder="2020" th:value="{anio}" required="">
+                            <input type="number" min="1900" max="2099" class="form-control" id="anio" name="anio" placeholder="2020" th:value="${anio}" required="">
                             <div class="invalid-feedback">
                                 Una año válido es requerida.
                             </div>

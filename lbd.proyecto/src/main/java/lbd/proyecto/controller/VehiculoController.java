@@ -45,15 +45,16 @@ public class VehiculoController {
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setIdVehiculo(idVehiculo);
         vehiculo = vehiculoService.getVehiculo(vehiculo);
+        
 
         model.addAttribute("vehiculo", vehiculo);
         model.addAttribute("idVehiculo", idVehiculo);
-        model.addAttribute("placa", vehiculo.getPlaca());
         model.addAttribute("marca", vehiculo.getMarca());
         model.addAttribute("modelo", vehiculo.getModelo());
+        model.addAttribute("placa", vehiculo.getPlaca());
         model.addAttribute("anio", vehiculo.getAnio());
         
-        return "vehiculo/editar";
+        return "vehiculo/actualizar";
     }
 
     @PostMapping("/update")
