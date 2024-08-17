@@ -92,4 +92,33 @@ BEGIN
     RETURN l_cursor;
 END buscar_direcciones_por_pedido;
 
--- Function to search invoice by Client ID
+-- Function to search license_employee by employee ID
+CREATE OR REPLACE FUNCTION buscar_licencias_por_empleado(p_id_empleado IN NUMBER)
+RETURN SYS_REFCURSOR AS
+    l_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN l_cursor FOR
+    SELECT ID_Licencia_Empleado, ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento
+    FROM Licencias_Empleado
+    WHERE ID_Empleado = p_id_empleado;
+    RETURN l_cursor;
+END buscar_licencias_por_empleado;
+
+-- Test function
+SET SERVEROUTPUT ON;
+DECLARE
+    l_cursor SYS_REFCURSOR;
+    l_record Licencias_Empleado%ROWTYPE;
+BEGIN
+    l_cursor := buscar_licencias_por_empleado(1);
+    LOOP
+        FETCH l_cursor INTO l_record;
+        EXIT WHEN l_cursor%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('ID_Licencia: ' || l_record.ID_Licencia);
+        DBMS_OUTPUT.PUT_LINE('ID_Empleado: ' || l_record.ID_Empleado);
+        DBMS_OUTPUT.PUT_LINE('Fecha_Expedicion: ' || l_record.Fecha_Expedicion);
+        DBMS_OUTPUT.PUT_LINE('Fecha_Vencimiento: ' || l_record.Fecha_Vencimiento);
+        DBMS_OUTPUT.PUT_LINE('-------------------------');
+    END LOOP;
+    CLOSE l_cursor;
+END;

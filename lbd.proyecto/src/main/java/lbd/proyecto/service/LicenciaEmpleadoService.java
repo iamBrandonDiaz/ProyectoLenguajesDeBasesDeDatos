@@ -25,4 +25,7 @@ public interface LicenciaEmpleadoService {
     // Method to get all licenses for employees with the Stored Procedure
     List<LicenciaEmpleado> getAllLicenciasEmpleados();
 
+    // Method to search licenses by employee ID with the SQL function
+    List<LicenciaEmpleado> searchLicenciasByEmpleado(Long idEmpleado);
+
 }

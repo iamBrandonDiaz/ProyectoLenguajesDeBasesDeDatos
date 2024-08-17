@@ -619,6 +619,23 @@ public class IndexController {
         //     System.out.println("Nombre Cliente: " + f.getPedido().getCliente().getNombre());
         // }
 
+        // Test searchLicenciasByEmpleado
+        // List<LicenciaEmpleado> licencias = licenciaEmpleadoService.searchLicenciasByEmpleado(2L);
+        // for (LicenciaEmpleado l : licencias) {
+        //     System.out.println("----- LICENCIA -----");
+        //     System.out.println("ID Licencia: " + l.getIdLicenciaEmpleado());
+        //     System.out.println("Fecha Expedicion: " + l.getFechaExpedicion());
+        //     System.out.println("Fecha Vencimiento: " + l.getFechaVencimiento());
+        //     System.out.println("ID Licencia: " + l.getLicencia().getIdLicencia());
+        //     System.out.println("Descripcion Licencia: " + l.getLicencia().getTipo());
+        //     System.out.println("ID Empleado: " + l.getEmpleado().getIdEmpleado());
+        //     System.out.println("Nombre Empleado: " + l.getEmpleado().getNombre());
+        //     System.out.println("Apellido Empleado: " + l.getEmpleado().getApellido());
+        //     System.out.println("Fecha Nacimiento Empleado: " + l.getEmpleado().getFechaNacimiento());
+        //     System.out.println("Fecha Contratacion Empleado: " + l.getEmpleado().getFechaContratacion());
+        //     System.out.println("Puesto Empleado: " + l.getEmpleado().getPuesto().toString());
+        // }
+
         return "index-new";
     }
     

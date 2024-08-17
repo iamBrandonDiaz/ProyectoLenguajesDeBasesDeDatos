@@ -222,5 +222,49 @@ public class LicenciaEmpleadoServiceImpl implements LicenciaEmpleadoService {
         
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<LicenciaEmpleado> searchLicenciasByEmpleado(Long idEmpleado) {
+        Session session = entityManager.unwrap(Session.class);
+        List<LicenciaEmpleado> licenciasEmpleados = new ArrayList<>();
+
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_licencias_por_empleado(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setLong(2, idEmpleado);
+                    callableStatement.execute();
+
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            LicenciaEmpleado licenciasEmpleado = new LicenciaEmpleado();
+                            licenciasEmpleado.setIdLicenciaEmpleado(rs.getLong("id_licencia_empleado"));
+                            licenciasEmpleado.setFechaExpedicion(rs.getDate("fecha_expedicion"));
+                            licenciasEmpleado.setFechaVencimiento(rs.getDate("fecha_vencimiento"));
+
+                            // Map the licencia to the LicenciaEmpleado object
+                            Licencia licencia = new Licencia();
+                            licencia.setIdLicencia(rs.getLong("id_licencia"));
+                            licenciasEmpleado.setLicencia(licenciaService.getLicencia(licencia));
+
+                            // Map the empleado to the LicenciaEmpleado object
+                            Empleado empleado = new Empleado();
+                            empleado.setIdEmpleado(rs.getLong("id_empleado"));
+                            licenciasEmpleado.setEmpleado(empleadoService.getEmpleado(empleado));
+
+                            licenciasEmpleados.add(licenciasEmpleado);
+
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        return licenciasEmpleados;
+        
+    }
 
 }

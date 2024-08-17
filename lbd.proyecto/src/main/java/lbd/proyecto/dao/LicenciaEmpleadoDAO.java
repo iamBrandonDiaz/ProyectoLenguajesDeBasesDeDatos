@@ -16,7 +16,7 @@ public interface LicenciaEmpleadoDAO extends JpaRepository<LicenciaEmpleado, Lon
 
     // Method to call an stored procedure to insert a new license for an employee
     @Procedure(procedureName = "insertar_licencia_empleado")
-    void insertLicenciaEmpleado(Long idEmpleado, Long idLicencia, Date fechaInicio, Date fechaFin);
+    void insertLicenciaEmpleado(Long idEmpleado, Long idLicencia, Date fechaExpedicion, Date fechaVencimiento);
 
     // Method to call an stored procedure to update a license for an employee
     @Procedure(procedureName = "actualizar_licencia_empleado")
@@ -33,5 +33,9 @@ public interface LicenciaEmpleadoDAO extends JpaRepository<LicenciaEmpleado, Lon
     // Method to call an stored procedure to get all licenses for employees
     @Procedure(procedureName = "ver_licencias_empleados")
     List<LicenciaEmpleado> getAllLicenciasEmpleado();
+
+    // Method to call a SQL function to get all the licenses by employee ID
+    @Query(value = "SELECT * FROM TABLE(buscar_licencias_empleado(:p_id_empleado))", nativeQuery = true)
+    List<LicenciaEmpleado> buscarLicenciasEmpleado(@Param("p_id_empleado") Long idEmpleado);
     
 }

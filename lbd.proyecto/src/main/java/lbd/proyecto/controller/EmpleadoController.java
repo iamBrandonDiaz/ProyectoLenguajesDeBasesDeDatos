@@ -201,6 +201,89 @@ public class EmpleadoController {
         return "redirect:/empleados/{idEmpleado}/dir/ver";
     }
 
+    // Licencia
+    @GetMapping("{idEmpleado}/lic/ver")
+    public String verLicencia(@PathVariable Long idEmpleado, Model model) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        List<LicenciaEmpleado> licenciasEmpleado = licenciaEmpleadoService.searchLicenciasByEmpleado(empleado.getIdEmpleado());
+        model.addAttribute("licenciasEmpleado", licenciasEmpleado);
+        
+        return "/licencia/ver";
+    }
+
+    @GetMapping("{idEmpleado}/lic/agregar")
+    public String agregarLicencia(@PathVariable Long idEmpleado, Model model) {
+        model.addAttribute("idEmpleado", idEmpleado);
+        model.addAttribute("licencias", licenciaService.getAllLicencias());
+        return "/licencia/agregar";
+    }
+
+    @PostMapping("/lic/add")
+    public String insertarLicencia(@RequestParam Long idEmpleado, @RequestParam String idLicencia, @RequestParam String fechaExpedicion, @RequestParam String fechaVencimiento, RedirectAttributes redirectAttributes) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        Licencia licencia = new Licencia();
+        licencia.setIdLicencia(Long.parseLong(idLicencia));
+
+        Licencia licenciaResult = licenciaService.getLicencia(licencia);
+        LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado(empleado.convertDate(fechaExpedicion), empleado.convertDate(fechaVencimiento), empleado, licenciaResult);
+
+        licenciaEmpleadoService.insertLicenciaEmpleado(licenciaEmpleado, empleado, licenciaResult);
+
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+
+        return "redirect:/empleados/{idEmpleado}/lic/ver";
+    }
+
+    @GetMapping("{idEmpleado}/lic/editar/{idLicenciaEmpleado}")
+    public String editarLicencia(@PathVariable Long idEmpleado, @PathVariable Long idLicenciaEmpleado, Model model) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        licenciaEmpleado.setIdLicenciaEmpleado(idLicenciaEmpleado);
+        LicenciaEmpleado licenciaEmpleadoResult = licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado);
+
+        model.addAttribute("licenciaEmpleado", licenciaEmpleadoResult);
+        model.addAttribute("idEmpleado", idEmpleado);
+        model.addAttribute("idLicenciaEmpleado", idLicenciaEmpleado);
+        model.addAttribute("licencias", licenciaService.getAllLicencias());
+        
+        return "/licencia/actualizar";
+    }
+
+    @PostMapping("/lic/update")
+    public String actualizarLicencia(@RequestParam Long idEmpleado, @RequestParam Long idLicenciaEmpleado, @RequestParam String fechaVencimiento, @RequestParam String fechaExpedicion, @RequestParam String idLicencia, RedirectAttributes redirectAttributes) {
+        Empleado empleado = new Empleado();
+        empleado.setIdEmpleado(idEmpleado);
+        Licencia licencia = new Licencia();
+        licencia.setIdLicencia(Long.parseLong(idLicencia));
+        Licencia licenciaResult = licenciaService.getLicencia(licencia);
+
+        LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        licenciaEmpleado.setIdLicenciaEmpleado(idLicenciaEmpleado);
+        licenciaEmpleado.setFechaVencimiento(empleado.convertDate(fechaVencimiento));
+        licenciaEmpleado.setFechaExpedicion(empleado.convertDate(fechaExpedicion));
+        licenciaEmpleado.setLicencia(licenciaResult);
+        licenciaEmpleado.setEmpleado(empleado);
+
+        licenciaEmpleadoService.updateLicenciaEmpleado(licenciaResult, licenciaEmpleado);
+
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+        return "redirect:/empleados/{idEmpleado}/lic/ver";
+
+    }
+
+    @GetMapping("{idEmpleado}/lic/eliminar/{idLicenciaEmpleado}")
+    public String eliminarLicencia(@PathVariable Long idEmpleado, @PathVariable Long idLicenciaEmpleado, RedirectAttributes redirectAttributes) {
+        LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+        licenciaEmpleado.setIdLicenciaEmpleado(idLicenciaEmpleado);
+        licenciaEmpleadoService.deleteLicenciaEmpleado(licenciaEmpleado);
+
+        redirectAttributes.addAttribute("idEmpleado", idEmpleado);
+        return "redirect:/empleados/{idEmpleado}/lic/ver";
+    }
+
 
 }
 
