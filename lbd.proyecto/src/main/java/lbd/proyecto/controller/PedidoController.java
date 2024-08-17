@@ -38,6 +38,12 @@ import lbd.proyecto.service.VehiculoService;
 import lbd.proyecto.domain.LicenciaEmpleado;
 import lbd.proyecto.service.LicenciaEmpleadoService;
 
+import lbd.proyecto.domain.direcciones.DireccionPedido;
+import lbd.proyecto.service.direcciones.DireccionPedidoService;
+
+import lbd.proyecto.domain.direcciones.Distrito;
+import lbd.proyecto.service.direcciones.DistritoService;
+
 @Controller
 @RequestMapping("/pedidos")
 public class PedidoController {
@@ -59,6 +65,12 @@ public class PedidoController {
 
     @Autowired
     private LicenciaEmpleadoService licenciaEmpleadoService;
+
+    @Autowired
+    private DireccionPedidoService direccionPedidoService;
+
+    @Autowired
+    private DistritoService distritoService;
 
     @GetMapping("/agregar")
     public String agregarPedido(Model model) {
@@ -168,5 +180,88 @@ public class PedidoController {
         pedidoService.deletePedido(pedido);
         return "redirect:/pedidos/ver";
     }
+
+    // Direccion
+    @GetMapping("{idPedido}/dir/ver")
+    public String verDireccion(@PathVariable Long idPedido, Model model) {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(idPedido);
+        List<DireccionPedido> direcciones = direccionPedidoService.searchDireccionesByPedido(pedido.getIdPedido());
+        
+      
+        model.addAttribute("direcciones", direcciones);
+        return "/direccion/ver-pedido";
+    }
+
+    @GetMapping("{idPedido}/dir/agregar")
+    public String agregarDireccion(@PathVariable Long idPedido, Model model) {
+        model.addAttribute("idPedido", idPedido);
+        return "/direccion/agregar-pedido";
+    }
+
+    @PostMapping("/dir/add")
+    public String insertarDireccion(@RequestParam Long idPedido, @RequestParam String idDistrito, @RequestParam String detalles, RedirectAttributes redirectAttributes) {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(idPedido);
+        
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+        DireccionPedido direccionPedido = new DireccionPedido(detalles, distritoResult);
+        direccionPedido.setPedido(pedido);
+
+        direccionPedidoService.insertDireccionPedido(direccionPedido, pedido, distritoResult);
+
+        redirectAttributes.addAttribute("idPedido", idPedido);
+
+        return "redirect:/pedidos/{idPedido}/dir/ver";
+
+    }
+
+    @GetMapping("{idPedido}/dir/editar/{idDireccion}")
+    public String editarDireccion(@PathVariable Long idPedido, @PathVariable Long idDireccion, Model model) {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(idPedido);
+        DireccionPedido direccion = new DireccionPedido();
+        direccion.setIdDireccion(idDireccion);
+        DireccionPedido direccionResult = direccionPedidoService.getDireccionPedido(direccion);
+
+
+        model.addAttribute("direccion", direccionResult);
+        model.addAttribute("idPedido", idPedido);
+        model.addAttribute("idDireccion", idDireccion);
+        model.addAttribute("detalles", direccionResult.getDetalles());
+        return "/direccion/actualizar-pedido";
+    }
+
+    @PostMapping("/dir/update")
+    public String actualizarDireccion(@RequestParam Long idPedido, @RequestParam Long idDireccion, @RequestParam String detalles, @RequestParam String idDistrito, RedirectAttributes redirectAttributes) {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(idPedido);
+        DireccionPedido direccion = new DireccionPedido();
+        direccion.setIdDireccion(idDireccion);
+        direccion.setDetalles(detalles);
+        Distrito distrito = new Distrito();
+        distrito.setIdDistrito(Long.parseLong(idDistrito));
+        Distrito distritoResult = distritoService.getDistrito(distrito);
+        
+        direccionPedidoService.updateDireccionPedido(direccion, distritoResult);
+
+        redirectAttributes.addAttribute("idPedido", idPedido);
+        return "redirect:/pedidos/{idPedido}/dir/ver";
+    }
+
+    @GetMapping("{idPedido}/dir/eliminar/{idDireccion}")
+    public String eliminarDireccion(@PathVariable Long idPedido, @PathVariable Long idDireccion, RedirectAttributes redirectAttributes) {
+        DireccionPedido direccion = new DireccionPedido();
+        direccion.setIdDireccion(idDireccion);
+        direccionPedidoService.deleteDireccionPedido(direccion);
+        redirectAttributes.addAttribute("idPedido", idPedido);
+        
+        return "redirect:/pedidos/{idPedido}/dir/ver";
+    }
+
+
 
 }
