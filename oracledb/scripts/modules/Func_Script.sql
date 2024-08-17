@@ -122,3 +122,15 @@ BEGIN
     END LOOP;
     CLOSE l_cursor;
 END;
+
+-- Function to search invoice by order ID
+CREATE OR REPLACE FUNCTION buscar_factura_por_pedido(p_id_pedido IN NUMBER)
+RETURN SYS_REFCURSOR AS
+    l_cursor SYS_REFCURSOR;
+BEGIN
+    OPEN l_cursor FOR
+    SELECT ID_Factura, ID_Pedido, Fecha, Total, ID_Estado
+    FROM Facturas
+    WHERE ID_Pedido = p_id_pedido;
+    RETURN l_cursor;
+END buscar_factura_por_pedido;

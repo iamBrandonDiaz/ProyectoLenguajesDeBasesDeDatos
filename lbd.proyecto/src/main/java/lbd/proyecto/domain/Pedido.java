@@ -8,6 +8,7 @@ import java.util.List;
 
 //Internal imports
 import lbd.proyecto.domain.direcciones.DireccionCliente;
+import lbd.proyecto.impl.PedidoServiceImpl;
 import lbd.proyecto.domain.Vehiculo;
 import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.domain.TipoCarga;
@@ -78,4 +79,9 @@ public class Pedido implements Serializable {
         this.direccionCliente = direccionCliente;
     }
     
+    // Method to verify if the order has an invoice
+    // public boolean hasFactura() {
+        
+    // }
+
 }

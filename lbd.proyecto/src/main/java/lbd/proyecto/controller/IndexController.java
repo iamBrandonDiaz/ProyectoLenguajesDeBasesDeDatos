@@ -453,15 +453,17 @@ public class IndexController {
         // pedidoService.deletePedido(pedido);
 
         // Test getPedido
-        // Pedido pedido = new Pedido();
-        // pedido.setIdPedido(6L);
-        // Pedido pedidoResult = pedidoService.getPedido(pedido);  
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(5L);
+        Pedido pedidoResult = pedidoService.getPedido(pedido);  
         // System.out.println(pedidoResult.toString());
         // System.out.println(pedidoResult.getCliente().toString());
         // System.out.println(pedidoResult.getVehiculo().toString());
         // System.out.println(pedidoResult.getTiposCarga().toString());
         // System.out.println(pedidoResult.getEstado().toString());
         // System.out.println(pedidoResult.getLicenciaEmpleado().toString());
+        // System.out.println("***FACTURAAAAA***");
+        // System.out.println(pedidoResult.getFactura());
 
         // Test getAllPedidos
         // List<Pedido> pedidos = pedidoService.getAllPedidos();
@@ -635,6 +637,16 @@ public class IndexController {
         //     System.out.println("Fecha Contratacion Empleado: " + l.getEmpleado().getFechaContratacion());
         //     System.out.println("Puesto Empleado: " + l.getEmpleado().getPuesto().toString());
         // }
+
+        // Test searchFacturaByPedido
+        // Factura factura = facturaService.searchFacturaByPedido(22L);
+        // System.out.println("----- FACTURA -----");
+        // System.out.println("ID Factura: " + factura.getIdFactura());
+        // System.out.println("Fecha Factura: " + factura.getFecha());
+        // System.out.println("Total Factura: " + factura.getTotal());
+        // System.out.println("Objeto:" + factura);
+
+        
 
         return "index-new";
     }

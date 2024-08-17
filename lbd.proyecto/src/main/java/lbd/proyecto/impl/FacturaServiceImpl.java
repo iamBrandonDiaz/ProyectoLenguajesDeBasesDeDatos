@@ -195,6 +195,46 @@ public class FacturaServiceImpl implements FacturaService {
         return facturas;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Factura searchFacturaByPedido(Long idPedido) {
+        Session session = entityManager.unwrap(Session.class);
+        Factura facturaResult = new Factura();
+
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_factura_por_pedido(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setString(2, idPedido.toString());
+                    callableStatement.execute();
+
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            facturaResult.setIdFactura(rs.getLong("id_factura"));
+                            facturaResult.setFecha(rs.getDate("fecha"));
+                            facturaResult.setTotal(rs.getDouble("total"));
+
+                            Estado estado = new Estado();
+                            estado.setIdEstado(rs.getLong("id_estado"));
+                            facturaResult.setEstado(estadoService.getEstado(estado));
+
+                            Pedido pedido = new Pedido();
+                            pedido.setIdPedido(rs.getLong("id_pedido"));
+                            facturaResult.setPedido(pedidoService.getPedido(pedido));
+
+                        }
+                    }
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        return facturaResult;
+
+    }
 
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ import lbd.proyecto.domain.Cliente;
 import lbd.proyecto.domain.Vehiculo;
 import lbd.proyecto.domain.TipoCarga;
 import lbd.proyecto.domain.Estado;
+import lbd.proyecto.domain.Factura;
 import lbd.proyecto.domain.LicenciaEmpleado;
 
 import lbd.proyecto.dao.PedidoDAO;
@@ -49,6 +51,7 @@ import lbd.proyecto.service.VehiculoService;
 import lbd.proyecto.service.TipoCargaService;
 import lbd.proyecto.service.EstadoService;
 import lbd.proyecto.service.LicenciaEmpleadoService;
+import lbd.proyecto.service.FacturaService;
 
 
 
@@ -72,6 +75,10 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private LicenciaEmpleadoService licenciaEmpleadoService;
+
+    @Autowired
+    @Lazy
+    private FacturaService facturaService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -176,6 +183,17 @@ public class PedidoServiceImpl implements PedidoService {
                 licenciaEmpleado.setIdLicenciaEmpleado((Long) query.getOutputParameterValue("p_id_licencia_empleado"));
                 pedidoResult.setLicenciaEmpleado(licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado));
 
+                
+
+                // Verify if the Pedido has an invoice and add it
+                Factura factura = new Factura();
+                factura.setPedido(pedidoResult);
+                Factura facturaResulFactura = facturaService.searchFacturaByPedido(pedidoResult.getIdPedido());
+
+                // if (facturaResulFactura.getIdFactura() != null && facturaResulFactura.getIdFactura() != 0) {
+                //     pedidoResult.setFactura(facturaResulFactura);
+                // }
+                
                 return pedidoResult;
 
             }
@@ -241,11 +259,25 @@ public class PedidoServiceImpl implements PedidoService {
                 licenciaEmpleado.setIdLicenciaEmpleado(rs.getLong("id_licencia_empleado"));
                 pedido.setLicenciaEmpleado(licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado));
 
+                Factura factura = new Factura();
+                factura.setPedido(pedido);
+                Factura facturaResulFactura = facturaService.searchFacturaByPedido(pedido.getIdPedido());
+
+                if (facturaResulFactura.getIdFactura() != null && facturaResulFactura.getIdFactura() != 0) {
+                    pedido.setFactura(facturaResulFactura);
+                }
+
                 pedidos.add(pedido);
                 
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return pedidos;
@@ -295,10 +327,10 @@ public class PedidoServiceImpl implements PedidoService {
 
                             pedidos.add(pedido);
                         }
-                    }
+                    } 
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                }
+                } 
                     
             }
         });

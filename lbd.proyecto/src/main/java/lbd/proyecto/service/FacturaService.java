@@ -24,5 +24,8 @@ public interface FacturaService {
 
     // Method to get all invoices with the Stored Procedure
     List<Factura> getAllFacturas();
+
+    // Method to search invoice by order ID with the SQL function
+    Factura searchFacturaByPedido(Long idPedido);
     
 }

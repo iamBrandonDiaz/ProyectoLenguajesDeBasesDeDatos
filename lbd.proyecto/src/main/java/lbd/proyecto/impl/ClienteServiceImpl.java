@@ -228,6 +228,8 @@ public class ClienteServiceImpl implements ClienteService {
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    connection.close();
                 }
             }
         });

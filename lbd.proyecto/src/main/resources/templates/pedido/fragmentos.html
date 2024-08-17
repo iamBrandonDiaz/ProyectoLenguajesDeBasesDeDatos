@@ -153,22 +153,20 @@
                         <td>[[${pedido.fechaPedido}]]</td>
                         <td>[[${pedido.getEstado.getDescripcion}]]</td>
                         <td>
-                            <!-- <a th:href="@{/pedidos/} + ${pedido.idPedido} + '/lic/ver'" class="btn btn-warning px-1 py-0">
-                                <svg height="32px" width="32px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <style type="text/css">
-                                            .st0 {
-                                                fill: #000000;
-                                            }
-                                        </style>
-                                        <g>
-                                            <path class="st0" d="M464.932,85.797H47.068C21.076,85.797,0,106.865,0,132.865v246.271c0,25.991,21.076,47.067,47.068,47.067 h417.865c25.991,0,47.068-21.076,47.068-47.067V132.865C512,106.865,490.924,85.797,464.932,85.797z M123.254,167.399 c25.966,0,47.026,21.059,47.026,47.034c0,25.974-21.06,47.025-47.026,47.025c-25.974,0-47.025-21.051-47.025-47.025 C76.229,188.458,97.28,167.399,123.254,167.399z M123.254,348.916c-32.305,0-65.389-11.187-60.229-42.153 c2.102-12.576,12.508-30.203,20.407-38.102c1.016-1.017,5.652-1.28,6.915-0.5c9.585,5.907,20.839,9.364,32.907,9.364 c12.068,0,23.313-3.457,32.898-9.364c1.263-0.78,5.898-0.517,6.924,0.5c7.89,7.899,18.296,25.526,20.398,38.102 C188.636,337.729,155.551,348.916,123.254,348.916z M366.424,333.492H232.194v-27h134.229V333.492z M446.686,267.068H232.194v-27 h214.492V267.068z M446.686,200.644H232.194v-27h214.492V200.644z"></path>
+                            <button th:if="${pedidos != null and !pedidos.empty}" type="button" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#exampleModal"
+                                    class="btn btn-warning px-1 py-0">
+                                    <svg width="32px" height="32px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M731.15 585.97c-100.99 0-182.86 81.87-182.86 182.86s81.87 182.86 182.86 182.86 182.86-81.87 182.86-182.86-81.87-182.86-182.86-182.86z m0 292.57c-60.5 0-109.71-49.22-109.71-109.71s49.22-109.71 109.71-109.71c60.5 0 109.71 49.22 109.71 109.71s-49.21 109.71-109.71 109.71z" fill="#0F1F3C"></path>
+                                            <path d="M718.01 778.55l-42.56-38.12-36.6 40.86 84.02 75.26 102.98-118.46-41.4-36zM219.51 474.96h219.43v73.14H219.51z" fill="#0F1F3C"></path>
+                                            <path d="M182.61 365.86h585.62v179.48h73.14V145.21c0-39.96-32.5-72.48-72.46-72.48h-27.36c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57h-18.16c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57H375.3c-29.18 0-55.04 16.73-65.88 42.59-5.71 13.64-27.82 13.66-33.57-0.02-10.86-25.86-36.71-42.57-65.88-42.57H182.4c-39.96 0-72.48 32.52-72.48 72.48v805.14h401.21v-73.14H183.04l-0.43-511.35z m25.81-222.29c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l15.86-2.3c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l16.59-2.3c14.25 34.09 47.32 56.11 84.23 56.11 36.89 0 69.96-22.02 82.66-53.8l26.68-0.66v147.5H182.54l-0.13-146.84 26.01-2.33z" fill="#0F1F3C"></path>
                                         </g>
-                                    </g>
-                                </svg>
-                            </a> -->
+                                    </svg>
+                            </button>
                             <a th:href="@{/pedidos/} + ${pedido.idPedido} + '/dir/ver'" class="btn btn-primary">Direcciones</a>
                             <a th:href="@{/pedidos/editar/} + ${pedido.idPedido}" class="btn btn-secondary">Editar</a>
                             <a th:href="@{/pedidos/eliminar/} + ${pedido.idPedido}" class="btn btn-danger">Eliminar</a>
@@ -177,6 +175,50 @@
                     </tbody>
                   </table>
             </div>
+            
+            <div th:each="pedido : ${pedidos}" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form th:action="@{/facturas/add}"
+                    method="POST"
+                    class="needs-validation" novalidate="">
+                        <div class="modal-header">
+                        <h5 class="modal-title">Crear factura</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <!-- Pedido -->
+                                <input type="text" class="form-control" hidden name="idPedido" id="idPedido" th:value="${pedido.idPedido}" placeholder="" required="">
+    
+                                <!-- Total -->
+                                <div class="col-sm-6">
+                                    <label for="total" class="form-label">Total</label>
+                                    <input type="number" class="form-control" name="total" id="total" placeholder="250.000" value="" required="">
+                                    <div class="invalid-feedback">
+                                        Un monto válido es requerido.
+                                    </div>
+                                </div>
+    
+                                <!-- Fecha -->
+                                <div class="col-sm-12 mb-2">
+                                    <label for="fecha" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="fecha" th:value="${fecha}" name="fecha" value="" required="">
+                                    <div class="invalid-feedback">
+                                        Una fecha válida es requerida.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+
             <div th:if="${pedidos == null or pedidos.empty}">
                 <p class="lead text-center" style="margin-left: 8rem; margin-right: 8rem;">
                     No se encontraron pedidos registrados :(
@@ -304,6 +346,71 @@
         </div>
     </section>
     
+    <!-- Seccion de modal para generar una factura a partir del pedido -->
+    <section th:fragment="boton-factura" class="py-4 mb-4 bg-light">
+        <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="row">
+                <div class="col-md-3">   
+                    <button 
+                        type="button" 
+                        class="btn btn-primary btn-block" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#agregarProducto">
+                        <i class="fas fa-plus"></i> [[#{producto.agregar}]]
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+    <!-- 2 Fragmento para agregar producto, es la ventana modal -->
+    <section th:fragment="agregar-factura">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Crear factura</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/facturas/add}"
+                method="POST"
+                class="needs-validation" novalidate="">
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <!-- Pedido -->
+                            <input type="text" class="form-control" hidden name="idPedido" id="idPedido" th:value="${idPedido}" placeholder="" required="">
+
+                            <!-- Total -->
+                            <div class="col-sm-6">
+                                <label for="total" class="form-label">Total</label>
+                                <input type="number" class="form-control" name="total" id="total" placeholder="250.000" value="" required="">
+                                <div class="invalid-feedback">
+                                    Un monto válido es requerido.
+                                </div>
+                            </div>
+
+                            <!-- Fecha -->
+                            <div class="col-sm-12">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" th:value="${fecha}" name="fecha" value="" required="">
+                                <div class="invalid-feedback">
+                                    Una fecha válida es requerida.
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>    
+    </section>
 
 </body>
 </html>
+                
