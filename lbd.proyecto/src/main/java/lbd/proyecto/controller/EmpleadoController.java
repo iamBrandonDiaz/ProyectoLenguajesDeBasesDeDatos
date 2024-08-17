@@ -82,7 +82,7 @@ public class EmpleadoController {
         empleado.setIdEmpleado(idEmpleado);
         Empleado empleadoResult = empleadoService.getEmpleado(empleado);
         model.addAttribute("empleado", empleadoResult);
-        model.addAttribute("idEmpelado", idEmpleado);
+        model.addAttribute("idEmpleado", idEmpleado);
         model.addAttribute("nombre", empleadoResult.getNombre());
         model.addAttribute("apellido", empleadoResult.getApellido());
         model.addAttribute("fechaNacimiento", empleadoResult.getFechaNacimiento());

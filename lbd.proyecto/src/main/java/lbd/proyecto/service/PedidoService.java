@@ -30,4 +30,7 @@ public interface PedidoService {
 
     // Method to search orders by client ID with the SQL function
     List<Pedido> searchPedidosByCliente(Long idCliente);
+
+    // Method to convert a string to a Date
+    public java.sql.Date convertDate(String input);
 }
