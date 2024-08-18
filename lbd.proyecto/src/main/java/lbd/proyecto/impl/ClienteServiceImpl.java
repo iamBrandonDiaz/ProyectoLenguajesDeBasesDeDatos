@@ -137,6 +137,8 @@ public class ClienteServiceImpl implements ClienteService {
                     } else {
                         throw e;
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 //Print the Output Parameters
@@ -190,6 +192,12 @@ public class ClienteServiceImpl implements ClienteService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return clientes;
@@ -228,6 +236,8 @@ public class ClienteServiceImpl implements ClienteService {
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    connection.close();
                 }
             }
         });
@@ -262,6 +272,8 @@ public class ClienteServiceImpl implements ClienteService {
                     }
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
+                } finally {
+                    connection.close();
                 }
             }
         });

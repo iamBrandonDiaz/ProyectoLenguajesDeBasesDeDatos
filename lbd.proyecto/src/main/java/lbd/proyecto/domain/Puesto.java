@@ -16,9 +16,8 @@ public class Puesto implements Serializable {
     
     //Attributes
     @Id // Primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental value
     @Column(name = "id_puesto")
-    private Long idPuesto; //Hibernate converts this to => id_puesto
+    private String idPuesto; //Hibernate converts this to => id_puesto
     private double salario; // Column => salario
     private String descripcion; // Column => descripcion
 

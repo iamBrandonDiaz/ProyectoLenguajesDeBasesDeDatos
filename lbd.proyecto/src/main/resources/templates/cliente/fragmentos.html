@@ -39,7 +39,7 @@
                         <!-- Nombre -->
                         <div class="col-sm-6">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="" value="" required="">
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="John" value="" required="">
                             <div class="invalid-feedback">
                                 Un nombre válido es requerido.
                             </div>
@@ -48,7 +48,7 @@
                         <!-- Apellido -->
                         <div class="col-sm-6">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" name="apellido" id="apellido" placeholder="" value="" required="">
+                            <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Doe" value="" required="">
                             <div class="invalid-feedback">
                                 Un apellido válido es requerido.
                             </div>
@@ -109,6 +109,8 @@
                         <td>[[${cliente.email}]]</td>
                         <td>[[${cliente.telefono}]]</td>
                         <td>
+                            <!-- Boton para ver las licencias -->
+                            <a th:href="@{/clientes/} + ${cliente.idCliente} + '/dir/ver'" class="btn btn-primary">Direcciones</a>
                             <a th:href="@{/clientes/editar/} + ${cliente.idCliente}" class="btn btn-secondary">Editar</a>
                             <a th:href="@{/clientes/eliminar/} + ${cliente.idCliente}" class="btn btn-danger">Eliminar</a>
                         </td>
@@ -182,7 +184,7 @@
             </svg>
             <h2>Editar Cliente</h2>
             <p class="lead text-center" style="margin-left: 8rem; margin-right: 8rem;">
-                Por favor, ingrese los nuevos datos del cliente. Una vez que haya completado el formulario, haga clic en el botón "Guardar" para actualizar la información.
+                Por favor, ingrese los nuevos datos del cliente. Una vez que haya completado el formulario, haga clic en el botón "Editar" para actualizar la información.
             </p>
         </div>
     </section>
@@ -247,41 +249,6 @@
 
                         <button class="w-100 btn btn-primary btn-lg" type="submit">Editar</button>
                 </form>
-
-                <hr class="my-4">
-
-                <!-- Direcciones -->
-                <h4 class="mb-3">Direcciones</h4>
-                <div th:if="${direccionesCliente != null and !direccionesCliente.empty}">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Provincia</th>
-                            <th scope="col">Cantón</th>
-                            <th scope="col">Distrito</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr th:each="direccion : ${direccionesCliente}">
-                            <th scope="row">[[${direccion.idDireccion}]]</th>
-                            <td>[[${direccion.provincia}]]</td>
-                            <td>[[${direccion.apellido}]]</td>                        
-                            <td>[[${direccion.email}]]</td>
-                            <td>
-                                <a th:href="@{/clientes/editar/} + ${cliente.idCliente}" class="btn btn-secondary">Editar</a>
-                                <a th:href="@{/clientes/eliminar/} + ${cliente.idCliente}" class="btn btn-danger">Eliminar</a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-                <div th:if="${clientes == null or clientes.empty}">
-                    <p class="lead text-center" style="margin-left: 8rem; margin-right: 8rem;">
-                        No se encontraron clientes registrados :(
-                    </p>
-                </div>
-
             </div>
         </div>
     </section>

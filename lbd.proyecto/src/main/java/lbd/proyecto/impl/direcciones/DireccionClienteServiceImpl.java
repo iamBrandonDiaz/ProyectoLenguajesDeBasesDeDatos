@@ -61,7 +61,7 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
     public void insertDireccionCliente(DireccionCliente direccionCliente, Cliente cliente, Distrito distrito) {
         Distrito distritoResult = distritoService.getDistrito(distrito);
         Cliente clienteResult = clienteService.getCliente(cliente);
-        direccionClienteDAO.insertDireccionCliente(cliente.getIdCliente(), direccionCliente.getDetalles(), distritoResult.getCanton().getProvincia().getIdProvincia(), distritoResult.getCanton().getIdCanton(), distritoResult.getIdDistrito());
+        direccionClienteDAO.insertDireccionCliente(clienteResult.getIdCliente(), direccionCliente.getDetalles(), distritoResult.getCanton().getProvincia().getIdProvincia(), distritoResult.getCanton().getIdCanton(), distritoResult.getIdDistrito());
 
         direccionCliente.setCliente(clienteResult);
         direccionCliente.setDistrito(distritoResult);
@@ -141,8 +141,8 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
     @Override
     @Transactional(readOnly = true)
     public List<DireccionCliente> getAllDirecciones() {
-        // Create a StoredProcedureQuery instance for the stored procedure "ver_direcciones_cliente"
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_direcciones_cliente");
+        // Create a StoredProcedureQuery instance for the stored procedure "ver_direcciones_clientes"
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("ver_direcciones_clientes");
 
         // Register the output parameters
         query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
@@ -181,4 +181,49 @@ public class DireccionClienteServiceImpl implements DireccionClienteService {
 
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<DireccionCliente> searchDireccionesByCliente(Long idCliente) {
+        Session session = entityManager.unwrap(Session.class);
+        List<DireccionCliente> direcciones = new ArrayList<>();
+
+        session.doWork(new Work() {
+            @Override
+            public void execute(Connection connection) throws SQLException {
+                try (CallableStatement callableStatement = connection.prepareCall("{ ? = call buscar_direcciones_por_cliente(?) }")) {
+                    callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+                    callableStatement.setLong(2, idCliente);
+                    callableStatement.execute();
+
+                    try (ResultSet rs = (ResultSet) callableStatement.getObject(1)) {
+                        while (rs.next()) {
+                            DireccionCliente direccion = new DireccionCliente();
+                            direccion.setIdDireccion(rs.getLong("id_direccion"));
+                            direccion.setDetalles(rs.getString("detalles"));
+
+                            Distrito distrito = new Distrito();
+                            distrito.setIdDistrito(rs.getLong("id_distrito"));
+                            direccion.setDistrito(distritoService.getDistrito(distrito));
+
+                            Cliente cliente = new Cliente();
+                            cliente.setIdCliente(rs.getLong("id_cliente"));
+                            direccion.setCliente(clienteService.getCliente(cliente));
+
+                            direcciones.add(direccion);
+                        }
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        return direcciones;
+    }
+
+    @Override
+    @Transactional
+    public void deleteDireccionCliente(DireccionCliente direccionCliente) {
+        direccionClienteDAO.deleteDireccionCliente(direccionCliente.getIdDireccion());
+    }
 }

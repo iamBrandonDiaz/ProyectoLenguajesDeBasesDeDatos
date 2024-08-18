@@ -90,7 +90,20 @@ public class ProvinciaServiceImpl implements ProvinciaService {
         query.registerStoredProcedureParameter(1, void.class, ParameterMode.REF_CURSOR);
 
         // Execute the stored procedure
-        query.execute();
+        try {
+            query.execute();
+        } catch (PersistenceException e) {
+            if (e.getCause() instanceof SQLException) {
+                // Handle the SQLException
+                SQLException sqlException = (SQLException) e.getCause();
+                System.err.println("Error Code: " + sqlException.getErrorCode());
+                System.err.println("SQL State: " + sqlException.getSQLState());
+                System.err.println("Message: " + sqlException.getMessage());
+                return null;
+            } else {
+                throw e;
+            }
+        }
 
         // Get the ResultSet
         ResultSet rs = (ResultSet) query.getOutputParameterValue(1);
