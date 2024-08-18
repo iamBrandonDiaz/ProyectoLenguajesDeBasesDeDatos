@@ -91,6 +91,20 @@ public class IndexController {
     // Muestra la página principal
     @RequestMapping("/")
     public String page(Model model) {
+
+        // Test getPedido
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(5L);
+        // Pedido pedidoResult = pedidoService.getPedido(pedido);  
+        // System.out.println(pedidoResult.toString());
+        // System.out.println(pedidoResult.getCliente().toString());
+        // System.out.println(pedidoResult.getVehiculo().toString());
+        // System.out.println(pedidoResult.getTiposCarga().toString());
+        // System.out.println(pedidoResult.getEstado().toString());
+        // System.out.println(pedidoResult.getLicenciaEmpleado().toString());
+        // System.out.println("***FACTURAAAAA***");
+        // System.out.println(pedidoResult.getFactura());
+
         // Test getProvincia and getAllProvincias
         // Provincia provincia = new Provincia();
         // provincia.setIdProvincia(3L);
@@ -453,9 +467,9 @@ public class IndexController {
         // pedidoService.deletePedido(pedido);
 
         // Test getPedido
-        Pedido pedido = new Pedido();
-        pedido.setIdPedido(5L);
-        Pedido pedidoResult = pedidoService.getPedido(pedido);  
+        // Pedido pedido = new Pedido();
+        // pedido.setIdPedido(5L);
+        // Pedido pedidoResult = pedidoService.getPedido(pedido);  
         // System.out.println(pedidoResult.toString());
         // System.out.println(pedidoResult.getCliente().toString());
         // System.out.println(pedidoResult.getVehiculo().toString());

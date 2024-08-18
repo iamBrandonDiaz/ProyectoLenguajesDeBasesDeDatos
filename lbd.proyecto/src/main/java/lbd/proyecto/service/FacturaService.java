@@ -27,5 +27,8 @@ public interface FacturaService {
 
     // Method to search invoice by order ID with the SQL function
     Factura searchFacturaByPedido(Long idPedido);
+
+    // Method to convert a string to a Date
+    public java.sql.Date convertDate(String input);
     
 }

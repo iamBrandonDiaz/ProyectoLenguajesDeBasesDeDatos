@@ -102,6 +102,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                     } else {
                         throw e;
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    entityManager.close();
                 }
 
                 // Print the output parameters
@@ -157,6 +161,10 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             } else {
                 throw e;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
         }
 
         // Get the ResultSet

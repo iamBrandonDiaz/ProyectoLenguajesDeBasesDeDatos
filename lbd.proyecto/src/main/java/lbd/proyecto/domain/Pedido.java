@@ -80,8 +80,8 @@ public class Pedido implements Serializable {
     }
     
     // Method to verify if the order has an invoice
-    // public boolean hasFactura() {
-        
-    // }
+    public boolean hasFactura() {
+        return this.factura != null;
+    }
 
 }

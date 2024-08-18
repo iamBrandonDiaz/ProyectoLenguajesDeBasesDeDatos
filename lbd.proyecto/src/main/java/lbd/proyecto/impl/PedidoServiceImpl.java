@@ -156,45 +156,51 @@ public class PedidoServiceImpl implements PedidoService {
                     }
                 }
 
-                // Map the output parameters to the Pedido object
-                Pedido pedidoResult = new Pedido();
-                pedidoResult.setIdPedido(pedido.getIdPedido());
-                pedidoResult.setDescripcion((String) query.getOutputParameterValue("p_descripcion"));
-                pedidoResult.setFechaPedido((Date) query.getOutputParameterValue("p_fecha"));
+                try {
 
-                // Map the client, vehicle, type of load, state and employee license to the Pedido object
-                Cliente cliente = new Cliente();
-                cliente.setIdCliente((Long) query.getOutputParameterValue("p_id_cliente"));
-                pedidoResult.setCliente(clienteService.getCliente(cliente));
+                    // Map the output parameters to the Pedido object
+                    Pedido pedidoResult = new Pedido();
+                    pedidoResult.setIdPedido(pedido.getIdPedido());
+                    pedidoResult.setDescripcion((String) query.getOutputParameterValue("p_descripcion"));
+                    pedidoResult.setFechaPedido((Date) query.getOutputParameterValue("p_fecha"));
 
-                Vehiculo vehiculo = new Vehiculo();
-                vehiculo.setIdVehiculo((Long) query.getOutputParameterValue("p_id_vehiculo"));
-                pedidoResult.setVehiculo(vehiculoService.getVehiculo(vehiculo));
+                    // Map the client, vehicle, type of load, state and employee license to the Pedido object
+                    Cliente cliente = new Cliente();
+                    cliente.setIdCliente((Long) query.getOutputParameterValue("p_id_cliente"));
+                    pedidoResult.setCliente(clienteService.getCliente(cliente));
 
-                TipoCarga tipoCarga = new TipoCarga();
-                tipoCarga.setIdTipo((Long) query.getOutputParameterValue("p_id_tipo_carga"));
-                pedidoResult.setTiposCarga(tipoCargaService.getTipoCarga(tipoCarga));
+                    Vehiculo vehiculo = new Vehiculo();
+                    vehiculo.setIdVehiculo((Long) query.getOutputParameterValue("p_id_vehiculo"));
+                    pedidoResult.setVehiculo(vehiculoService.getVehiculo(vehiculo));
 
-                Estado estado = new Estado();
-                estado.setIdEstado((Long) query.getOutputParameterValue("p_id_estado"));
-                pedidoResult.setEstado(estadoService.getEstado(estado));
+                    TipoCarga tipoCarga = new TipoCarga();
+                    tipoCarga.setIdTipo((Long) query.getOutputParameterValue("p_id_tipo_carga"));
+                    pedidoResult.setTiposCarga(tipoCargaService.getTipoCarga(tipoCarga));
 
-                LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
-                licenciaEmpleado.setIdLicenciaEmpleado((Long) query.getOutputParameterValue("p_id_licencia_empleado"));
-                pedidoResult.setLicenciaEmpleado(licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado));
+                    Estado estado = new Estado();
+                    estado.setIdEstado((Long) query.getOutputParameterValue("p_id_estado"));
+                    pedidoResult.setEstado(estadoService.getEstado(estado));
 
+                    LicenciaEmpleado licenciaEmpleado = new LicenciaEmpleado();
+                    licenciaEmpleado.setIdLicenciaEmpleado((Long) query.getOutputParameterValue("p_id_licencia_empleado"));
+                    pedidoResult.setLicenciaEmpleado(licenciaEmpleadoService.getLicenciaEmpleado(licenciaEmpleado));
+
+                    // Verify if the Pedido has an invoice and add it
+                    Factura factura = new Factura();
+                    factura.setPedido(pedidoResult);
+                    Factura facturaResulFactura = facturaService.searchFacturaByPedido(pedidoResult.getIdPedido());
+
+                    if (facturaResulFactura.getIdFactura() != null && facturaResulFactura.getIdFactura() != 0) {
+                        pedidoResult.setFactura(facturaResulFactura);
+                    }
+
+                    return pedidoResult;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 
-
-                // Verify if the Pedido has an invoice and add it
-                Factura factura = new Factura();
-                factura.setPedido(pedidoResult);
-                Factura facturaResulFactura = facturaService.searchFacturaByPedido(pedidoResult.getIdPedido());
-
-                // if (facturaResulFactura.getIdFactura() != null && facturaResulFactura.getIdFactura() != 0) {
-                //     pedidoResult.setFactura(facturaResulFactura);
-                // }
-                
-                return pedidoResult;
+                return null;
 
             }
         });

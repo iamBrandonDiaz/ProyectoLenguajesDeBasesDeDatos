@@ -153,7 +153,7 @@
                         <td>[[${pedido.fechaPedido}]]</td>
                         <td>[[${pedido.getEstado.getDescripcion}]]</td>
                         <td>
-                            <button th:if="${pedidos != null and !pedidos.empty}" type="button" 
+                            <button th:if="${!pedido.hasFactura}" type="button" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#exampleModal"
                                     class="btn btn-warning px-1 py-0">

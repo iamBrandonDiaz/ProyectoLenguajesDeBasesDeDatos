@@ -221,7 +221,8 @@ public class FacturaServiceImpl implements FacturaService {
 
                             Pedido pedido = new Pedido();
                             pedido.setIdPedido(rs.getLong("id_pedido"));
-                            facturaResult.setPedido(pedidoService.getPedido(pedido));
+                            // facturaResult.setPedido(pedidoService.getPedido(pedido));
+                            facturaResult.setPedido(pedido);
 
                         }
                     }
@@ -234,6 +235,24 @@ public class FacturaServiceImpl implements FacturaService {
 
         return facturaResult;
 
+    }
+
+    //Function to get the date returned by the HTML input and convert it to a java.sql.Date
+    public java.sql.Date convertDate(String input) {
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date dt = sdf.parse(input);
+            java.sql.Date sqlDate = new java.sql.Date(dt.getTime());
+
+            return sqlDate;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        
     }
 
 
