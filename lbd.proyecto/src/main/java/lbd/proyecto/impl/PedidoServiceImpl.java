@@ -278,12 +278,6 @@ public class PedidoServiceImpl implements PedidoService {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return pedidos;
