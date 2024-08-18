@@ -65,6 +65,107 @@ BEGIN
     WHERE ID_Empleado = p_id_empleado;
 END eliminar_empleado;
 
+/* SP de objeto Vehiculo */
+CREATE OR REPLACE PROCEDURE insertar_vehiculo (
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+) AS
+BEGIN
+    INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa)
+    VALUES (p_marca, p_modelo, p_anio, p_placa);
+END insertar_vehiculo;
+
+
+CREATE OR REPLACE PROCEDURE ver_vehiculo (
+    p_id_vehiculo IN NUMBER,
+	p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+	OPEN p_cursor FOR
+    SELECT Marca, Modelo, Anio, Placa
+    FROM Vehiculos
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END ver_vehiculo;
+
+
+CREATE OR REPLACE PROCEDURE actualizar_vehiculo (
+    p_id_vehiculo IN NUMBER,
+    p_marca IN VARCHAR2,
+    p_modelo IN VARCHAR2,
+    p_anio IN NUMBER,
+    p_placa IN VARCHAR2
+) AS
+BEGIN
+    UPDATE Vehiculos
+    SET Marca = p_marca,
+        Modelo = p_modelo,
+        Anio = p_anio,
+        Placa = p_placa
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END actualizar_vehiculo;
+
+
+CREATE OR REPLACE PROCEDURE eliminar_vehiculo (
+    p_id_vehiculo IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Vehiculos
+    WHERE ID_Vehiculo = p_id_vehiculo;
+END eliminar_vehiculo;
+
+
+/* SP de objeto Pedido */
+CREATE OR REPLACE PROCEDURE insertar_pedido (
+    p_id_cliente IN NUMBER,
+    p_fecha IN DATE,
+    p_monto IN NUMBER,
+    p_id_estado IN NUMBER
+) AS
+BEGIN
+    INSERT INTO Pedidos (ID_Cliente, Fecha, Monto, ID_Estado)
+    VALUES (p_id_cliente, p_fecha, p_monto, p_id_estado);
+END insertar_pedido;
+
+
+CREATE OR REPLACE PROCEDURE ver_pedido (
+    p_id_pedido IN NUMBER,
+    p_cursor OUT SYS_REFCURSOR
+) AS
+BEGIN
+    OPEN p_cursor FOR
+    SELECT ID_Cliente, Fecha, Monto, ID_Estado
+    FROM Pedidos
+    WHERE ID_Pedido = p_id_pedido;
+END ver_pedido;
+
+
+CREATE OR REPLACE PROCEDURE actualizar_pedido (
+    p_id_pedido IN NUMBER,
+    p_id_cliente IN NUMBER,
+    p_fecha IN DATE,
+    p_monto IN NUMBER,
+    p_id_estado IN NUMBER
+) AS
+BEGIN
+    UPDATE Pedidos
+    SET ID_Cliente = p_id_cliente,
+        Fecha = p_fecha,
+        Monto = p_monto,
+        ID_Estado = p_id_estado
+    WHERE ID_Pedido = p_id_pedido;
+END actualizar_pedido;
+
+
+CREATE OR REPLACE PROCEDURE eliminar_pedido (
+    p_id_pedido IN NUMBER
+) AS
+BEGIN
+    DELETE FROM Pedidos
+    WHERE ID_Pedido = p_id_pedido;
+END eliminar_pedido;
+
 /* SP de objeto Cliente */
 CREATE OR REPLACE PROCEDURE insertar_cliente (
     p_nombre IN VARCHAR2,
