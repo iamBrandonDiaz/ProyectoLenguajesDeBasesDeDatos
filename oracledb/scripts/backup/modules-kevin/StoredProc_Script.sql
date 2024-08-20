@@ -70,11 +70,11 @@ CREATE OR REPLACE PROCEDURE insertar_cliente (
     p_nombre IN VARCHAR2,
     p_apellido IN VARCHAR2,
     p_telefono IN VARCHAR2,
-    p_correo IN VARCHAR2
+    p_email IN VARCHAR2
 ) AS
 BEGIN
-    INSERT INTO Clientes (Nombre, Apellido, Telefono, Correo)
-    VALUES (p_nombre, p_apellido, p_telefono, p_correo);
+    INSERT INTO Clientes (Nombre, Apellido, Telefono, Email)
+    VALUES (p_nombre, p_apellido, p_telefono, p_email);
 END insertar_cliente;
 
 CREATE OR REPLACE PROCEDURE ver_cliente (
