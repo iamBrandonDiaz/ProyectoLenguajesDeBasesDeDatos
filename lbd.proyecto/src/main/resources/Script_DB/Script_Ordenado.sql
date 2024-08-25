@@ -142,7 +142,7 @@ CREATE TABLE Facturaciones (
 );
 
 
---Vistas
+//Vistas
 
 
 CREATE OR REPLACE VIEW Vista_Clientes_Direcciones AS
@@ -181,7 +181,6 @@ SELECT
     p.ID_Pedido,
     c.Nombre AS Cliente,
     p.Fecha,
-    p.Monto,
     e.Descripcion AS Estado
 FROM 
     Pedidos p
@@ -206,7 +205,6 @@ SELECT
     p.ID_Pedido,
     c.Nombre AS Cliente,
     f.Fecha,
-    f.Monto,
     e.Descripcion AS Estado
 FROM 
     Facturaciones f
@@ -215,84 +213,510 @@ FROM
     JOIN Estados e ON f.ID_Estado = e.ID_Estado;
 
 
---PAQUETES 
+//PAQUETES 
 
---Paquete Manejo de Clientes
+
+// Primer paquete Clientes
 CREATE OR REPLACE PACKAGE pkg_clientes AS
-    PROCEDURE agregar_cliente(p_nombre VARCHAR2, p_apellido VARCHAR2, p_telefono VARCHAR2, p_email VARCHAR2);
-    PROCEDURE eliminar_cliente(p_id_cliente NUMBER);
-    PROCEDURE actualizar_cliente(p_id_cliente NUMBER, p_nombre VARCHAR2, p_apellido VARCHAR2, p_telefono VARCHAR2, p_email VARCHAR2);
-    FUNCTION obtener_cliente(p_id_cliente NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_clientes_nombre(p_nombre IN VARCHAR2) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_clientes_email(p_email IN VARCHAR2) RETURN SYS_REFCURSOR;
+    PROCEDURE insertar_cliente(p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_telefono IN VARCHAR2, p_email IN VARCHAR2);
+    PROCEDURE actualizar_cliente(p_id_cliente IN NUMBER, p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_telefono IN VARCHAR2, p_email IN VARCHAR2);
+    PROCEDURE eliminar_cliente(p_id_cliente IN NUMBER);
 END pkg_clientes;
+/
 
 CREATE OR REPLACE PACKAGE BODY pkg_clientes AS
-    PROCEDURE agregar_cliente(p_nombre VARCHAR2, p_apellido VARCHAR2, p_telefono VARCHAR2, p_email VARCHAR2) IS
+    FUNCTION buscar_clientes_nombre(p_nombre IN VARCHAR2) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Cliente, Nombre, Apellido, Telefono, Email
+        FROM Clientes
+        WHERE LOWER(Nombre) LIKE '%' || LOWER(p_nombre) || '%';
+        RETURN l_cursor;
+    END buscar_clientes_nombre;
+
+    FUNCTION buscar_clientes_email(p_email IN VARCHAR2) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Cliente, Nombre, Apellido, Telefono, Email
+        FROM Clientes
+        WHERE LOWER(Email) LIKE '%' || LOWER(p_email) || '%';
+        RETURN l_cursor;
+    END buscar_clientes_email;
+
+    PROCEDURE insertar_cliente(p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_telefono IN VARCHAR2, p_email IN VARCHAR2) AS
     BEGIN
         INSERT INTO Clientes (Nombre, Apellido, Telefono, Email)
         VALUES (p_nombre, p_apellido, p_telefono, p_email);
-    END agregar_cliente;
+    END insertar_cliente;
 
-    PROCEDURE eliminar_cliente(p_id_cliente NUMBER) IS
-    BEGIN
-        DELETE FROM Clientes WHERE ID_Cliente = p_id_cliente;
-    END eliminar_cliente;
-
-    PROCEDURE actualizar_cliente(p_id_cliente NUMBER, p_nombre VARCHAR2, p_apellido VARCHAR2, p_telefono VARCHAR2, p_email VARCHAR2) IS
+    PROCEDURE actualizar_cliente(p_id_cliente IN NUMBER, p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_telefono IN VARCHAR2, p_email IN VARCHAR2) AS
     BEGIN
         UPDATE Clientes
         SET Nombre = p_nombre, Apellido = p_apellido, Telefono = p_telefono, Email = p_email
         WHERE ID_Cliente = p_id_cliente;
     END actualizar_cliente;
 
-    FUNCTION obtener_cliente(p_id_cliente NUMBER) RETURN SYS_REFCURSOR IS
-        cur SYS_REFCURSOR;
+    PROCEDURE eliminar_cliente(p_id_cliente IN NUMBER) AS
     BEGIN
-        OPEN cur FOR
-        SELECT * FROM Clientes WHERE ID_Cliente = p_id_cliente;
-        RETURN cur;
-    END obtener_cliente;
+        DELETE FROM Clientes WHERE ID_Cliente = p_id_cliente;
+    END eliminar_cliente;
 END pkg_clientes;
-
---Paquete Manejo de Pedidos
-
-
-CREATE OR REPLACE PACKAGE pkg_pedidos AS
-    PROCEDURE agregar_pedido(p_id_cliente NUMBER, p_fecha DATE, p_monto NUMBER, p_id_estado NUMBER);
-    PROCEDURE eliminar_pedido(p_id_pedido NUMBER);
-    PROCEDURE actualizar_pedido(p_id_pedido NUMBER, p_fecha DATE, p_monto NUMBER, p_id_estado NUMBER);
-    FUNCTION obtener_pedido(p_id_pedido NUMBER) RETURN SYS_REFCURSOR;
-END pkg_pedidos;
+/
 
 
-CREATE OR REPLACE PACKAGE BODY pkg_pedidos AS
-    PROCEDURE agregar_pedido(p_id_cliente NUMBER, p_fecha DATE, p_monto NUMBER, p_id_estado NUMBER) IS
+-- Segundo Paquete Direcciones
+CREATE OR REPLACE PACKAGE PKG_DIRECCIONES AS
+    FUNCTION buscar_direcciones_por_empleado(p_id_empleado IN NUMBER)
+    RETURN SYS_REFCURSOR;
+
+    FUNCTION buscar_direcciones_por_pedido(p_id_pedido IN NUMBER)
+    RETURN SYS_REFCURSOR;
+END PKG_DIRECCIONES;
+/
+CREATE OR REPLACE PACKAGE BODY PKG_DIRECCIONES AS
+    FUNCTION buscar_direcciones_por_empleado(p_id_empleado IN NUMBER)
+    RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
     BEGIN
-        INSERT INTO Pedidos (ID_Cliente, Fecha, Monto, ID_Estado)
-        VALUES (p_id_cliente, p_fecha, p_monto, p_id_estado);
-    END agregar_pedido;
+        OPEN l_cursor FOR
+        SELECT ID_DIRECCION, DETALLES, ID_DISTRITO
+        FROM Direcciones_Empleado
+        WHERE ID_EMPLEADO = p_id_empleado;
+        RETURN l_cursor;
+    END buscar_direcciones_por_empleado;
 
-    PROCEDURE eliminar_pedido(p_id_pedido NUMBER) IS
+    FUNCTION buscar_direcciones_por_pedido(p_id_pedido IN NUMBER)
+    RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
     BEGIN
-        DELETE FROM Pedidos WHERE ID_Pedido = p_id_pedido;
-    END eliminar_pedido;
+        OPEN l_cursor FOR
+        SELECT ID_DIRECCION, DETALLES, ID_DISTRITO
+        FROM Direcciones_Pedido
+        WHERE ID_PEDIDO = p_id_pedido;
+        RETURN l_cursor;
+    END buscar_direcciones_por_pedido;
+END PKG_DIRECCIONES;
+/
 
-    PROCEDURE actualizar_pedido(p_id_pedido NUMBER, p_fecha DATE, p_monto NUMBER, p_id_estado NUMBER) IS
+--Tercer Paquete Pedidos
+
+CREATE OR REPLACE PACKAGE PKG_LICENCIAS AS
+    FUNCTION buscar_licencias_por_empleado(p_id_empleado IN NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_factura_por_pedido(p_id_pedido IN NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_factura_ID(p_id_factura IN NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_factura_monto(p_factura_monto IN NUMBER) RETURN SYS_REFCURSOR;
+END PKG_LICENCIAS;
+/
+
+CREATE OR REPLACE PACKAGE BODY PKG_LICENCIAS AS
+    FUNCTION buscar_licencias_por_empleado(p_id_empleado IN NUMBER) RETURN SYS_REFCURSOR IS
+        l_cursor SYS_REFCURSOR;
     BEGIN
-        UPDATE Pedidos
-        SET Fecha = p_fecha, Monto = p_monto, ID_Estado = p_id_estado
+        OPEN l_cursor FOR
+        SELECT ID_Licencia, ID_Empleado, ID_Licencia, Fecha_Expedicion, Fecha_Vencimiento
+        FROM Licencias_Empleado
+        WHERE ID_Empleado = p_id_empleado;
+        RETURN l_cursor;
+    END buscar_licencias_por_empleado;
+
+    FUNCTION buscar_factura_por_pedido(p_id_pedido IN NUMBER) RETURN SYS_REFCURSOR IS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Factura, ID_Pedido, Fecha, Monto, ID_Estado
+        FROM Facturaciones
         WHERE ID_Pedido = p_id_pedido;
-    END actualizar_pedido;
+        RETURN l_cursor;
+    END buscar_factura_por_pedido;
 
-    FUNCTION obtener_pedido(p_id_pedido NUMBER) RETURN SYS_REFCURSOR IS
-        cur SYS_REFCURSOR;
+    FUNCTION buscar_factura_ID(p_id_factura IN NUMBER) RETURN SYS_REFCURSOR IS
+        l_cursor SYS_REFCURSOR;
     BEGIN
-        OPEN cur FOR
-        SELECT * FROM Pedidos WHERE ID_Pedido = p_id_pedido;
-        RETURN cur;
-    END obtener_pedido;
-END pkg_pedidos;
+        OPEN l_cursor FOR
+        SELECT ID_Factura, ID_Pedido, Fecha, Monto, ID_Estado
+        FROM Facturaciones
+        WHERE ID_Factura = p_id_factura;
+        RETURN l_cursor;
+    END buscar_factura_ID;
+
+    FUNCTION buscar_factura_monto(p_factura_monto IN NUMBER) RETURN SYS_REFCURSOR IS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Factura, ID_Pedido, Fecha, Monto, ID_Estado
+        FROM Facturaciones
+        WHERE Monto = p_factura_monto;
+        RETURN l_cursor;
+    END buscar_factura_monto;
+END PKG_LICENCIAS;
+/
+
+
+--Cuarto Paquete, empleados 
+
+CREATE OR REPLACE PACKAGE pkg_empleados AS
+    FUNCTION buscar_empleado_nombre(p_nombre IN VARCHAR2) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_empleado_ID(p_Empleado_ID IN NUMBER) RETURN SYS_REFCURSOR;
+    PROCEDURE insertar_empleado(p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_fecha_nacimiento IN DATE, p_fecha_contratacion IN DATE);
+    PROCEDURE actualizar_empleado(p_id_empleado IN NUMBER, p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_fecha_nacimiento IN DATE, p_fecha_contratacion IN DATE);
+    PROCEDURE eliminar_empleado(p_id_empleado IN NUMBER);
+END pkg_empleados;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_empleados AS
+    FUNCTION buscar_empleado_nombre(p_nombre IN VARCHAR2) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Empleado, Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion
+        FROM Empleados
+        WHERE LOWER(Nombre) LIKE '%' || LOWER(p_nombre) || '%';
+        RETURN l_cursor;
+    END buscar_empleado_nombre;
+
+    FUNCTION buscar_empleado_ID(p_Empleado_ID IN NUMBER) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Empleado, Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion
+        FROM Empleados
+        WHERE ID_Empleado = p_Empleado_ID;
+        RETURN l_cursor;
+    END buscar_empleado_ID;
+
+    PROCEDURE insertar_empleado(p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_fecha_nacimiento IN DATE, p_fecha_contratacion IN DATE) AS
+    BEGIN
+        INSERT INTO Empleados (Nombre, Apellido, Fecha_Nacimiento, Fecha_Contratacion)
+        VALUES (p_nombre, p_apellido, p_fecha_nacimiento, p_fecha_contratacion);
+    END insertar_empleado;
+
+    PROCEDURE actualizar_empleado(p_id_empleado IN NUMBER, p_nombre IN VARCHAR2, p_apellido IN VARCHAR2, p_fecha_nacimiento IN DATE, p_fecha_contratacion IN DATE) AS
+    BEGIN
+        UPDATE Empleados
+        SET Nombre = p_nombre, Apellido = p_apellido, Fecha_Nacimiento = p_fecha_nacimiento, Fecha_Contratacion = p_fecha_contratacion
+        WHERE ID_Empleado = p_id_empleado;
+    END actualizar_empleado;
+
+    PROCEDURE eliminar_empleado(p_id_empleado IN NUMBER) AS
+    BEGIN
+        DELETE FROM Empleados WHERE ID_Empleado = p_id_empleado;
+    END eliminar_empleado;
+END pkg_empleados;
+/
+
+
+--Quinto Paquete Vehiculos
+
+CREATE OR REPLACE PACKAGE pkg_vehiculos AS
+    FUNCTION buscar_vehiculo_placa(p_placa IN VARCHAR2) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_vehiculo_marca(p_marca IN VARCHAR2) RETURN SYS_REFCURSOR;
+    PROCEDURE insertar_vehiculo(p_marca IN VARCHAR2, p_modelo IN VARCHAR2, p_anio IN NUMBER, p_placa IN VARCHAR2);
+    PROCEDURE actualizar_vehiculo(p_id_vehiculo IN NUMBER, p_marca IN VARCHAR2, p_modelo IN VARCHAR2, p_anio IN NUMBER, p_placa IN VARCHAR2);
+    PROCEDURE eliminar_vehiculo(p_id_vehiculo IN NUMBER);
+END pkg_vehiculos;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_vehiculos AS
+    FUNCTION buscar_vehiculo_placa(p_placa IN VARCHAR2) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Vehiculo, Marca, Modelo, Anio, Placa
+        FROM Vehiculos
+        WHERE LOWER(Placa) LIKE '%' || LOWER(p_placa) || '%';
+        RETURN l_cursor;
+    END buscar_vehiculo_placa;
+
+    FUNCTION buscar_vehiculo_marca(p_marca IN VARCHAR2) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Vehiculo, Marca, Modelo, Anio, Placa
+        FROM Vehiculos
+        WHERE LOWER(Marca) LIKE '%' || LOWER(p_marca) || '%';
+        RETURN l_cursor;
+    END buscar_vehiculo_marca;
+
+    PROCEDURE insertar_vehiculo(p_marca IN VARCHAR2, p_modelo IN VARCHAR2, p_anio IN NUMBER, p_placa IN VARCHAR2) AS
+    BEGIN
+        INSERT INTO Vehiculos (Marca, Modelo, Anio, Placa)
+        VALUES (p_marca, p_modelo, p_anio, p_placa);
+    END insertar_vehiculo;
+
+    PROCEDURE actualizar_vehiculo(p_id_vehiculo IN NUMBER, p_marca IN VARCHAR2, p_modelo IN VARCHAR2, p_anio IN NUMBER, p_placa IN VARCHAR2) AS
+    BEGIN
+        UPDATE Vehiculos
+        SET Marca = p_marca, Modelo = p_modelo, Anio = p_anio, Placa = p_placa
+        WHERE ID_Vehiculo = p_id_vehiculo;
+    END actualizar_vehiculo;
+
+    PROCEDURE eliminar_vehiculo(p_id_vehiculo IN NUMBER) AS
+    BEGIN
+        DELETE FROM Vehiculos WHERE ID_Vehiculo = p_id_vehiculo;
+    END eliminar_vehiculo;
+END pkg_vehiculos;
+/
+
+
+--Sexto paquete Facturaciones
+
+CREATE OR REPLACE PACKAGE pkg_facturaciones AS
+    FUNCTION buscar_factura_ID(p_factura_ID IN NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION buscar_factura_monto(p_factura_monto IN NUMBER) RETURN SYS_REFCURSOR;
+    PROCEDURE insertar_factura(p_id_pedido IN NUMBER, p_fecha IN DATE, p_monto IN NUMBER, p_id_estado IN NUMBER);
+    PROCEDURE actualizar_factura(p_id_factura IN NUMBER, p_id_pedido IN NUMBER, p_fecha IN DATE, p_monto IN NUMBER, p_id_estado IN NUMBER);
+    PROCEDURE eliminar_factura(p_id_factura IN NUMBER);
+END pkg_facturaciones;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_facturaciones AS
+    FUNCTION buscar_factura_ID(p_factura_ID IN NUMBER) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Factura, ID_Pedido, Fecha, Monto, ID_Estado
+        FROM Facturaciones
+        WHERE ID_Factura = p_factura_ID;
+        RETURN l_cursor;
+    END buscar_factura_ID;
+
+    FUNCTION buscar_factura_monto(p_factura_monto IN NUMBER) RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_Factura, ID_Pedido, Fecha, Monto, ID_Estado
+        FROM Facturaciones
+        WHERE Monto = p_factura_monto;
+        RETURN l_cursor;
+    END buscar_factura_monto;
+
+    PROCEDURE insertar_factura(p_id_pedido IN NUMBER, p_fecha IN DATE, p_monto IN NUMBER, p_id_estado IN NUMBER) AS
+    BEGIN
+        INSERT INTO Facturaciones (ID_Pedido, Fecha, Monto, ID_Estado)
+        VALUES (p_id_pedido, p_fecha, p_monto, p_id_estado);
+    END insertar_factura;
+
+    PROCEDURE actualizar_factura(p_id_factura IN NUMBER, p_id_pedido IN NUMBER, p_fecha IN DATE, p_monto IN NUMBER, p_id_estado IN NUMBER) AS
+    BEGIN
+        UPDATE Facturaciones
+        SET ID_Pedido = p_id_pedido, Fecha = p_fecha, Monto = p_monto, ID_Estado = p_id_estado
+        WHERE ID_Factura = p_id_factura;
+    END actualizar_factura;
+
+    PROCEDURE eliminar_factura(p_id_factura IN NUMBER) AS
+    BEGIN
+        DELETE FROM Facturaciones WHERE ID_Factura = p_id_factura;
+    END eliminar_factura;
+END pkg_facturaciones;
+/
+
+--Septimo paquete Licencias 
+CREATE OR REPLACE PACKAGE PKG_LICENCIAS AS
+    FUNCTION buscar_licencias_por_empleado(p_id_empleado IN NUMBER)
+    RETURN SYS_REFCURSOR;
+    
+    FUNCTION buscar_licencia_por_id(p_id_licencia IN NUMBER)
+    RETURN SYS_REFCURSOR;
+    
+    FUNCTION buscar_licencias_por_fecha(p_fecha_exp_inicio IN DATE, p_fecha_exp_fin IN DATE)
+    RETURN SYS_REFCURSOR;
+END PKG_LICENCIAS;
+/
+CREATE OR REPLACE PACKAGE BODY PKG_LICENCIAS AS
+
+    FUNCTION buscar_licencias_por_empleado(p_id_empleado IN NUMBER)
+    RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_EMPLEADO, ID_LICENCIA, FECHA_EXPEDICION, FECHA_VENCIMIENTO
+        FROM Licencias_Empleado
+        WHERE ID_EMPLEADO = p_id_empleado;
+        RETURN l_cursor;
+    END buscar_licencias_por_empleado;
+
+    FUNCTION buscar_licencia_por_id(p_id_licencia IN NUMBER)
+    RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_EMPLEADO, ID_LICENCIA, FECHA_EXPEDICION, FECHA_VENCIMIENTO
+        FROM Licencias_Empleado
+        WHERE ID_LICENCIA = p_id_licencia;
+        RETURN l_cursor;
+    END buscar_licencia_por_id;
+
+    FUNCTION buscar_licencias_por_fecha(p_fecha_exp_inicio IN DATE, p_fecha_exp_fin IN DATE)
+    RETURN SYS_REFCURSOR AS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_EMPLEADO, ID_LICENCIA, FECHA_EXPEDICION, FECHA_VENCIMIENTO
+        FROM Licencias_Empleado
+        WHERE FECHA_EXPEDICION BETWEEN p_fecha_exp_inicio AND p_fecha_exp_fin;
+        RETURN l_cursor;
+    END buscar_licencias_por_fecha;
+
+END PKG_LICENCIAS;
+/
+
+--Octavo Paquete estados
+CREATE OR REPLACE PACKAGE PKG_ESTADOS AS
+
+    PROCEDURE insertar_estado(p_id_estado IN NUMBER, p_descripcion IN VARCHAR2);
+    PROCEDURE actualizar_estado(p_id_estado IN NUMBER, p_descripcion IN VARCHAR2);
+    PROCEDURE eliminar_estado(p_id_estado IN NUMBER);
+    FUNCTION obtener_estado(p_id_estado IN NUMBER) RETURN SYS_REFCURSOR;
+
+END PKG_ESTADOS;
+/
+
+CREATE OR REPLACE PACKAGE BODY PKG_ESTADOS AS
+
+    PROCEDURE insertar_estado(p_id_estado IN NUMBER, p_descripcion IN VARCHAR2) IS
+    BEGIN
+        INSERT INTO Estados (ID_ESTADO, DESCRIPCION)
+        VALUES (p_id_estado, p_descripcion);
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Error al insertar el estado: ' || SQLERRM);
+    END insertar_estado;
+
+    PROCEDURE actualizar_estado(p_id_estado IN NUMBER, p_descripcion IN VARCHAR2) IS
+    BEGIN
+        UPDATE Estados
+        SET DESCRIPCION = p_descripcion
+        WHERE ID_ESTADO = p_id_estado;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Error al actualizar el estado: ' || SQLERRM);
+    END actualizar_estado;
+
+    PROCEDURE eliminar_estado(p_id_estado IN NUMBER) IS
+    BEGIN
+        DELETE FROM Estados
+        WHERE ID_ESTADO = p_id_estado;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20003, 'Error al eliminar el estado: ' || SQLERRM);
+    END eliminar_estado;
+
+    FUNCTION obtener_estado(p_id_estado IN NUMBER) RETURN SYS_REFCURSOR IS
+        l_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT ID_ESTADO, DESCRIPCION
+        FROM Estados
+        WHERE ID_ESTADO = p_id_estado;
+        RETURN l_cursor;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20004, 'Error al obtener el estado: ' || SQLERRM);
+    END obtener_estado;
+
+END PKG_ESTADOS;
+/
+
+--Noveno Paquete, carga tipos
+CREATE OR REPLACE PACKAGE PKG_CARGA_TIPOS AS
+    PROCEDURE insertar_tipo(p_id_tipo NUMBER, p_descripcion VARCHAR2);
+    PROCEDURE actualizar_tipo(p_id_tipo NUMBER, p_descripcion VARCHAR2);
+    PROCEDURE eliminar_tipo(p_id_tipo NUMBER);
+    FUNCTION obtener_tipo(p_id_tipo NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION obtener_todos_tipos RETURN SYS_REFCURSOR;
+END PKG_CARGA_TIPOS;
+/
+CREATE OR REPLACE PACKAGE BODY PKG_CARGA_TIPOS AS
+
+    PROCEDURE insertar_tipo(p_id_tipo NUMBER, p_descripcion VARCHAR2) IS
+    BEGIN
+        INSERT INTO carga_tipos (id_tipo, descripcion)
+        VALUES (p_id_tipo, p_descripcion);
+    END insertar_tipo;
+
+    PROCEDURE actualizar_tipo(p_id_tipo NUMBER, p_descripcion VARCHAR2) IS
+    BEGIN
+        UPDATE carga_tipos
+        SET descripcion = p_descripcion
+        WHERE id_tipo = p_id_tipo;
+    END actualizar_tipo;
+
+    PROCEDURE eliminar_tipo(p_id_tipo NUMBER) IS
+    BEGIN
+        DELETE FROM carga_tipos
+        WHERE id_tipo = p_id_tipo;
+    END eliminar_tipo;
+
+    FUNCTION obtener_tipo(p_id_tipo NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT id_tipo, descripcion
+        FROM carga_tipos
+        WHERE id_tipo = p_id_tipo;
+        RETURN v_cursor;
+    END obtener_tipo;
+
+    FUNCTION obtener_todos_tipos RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT id_tipo, descripcion
+        FROM carga_tipos;
+        RETURN v_cursor;
+    END obtener_todos_tipos;
+
+END PKG_CARGA_TIPOS;
+/
 
 
 
 
+--Decimo paquete, Reportes
+
+CREATE OR REPLACE PACKAGE PKG_REPORTES AS
+    FUNCTION rpt_pedidos_cliente(p_id_cliente NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION rpt_pedidos_estado(p_id_estado NUMBER) RETURN SYS_REFCURSOR;
+    FUNCTION rpt_pedidos_fecha(p_fecha DATE) RETURN SYS_REFCURSOR;
+END PKG_REPORTES;
+/
+
+CREATE OR REPLACE PACKAGE BODY PKG_REPORTES AS
+
+    FUNCTION rpt_pedidos_cliente(p_id_cliente NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT id_pedido, id_cliente, fecha, monto, id_estado
+        FROM pedidos
+        WHERE id_cliente = p_id_cliente;
+        RETURN v_cursor;
+    END rpt_pedidos_cliente;
+
+    FUNCTION rpt_pedidos_estado(p_id_estado NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT id_pedido, id_cliente, fecha, monto, id_estado
+        FROM pedidos
+        WHERE id_estado = p_id_estado;
+        RETURN v_cursor;
+    END rpt_pedidos_estado;
+
+    FUNCTION rpt_pedidos_fecha(p_fecha DATE) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+        SELECT id_pedido, id_cliente, fecha, monto, id_estado
+        FROM pedidos
+        WHERE fecha = p_fecha;
+        RETURN v_cursor;
+    END rpt_pedidos_fecha;
+
+END PKG_REPORTES;
+/
 
