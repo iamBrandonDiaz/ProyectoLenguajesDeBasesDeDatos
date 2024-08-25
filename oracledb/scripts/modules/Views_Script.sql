@@ -34,7 +34,6 @@ CREATE OR REPLACE VIEW vista_pedidos_direcciones AS
 SELECT 
     p.ID_Pedido,
     p.Fecha,
-    p.Estado,
     d.Detalles AS Direccion,
     prov.Nombre AS Provincia,
     cant.Nombre AS Canton,

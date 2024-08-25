@@ -15,11 +15,11 @@ import lbd.proyecto.domain.Cliente;
 public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     
     // Method to call an stored procedure to insert a new client
-    @Procedure(procedureName = "insertar_cliente")
+    @Procedure(procedureName = "pkg_clientes.insertar_cliente")
     void insertCliente(String nombre, String apellidos, String telefono, String email);
     
     // Method to call an stored procedure to update a client
-    @Procedure(procedureName = "actualizar_cliente")
+    @Procedure(procedureName = "pkg_clientes.actualizar_cliente")
     void updateCliente(Long idCliente, String nombre, String apellidos, String telefono, String email);
 
     // Method to call an stored procedure to get a (single) client
