@@ -677,7 +677,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_TIPO_CARGA AS
 
     PROCEDURE insertar_tipos(p_id_tipo NUMBER, p_descripcion VARCHAR2) IS
     BEGIN
-        INSERT INTO tipos_carga (id_tipos, descripcion)
+        INSERT INTO tipos_carga (id_tipo, descripcion)
         VALUES (p_id_tipo, p_descripcion);
     END insertar_tipos;
 
@@ -685,22 +685,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_TIPO_CARGA AS
     BEGIN
         UPDATE tipos_carga
         SET descripcion = p_descripcion
-        WHERE id_tipos = p_id_tipo;
+        WHERE id_tipo = p_id_tipo;
     END actualizar_tipos;
 
     PROCEDURE eliminar_tipos(p_id_tipo NUMBER) IS
     BEGIN
         DELETE FROM tipos_carga
-        WHERE id_tipos = p_id_tipo;
+        WHERE id_tipo = p_id_tipo;
     END eliminar_tipos;
 
     FUNCTION obtener_tipos(p_id_tipo NUMBER) RETURN SYS_REFCURSOR IS
         v_cursor SYS_REFCURSOR;
     BEGIN
         OPEN v_cursor FOR
-        SELECT id_tipos, descripcion
+        SELECT id_tipo, descripcion
         FROM tipos_carga
-        WHERE id_tipos = p_id_tipo;
+        WHERE id_tipo = p_id_tipo;
         RETURN v_cursor;
     END obtener_tipos;
 
@@ -708,7 +708,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_TIPO_CARGA AS
         v_cursor SYS_REFCURSOR;
     BEGIN
         OPEN v_cursor FOR
-        SELECT id_tipos, descripcion
+        SELECT id_tipo, descripcion
         FROM tipos_carga;
         RETURN v_cursor;
     END obtener_todos_tipos;
