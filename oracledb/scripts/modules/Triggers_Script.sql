@@ -52,13 +52,13 @@ BEGIN
 END;
 
 
-CREATE OR REPLACE TRIGGER trg_prevent_delete_pedido
-BEFORE DELETE ON pedidos
+CREATE OR REPLACE TRIGGER trg_prevent_insert_pedido
+BEFORE INSERT ON pedidos
 FOR EACH ROW
 BEGIN
 
-    IF :OLD.ID_tipo_carga IS NOT NULL THEN
-        RAISE_APPLICATION_ERROR(-20001, 'No se puede eliminar el pedido porque tiene un ID_tipo_carga asociado.');
+    IF :NEW.ID_tipo_carga IS NOT NULL THEN
+        RAISE_APPLICATION_ERROR(-20001, 'No se puede insertar el pedido porque tiene un ID_tipo_carga asociado.');
     END IF;
 END;
 
