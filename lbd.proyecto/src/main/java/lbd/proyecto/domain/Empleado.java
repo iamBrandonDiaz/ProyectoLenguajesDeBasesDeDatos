@@ -70,5 +70,15 @@ public class Empleado implements Serializable {
         
     }
 
+    //Function to return if the employee is a driver
+    public boolean isDriver() {
+        System.out.println(this.puesto.getIdPuesto());
+        if (this.puesto.getIdPuesto().equals("DRV-01") || this.puesto.getIdPuesto().equals("DRV-02") || this.puesto.getIdPuesto().equals("DRV-03")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }

@@ -31,15 +31,15 @@ public interface ClienteDAO extends JpaRepository<Cliente, Long> {
     List<Cliente> getAllClientes();
 
     //Method to call an stored procedure to delete a client
-    @Procedure(procedureName = "eliminar_cliente")
+    @Procedure(procedureName = "pkg_clientes.eliminar_cliente")
     void deleteCliente(Long idCliente);
 
     //Method to call a SQL function to get all the clients that match the string in their name
-    @Query(value = "SELECT * FROM TABLE(buscar_clientes_nombre(:p_nombre))", nativeQuery = true)
+    @Query(value = "SELECT * FROM TABLE(pkg_clientes.buscar_clientes_nombre(:p_nombre))", nativeQuery = true)
     List<Cliente> buscarClientes(@Param("p_nombre") String nombre);
 
     //Method to call a SQL function to get all the clients that match the string in their email
-    @Query(value = "SELECT * FROM TABLE(buscar_clientes_email(:p_email))", nativeQuery = true)
+    @Query(value = "SELECT * FROM TABLE(pkg_clientes.buscar_clientes_email(:p_email))", nativeQuery = true)
     List<Cliente> buscarClientesEmail(@Param("p_email") String email);
 
 }

@@ -153,7 +153,7 @@
                         <td>[[${pedido.fechaPedido}]]</td>
                         <td>[[${pedido.getEstado.getDescripcion}]]</td>
                         <td>
-                            <button th:if="${!pedido.hasFactura}" type="button" 
+                            <button th:if="${!pedido.hasFactura and !pedido.isCanceled}" type="button" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#exampleModal"
                                     class="btn btn-warning px-1 py-0">
@@ -194,7 +194,7 @@
                                 <!-- Total -->
                                 <div class="col-sm-6">
                                     <label for="total" class="form-label">Total</label>
-                                    <input type="number" class="form-control" name="total" id="total" placeholder="250.000" value="" required="">
+                                    <input type="number" class="form-control" name="total" id="total" placeholder="250000" value="" required="">
                                     <div class="invalid-feedback">
                                         Un monto válido es requerido.
                                     </div>

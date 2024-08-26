@@ -725,12 +725,35 @@ BEGIN
     WHERE ID_Pedido = p_id_pedido;
 END actualizar_pedido;
 
+-- CREATE OR REPLACE PROCEDURE eliminar_pedido (
+--     p_id_pedido IN NUMBER
+-- ) AS
+-- BEGIN
+--     DELETE FROM Pedidos
+--     WHERE ID_Pedido = p_id_pedido;
+-- END eliminar_pedido;
+
 CREATE OR REPLACE PROCEDURE eliminar_pedido (
     p_id_pedido IN NUMBER
 ) AS
 BEGIN
+    -- Eliminar facturas asociadas al pedido
+    DELETE FROM Facturas
+    WHERE ID_Pedido = p_id_pedido;
+
+    -- Eliminar direcciones_pedido asociadas al pedido
+    DELETE FROM Direcciones_Pedido
+    WHERE ID_Pedido = p_id_pedido;
+
+    -- Eliminar el pedido
     DELETE FROM Pedidos
     WHERE ID_Pedido = p_id_pedido;
+    
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
 END eliminar_pedido;
 
 -- SP de objeto Direcciones_Pedido

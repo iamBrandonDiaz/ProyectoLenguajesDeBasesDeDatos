@@ -117,7 +117,7 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    @Transactional
+    
     public Pedido getPedido(Pedido pedido) {
         
         return transactionTemplate.execute(new TransactionCallback<Pedido>() {

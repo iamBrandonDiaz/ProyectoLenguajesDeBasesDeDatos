@@ -19,7 +19,7 @@
                         <th scope="col">Cliente</th>
                         <th scope="col">Monto</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Acciones</th>
+                        <!-- <th scope="col">Acciones</th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -29,10 +29,10 @@
                         <td>[[${factura.getPedido.getCliente.getNombre + ' ' + factura.getPedido.getCliente.getApellido}]]</td>
                         <td>[[${factura.total}]]</td>                        
                         <td>[[${factura.fecha}]]</td>
-                        <td>
+                        <!-- <td> -->
                             <!-- Boton para ver las licencias -->
-                            <a th:href="@{/facturas/eliminar/} + ${factura.idFactura}" class="btn btn-danger">Eliminar</a>
-                        </td>
+                            <!-- <a th:href="@{/facturas/eliminar/} + ${factura.idFactura}" class="btn btn-danger">Eliminar</a>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>

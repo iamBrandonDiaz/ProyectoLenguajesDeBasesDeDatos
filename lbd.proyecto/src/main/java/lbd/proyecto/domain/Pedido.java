@@ -84,4 +84,13 @@ public class Pedido implements Serializable {
         return this.factura != null;
     }
 
+    // Method to verify if the order is canceled
+    public boolean isCanceled() {
+        if (this.estado.getIdEstado() == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -660,7 +660,17 @@ public class IndexController {
         // System.out.println("Total Factura: " + factura.getTotal());
         // System.out.println("Objeto:" + factura);
 
-        
+        //Test Empleado.isDriver
+        // Empleado empleado = new Empleado();
+        // empleado.setIdEmpleado(61L);
+        // Empleado empleadoResult = empleadoService.getEmpleado(empleado);
+        // System.out.println(empleadoResult.isDriver());
+
+        //Test Pedido.isCanceled
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(63L);
+        Pedido pedidoResult = pedidoService.getPedido(pedido);
+        System.out.println(pedidoResult.isCanceled());
 
         return "index-new";
     }
