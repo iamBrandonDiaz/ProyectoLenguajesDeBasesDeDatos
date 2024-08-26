@@ -311,7 +311,6 @@ CREATE OR REPLACE PACKAGE PKG_PEDIDOS AS
     PROCEDURE insertar_pedido(
         p_id_cliente IN NUMBER,
         p_fecha IN DATE,
-        p_total IN NUMBER,
         p_id_estado IN NUMBER
     );
     
@@ -324,7 +323,6 @@ CREATE OR REPLACE PACKAGE PKG_PEDIDOS AS
         p_id_pedido IN NUMBER,
         p_id_cliente IN NUMBER,
         p_fecha IN DATE,
-        p_total IN NUMBER,
         p_id_estado IN NUMBER
     );
     
@@ -339,7 +337,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_PEDIDOS AS
         l_cursor SYS_REFCURSOR;
     BEGIN
         OPEN l_cursor FOR
-        SELECT ID_Pedido, ID_Cliente, Fecha, Total, ID_Estado
+        SELECT ID_Pedido, ID_Cliente, Fecha, ID_Estado
         FROM Pedidos
         WHERE ID_Pedido = p_pedido_ID;
         RETURN l_cursor;
@@ -349,7 +347,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_PEDIDOS AS
         l_cursor SYS_REFCURSOR;
     BEGIN
         OPEN l_cursor FOR
-        SELECT ID_Pedido, ID_Cliente, Fecha, Total, ID_Estado
+        SELECT ID_Pedido, ID_Cliente, Fecha, ID_Estado
         FROM Pedidos
         WHERE ID_Estado = p_id_estado;
         RETURN l_cursor;
@@ -357,12 +355,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_PEDIDOS AS
     PROCEDURE insertar_pedido(
         p_id_cliente IN NUMBER,
         p_fecha IN DATE,
-        p_total IN NUMBER,
         p_id_estado IN NUMBER
     ) AS
     BEGIN
-        INSERT INTO Pedidos (ID_Cliente, Fecha, Total, ID_Estado)
-        VALUES (p_id_cliente, p_fecha, p_total, p_id_estado);
+        INSERT INTO Pedidos (ID_Cliente, Fecha, ID_Estado)
+        VALUES (p_id_cliente, p_fecha, p_id_estado);
     END insertar_pedido;
 
     PROCEDURE ver_pedido(
@@ -371,7 +368,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_PEDIDOS AS
     ) AS
     BEGIN
         OPEN p_cursor FOR
-        SELECT ID_Cliente, Fecha, Total, ID_Estado
+        SELECT ID_Cliente, Fecha, ID_Estado
         FROM Pedidos
         WHERE ID_Pedido = p_id_pedido;
     END ver_pedido;
@@ -380,14 +377,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_PEDIDOS AS
         p_id_pedido IN NUMBER,
         p_id_cliente IN NUMBER,
         p_fecha IN DATE,
-        p_total IN NUMBER,
         p_id_estado IN NUMBER
     ) AS
     BEGIN
         UPDATE Pedidos
         SET ID_Cliente = p_id_cliente,
             Fecha = p_fecha,
-            Total = p_total,
             ID_Estado = p_id_estado
         WHERE ID_Pedido = p_id_pedido;
     END actualizar_pedido;
@@ -671,41 +666,41 @@ END PKG_ESTADOS;
 
 --Noveno Paquete, Tipos Carga
 CREATE OR REPLACE PACKAGE PKG_TIPO_CARGA AS
-    PROCEDURE insertar_tipos(p_id_tipos NUMBER, p_descripcion VARCHAR2);
-    PROCEDURE actualizar_tipos(p_id_tipos NUMBER, p_descripcion VARCHAR2);
-    PROCEDURE eliminar_tipos(p_id_tipos NUMBER);
-    FUNCTION obtener_tipos(p_id_tipos NUMBER) RETURN SYS_REFCURSOR;
+    PROCEDURE insertar_tipos(p_id_tipo NUMBER, p_descripcion VARCHAR2);
+    PROCEDURE actualizar_tipos(p_id_tipo NUMBER, p_descripcion VARCHAR2);
+    PROCEDURE eliminar_tipos(p_id_tipo NUMBER);
+    FUNCTION obtener_tipos(p_id_tipo NUMBER) RETURN SYS_REFCURSOR;
     FUNCTION obtener_todos_tipos RETURN SYS_REFCURSOR;
 END PKG_TIPO_CARGA;
 /
 CREATE OR REPLACE PACKAGE BODY PKG_TIPO_CARGA AS
 
-    PROCEDURE insertar_tipos(p_id_tipos NUMBER, p_descripcion VARCHAR2) IS
+    PROCEDURE insertar_tipos(p_id_tipo NUMBER, p_descripcion VARCHAR2) IS
     BEGIN
         INSERT INTO tipos_carga (id_tipos, descripcion)
-        VALUES (p_id_tipos, p_descripcion);
+        VALUES (p_id_tipo, p_descripcion);
     END insertar_tipos;
 
-    PROCEDURE actualizar_tipos(p_id_tipos NUMBER, p_descripcion VARCHAR2) IS
+    PROCEDURE actualizar_tipos(p_id_tipo NUMBER, p_descripcion VARCHAR2) IS
     BEGIN
         UPDATE tipos_carga
         SET descripcion = p_descripcion
-        WHERE id_tipos = p_id_tipos;
+        WHERE id_tipos = p_id_tipo;
     END actualizar_tipos;
 
-    PROCEDURE eliminar_tipos(p_id_tipos NUMBER) IS
+    PROCEDURE eliminar_tipos(p_id_tipo NUMBER) IS
     BEGIN
         DELETE FROM tipos_carga
-        WHERE id_tipos = p_id_tipos;
+        WHERE id_tipos = p_id_tipo;
     END eliminar_tipos;
 
-    FUNCTION obtener_tipos(p_id_tipos NUMBER) RETURN SYS_REFCURSOR IS
+    FUNCTION obtener_tipos(p_id_tipo NUMBER) RETURN SYS_REFCURSOR IS
         v_cursor SYS_REFCURSOR;
     BEGIN
         OPEN v_cursor FOR
         SELECT id_tipos, descripcion
         FROM tipos_carga
-        WHERE id_tipos = p_id_tipos;
+        WHERE id_tipos = p_id_tipo;
         RETURN v_cursor;
     END obtener_tipos;
 
