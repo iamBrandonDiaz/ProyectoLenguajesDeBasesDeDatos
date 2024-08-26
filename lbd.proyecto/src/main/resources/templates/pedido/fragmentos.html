@@ -155,7 +155,7 @@
                         <td>
                             <button th:if="${!pedido.hasFactura and !pedido.isCanceled}" type="button" 
                                     data-bs-toggle="modal" 
-                                    data-bs-target="#exampleModal"
+                                    th:data-bs-target="'#modal-' + ${pedido.idPedido}"
                                     class="btn btn-warning px-1 py-0">
                                     <svg width="32px" height="32px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -176,7 +176,7 @@
                   </table>
             </div>
             
-            <div th:each="pedido : ${pedidos}" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div th:each="pedido : ${pedidos}" class="modal fade" th:id="'modal-' + ${pedido.idPedido}"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <form th:action="@{/facturas/add}"
